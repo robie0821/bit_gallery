@@ -5,40 +5,43 @@ import java.io.Serializable;
 public class AttachedFile implements Serializable {
   private static final long serialVersionUID = 1L;
 
-  int no;
-  String originName;
-  String filePath;
-  int boardNo;
+  private int no;
+  private int fileNo;
+  private String filePath;
+  int boardNo; // 이부분 최종부분에서 지워야 함
 
-  @Override
-  public String toString() {
-    return "AttachedFile [no=" + no + ", originName=" + originName + ", filePath=" + filePath
-        + ", boardNo=" + boardNo + "]";
-  }
   public int getNo() {
     return no;
   }
+
   public void setNo(int no) {
     this.no = no;
   }
-  public String getOriginName() {
-    return originName;
+
+  public int getFileNo() {
+    return fileNo;
   }
-  public void setOriginName(String originName) {
-    this.originName = originName;
+
+  public void setFileNo(int fileNo) {
+    this.fileNo = fileNo;
   }
+
   public String getFilePath() {
     return filePath;
   }
+
   public void setFilePath(String filePath) {
     this.filePath = filePath;
   }
+
+  // 최종부분에 지워야 하는 부분
+  // 여기서부터
   public int getBoardNo() {
     return boardNo;
   }
+
   public void setBoardNo(int boardNo) {
     this.boardNo = boardNo;
   }
-
-
+  // 여기까지
 }

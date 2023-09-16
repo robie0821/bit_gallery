@@ -1,9 +1,9 @@
 package bitcamp.myapp.vo;
 
+import ch.qos.logback.core.status.Status;
+
 import java.io.Serializable;
 import java.sql.Timestamp;
-import java.util.List;
-import java.util.Objects;
 
 public class AuctionArticle implements Serializable {
   private static final long serialVersionUID = 1L;
