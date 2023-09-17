@@ -5,12 +5,12 @@ import bitcamp.myapp.vo.Status;
 
 import java.util.List;
 
-public interface AuctionArticleService {
-    int add(AuctionArticle auctionArticle) throws Exception;
+public interface ArticleService {
+    int add(AuctionArticle article) throws Exception;
     List<AuctionArticle> list(Status status) throws Exception;
     AuctionArticle get(int articleNo) throws Exception;
-    int update(AuctionArticle auctionArticle) throws Exception;
-    int delete(int articleNo) throws Exception;
+//    int update(AuctionArticle article) throws Exception;
+//    int delete(int articleNo) throws Exception;
 
-    int bid(int currentPrice);
+    int bid(int currentPrice, int bidCount);
 }
