@@ -1,6 +1,10 @@
+// 이 파일은 서버 실행을 위해 임시로 만든 것. 지워야 함.
+
 package bitcamp.myapp.controller;
 
 import bitcamp.myapp.service.NcpObjectStorageService;
+import bitcamp.myapp.service.UserService;
+import bitcamp.myapp.vo.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,15 +15,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 
 @Controller
-@RequestMapping("/member")
-public class MemberController {
+@RequestMapping("/user")
+public class UserController {
 
-  {
-    System.out.println("MemberController 생성됨!");
-  }
+//  {
+//    System.out.println("UserController 생성됨!");
+//  }
 
   @Autowired
-  MemberService memberService;
+  UserService userService;
 
   @Autowired
   NcpObjectStorageService ncpObjectStorageService;
@@ -29,20 +33,20 @@ public class MemberController {
   }
 
   @PostMapping("add")
-  public String add(Member member, MultipartFile photofile) throws Exception {
-    System.out.println(member);
+  public String add(User user, MultipartFile photofile) throws Exception {
+    System.out.println(user);
     if (photofile.getSize() > 0) {
       String uploadFileUrl = ncpObjectStorageService.uploadFile(
-              "bitcamp-nc7-bucket-118", "member/", photofile);
-      member.setPhoto(uploadFileUrl);
+              "bitgallery", "user/", photofile);
+      user.setProfilePhoto(uploadFileUrl);
     }
-    memberService.add(member);
+    userService.add(user);
     return "redirect:list";
   }
 
   @GetMapping("delete")
   public String delete(int no) throws Exception {
-    if (memberService.delete(no) == 0) {
+    if (userService.delete(no) == 0) {
       throw new Exception("해당 번호의 회원이 없습니다.");
     } else {
       return "redirect:list";
@@ -51,24 +55,24 @@ public class MemberController {
 
   @GetMapping("{no}")
   public String detail(@PathVariable int no, Model model) throws Exception {
-    model.addAttribute("member", memberService.get(no));
-    return "member/detail";
+    model.addAttribute("user", userService.get(no));
+    return "user/detail";
   }
 
   @GetMapping("list")
   public void list(Model model) throws Exception {
-    model.addAttribute("list", memberService.list());
+    model.addAttribute("list", userService.list());
   }
 
   @PostMapping("update")
-  public String update(Member member, MultipartFile photofile) throws Exception {
+  public String update(User user, MultipartFile photofile) throws Exception {
     if (photofile.getSize() > 0) {
       String uploadFileUrl = ncpObjectStorageService.uploadFile(
-              "bitcamp-nc7-bucket-118", "member/", photofile);
-      member.setPhoto(uploadFileUrl);
+              "bitgallery", "user/", photofile);
+      user.setProfilePhoto(uploadFileUrl);
     }
 
-    if (memberService.update(member) == 0) {
+    if (userService.update(user) == 0) {
       throw new Exception("회원이 없습니다.");
     } else {
       return "redirect:list";
