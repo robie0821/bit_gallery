@@ -116,7 +116,7 @@ public class User implements Serializable {
 
   @Override
   public String toString() {
-    return "ActionMember{" +
+    return "User{" +
             "no=" + no +
             ", authority=" + authority +
             ", email='" + email + '\'' +

@@ -5,6 +5,8 @@ import bitcamp.myapp.vo.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 public class DefaultUserService implements UserService {
   {
@@ -23,10 +25,10 @@ public class DefaultUserService implements UserService {
     return userDao.insert(member);
   }
 
-//  @Override
-//  public List<AuctionMemberDao> list() throws Exception {
-//    return userDao.findAll();
-//  }
+  @Override
+  public List<User> list() throws Exception {
+    return userDao.findAll();
+  }
 
   @Override
   public User get(int memberNo) throws Exception {
