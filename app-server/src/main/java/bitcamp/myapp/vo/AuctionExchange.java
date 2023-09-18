@@ -6,7 +6,7 @@ public class AuctionExchange implements Serializable {
   private static final long serialVersionUID = 1L;
 
   private int no;
-  private AuctionMember user;
+  private User user;
   private String title;
   private String content;
   private int exchangePoint;
@@ -19,11 +19,11 @@ public class AuctionExchange implements Serializable {
     this.no = no;
   }
 
-  public AuctionMember getUser() {
+  public User getUser() {
     return user;
   }
 
-  public void setUser(AuctionMember user) {
+  public void setUser(User user) {
     this.user = user;
   }
 

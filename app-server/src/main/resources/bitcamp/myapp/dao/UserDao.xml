@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="bitcamp.myapp.dao.UserDao">
+
+  <!-- 결과 레코드의 컬럼 값을 자바 객체에 어떻게 담을 것인지 설정한다. -->
+  <resultMap type="member" id="memberMap">
+    <id     column="user_no"    property="no"/>
+    <result column="authority"    property="authority"/>
+    <result column="email"        property="email"/>
+    <result column="password"     property="password"/>
+    <result column="name"         property="name"/>
+    <result column="phone"         property="phone"/>
+    <result column="address"         property="address"/>
+    <result column="detailAddr"         property="detail_addr"/>
+    <result column="joinDate" property="join_date"/>
+    <result column="profilePhoto"        property="profile_photo"/>
+    <result column="point" property="point"/>
+  </resultMap>
+
+  <insert id="insert" parameterType="member">
+    insert into auction_user(authority,email,password,name,phone,zonecode,address,detail_addr)
+    values(#{authority},#{email},sha1(#{password}),#{name},#{phone},#{zonecode},#{address},#{detailAddr})
+  </insert>
+  
+  <select id="findAll" resultMap="memberMap">
+    select
+      user_no,
+      name,
+      email,
+      profile_photo
+    from
+      auction_user
+    order by
+      name asc
+  </select>
+  
+  <select id="findBy" parameterType="int" resultMap="memberMap">
+    select
+      member_no,
+      name,
+      email,
+      gender,
+      created_date,
+      photo
+    from
+      auction_user
+    where
+      member_no=#{no}
+  </select>
+  
+  <select id="findByEmailAndPassword" resultMap="memberMap">
+    select
+      member_no,
+      name,
+      email,
+      gender,
+      created_date,
+      photo
+    from
+      auction_user
+    where
+      email=#{email}
+      and password=sha1(#{password})
+  </select>
+  
+  <update id="update" parameterType="member">
+    update myapp_member set
+      name=#{name}
+      ,email=#{email}
+      ,password=sha1(#{password})
+      ,gender=#{gender} 
+    <if test="photo != null">
+      ,photo=#{photo}
+    </if>
+    where 
+      member_no=#{no}
+  </update>
+  
+  <delete id="delete" parameterType="int">
+    delete from myapp_member
+    where 
+      member_no=#{no}
+  </delete>
+</mapper>
+
+
+
+
+
