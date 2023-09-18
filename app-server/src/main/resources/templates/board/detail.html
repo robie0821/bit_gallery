@@ -25,7 +25,7 @@
     <tr><th>등록일</th> <td data-th-text="${#dates.format(board.createdDate, 'yyyy-MM-dd')}">2023-09-14</td></tr>
     <tr><th>첨부파일</th><td>
         <div data-th-each="file : ${board.attachedFiles}">
-            <a data-th-href="|https://kr.object.ncloudstorage.com/bitcamp-nc7-bucket-118/board/${file.filePath}|"
+            <a data-th-href="|https://kr.object.ncloudstorage.com/bitgallery/board/${file.filePath}|"
                data-th-text="${file.filePath}">okok.gif</a>
             [<a data-th-href="|/board/fileDelete/attachedFile;no=${file.no}|">삭제</a>]<br>
         </div>

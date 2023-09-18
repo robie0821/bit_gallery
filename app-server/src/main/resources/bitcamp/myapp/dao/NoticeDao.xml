@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="bitcamp.myapp.dao.NoticeDao">
+
+  <!-- 결과 레코드의 컬럼 값을 자바 객체에 어떻게 담을 것인지 설정한다. -->
+  <resultMap type="notice" id="noticeMap">
+    <id     column="notice_no"       property="no"/>
+    <result column="title"          property="title"/>
+    <result column="content"        property="content"/>
+    <result column="created_date"   property="createdDate"/>
+
+    <association property="user_no" javaType="member">
+      <id     column="user_no"    property="no"/>
+      <result column="name"         property="name"/>
+    </association>
+    
+    <collection property="noticeAttachedFiles" ofType="noticeAttachedFile">
+      <id     column="file_no"    property="no"/>
+      <result column="filepath"         property="filePath"/>
+    </collection>
+    
+  </resultMap>
+  
+  <resultMap type="noticeAttachedFile" id="noticeAttachedFileMap">
+    <id     column="file_no"  property="no"/>
+    <result column="filepath"       property="filePath"/>
+    <result column="notice_no"       property="noticeNo"/>
+  </resultMap>
+
+  <insert id="insert" parameterType="notice"
+          useGeneratedKeys="true" keyColumn="notice_no" keyProperty="no">
+    insert into auction_notice(title,content,user_no)
+    values(#{title},#{content},#{user_no.no})
+  </insert>
+  
+  <select id="findAll" parameterType="int" resultMap="noticeMap">
+    select
+      n.notice_no,
+      n.title,
+      n.created_date,
+      u.user_no,
+      u.name
+    from
+      auction_notice n inner join auction_user u on n.user_no=m.user_no
+    order by
+      notice_no desc
+  </select>
+  
+  <select id="findBy" resultMap="noticeMap" parameterType="int">
+    select
+      n.notice_no,
+      n.title,
+      n.content,
+      n.created_date,
+      u.user_no,
+      u.name,
+      f.file_no,
+      f.filepath
+    from
+      auction_notice n inner join auction_user u on n.user_no=u.user_no
+      left outer join auction_attached_file f on n.notice_no=f.notice_no
+    where
+      n.notice_no=#{noticeNo}
+  </select>
+  
+  <update id="update" parameterType="notice">
+	  update auction_notice set
+	    title=#{title},
+	    content=#{content}
+	  where 
+	    notice_no=#{no}
+  </update>
+  
+  <delete id="delete" parameterType="int">
+    delete from auction_notice
+    where 
+      notice_no=#{no}
+  </delete>
+  
+  <insert id="insertFiles" parameterType="notice">
+    insert into auction_attached_file(filepath, notice_no)
+    values 
+    <foreach collection="noticeAttachedFiles" item="file" separator=",">(#{file.filePath}, #{no})</foreach>
+  </insert>
+  
+  <select id="findFileBy" parameterType="int" resultMap="noticeAttachedFileMap">
+    select
+      file_no,
+      filepath,
+      notice_no
+    from
+      auction_attached_file
+    where
+      file_no=#{no}
+  </select>
+  
+  <delete id="deleteFile" parameterType="int">
+    delete from auction_attached_file
+    where 
+      file_no=#{no}
+  </delete>
+
+  <delete id="deleteFiles" parameterType="int">
+    delete from auction_attached_file
+    where
+    notice_no=#{no}
+  </delete>
+</mapper>
+
+
+
+
+

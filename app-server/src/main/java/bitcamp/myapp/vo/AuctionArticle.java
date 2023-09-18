@@ -1,9 +1,9 @@
 package bitcamp.myapp.vo;
 
-import ch.qos.logback.core.status.Status;
-
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.List;
+import java.util.Objects;
 
 public class AuctionArticle implements Serializable {
   private static final long serialVersionUID = 1L;
@@ -17,7 +17,7 @@ public class AuctionArticle implements Serializable {
   private String photo;
   private Timestamp startDate;
   private Timestamp endDate;
-  private Status status;
+  private String status;
   private int currentPrice;
   private int endPrice;
   private int bidCount;
@@ -77,7 +77,7 @@ public class AuctionArticle implements Serializable {
     this.endDate = endDate;
   }
 
-  public void setStatus(Status status) {
+  public void setStatus(String status) {
     this.status = status;
   }
 
@@ -125,11 +125,9 @@ public class AuctionArticle implements Serializable {
     return startDate;
   }
 
-  public Timestamp getEndDate() {
-    return endDate;
-  }
+  public Timestamp getEndDate() {return endDate;}
 
-  public Status getStatus() {
+  public String getStatus() {
     return status;
   }
 
