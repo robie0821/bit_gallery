@@ -5,7 +5,7 @@ import java.sql.Timestamp;
 import java.util.List;
 import java.util.Objects;
 
-public class Notice implements Serializable {
+public class Announcement implements Serializable {
   private static final long serialVersionUID = 1L;
 
   private int no;
@@ -14,7 +14,7 @@ public class Notice implements Serializable {
   private Member writer;
   private String password;
   private Timestamp createdDate;
-  private List<NoticeAttachedFile> noticeAttachedFiles;
+  private List<AnnouncementAttachedFile> announcementAttachedFiles;
 
   @Override
   public String toString() {
@@ -25,7 +25,7 @@ public class Notice implements Serializable {
             ", writer=" + writer +
             ", password='" + password + '\'' +
             ", createdDate=" + createdDate +
-            ", noticeAttachedFiles=" + noticeAttachedFiles +
+            ", announcementAttachedFiles=" + announcementAttachedFiles +
             '}';
   }
 
@@ -42,7 +42,7 @@ public class Notice implements Serializable {
       return false;
     if (getClass() != obj.getClass())
       return false;
-    Notice other = (Notice) obj;
+    Announcement other = (Announcement) obj;
     return no == other.no;
   }
 
@@ -94,11 +94,11 @@ public class Notice implements Serializable {
     this.createdDate = createdDate;
   }
 
-  public List<NoticeAttachedFile> getNoticeAttachedFiles() {
-    return noticeAttachedFiles;
+  public List<AnnouncementAttachedFile> getAnnouncementAttachedFiles() {
+    return announcementAttachedFiles;
   }
 
-  public void setNoticeAttachedFiles(List<NoticeAttachedFile> noticeAttachedFiles) {
-    this.noticeAttachedFiles = noticeAttachedFiles;
+  public void setAnnouncementAttachedFiles(List<AnnouncementAttachedFile> announcementAttachedFiles) {
+    this.announcementAttachedFiles = announcementAttachedFiles;
   }
 }

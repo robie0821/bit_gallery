@@ -2,13 +2,13 @@ package bitcamp.myapp.vo;
 
 import java.io.Serializable;
 
-public class NoticeAttachedFile implements Serializable {
+public class AnnouncementAttachedFile implements Serializable {
   private static final long serialVersionUID = 1L;
 
   int no;
   String originName;
   String filePath;
-  int noticeNo;
+  int announcementNo;
 
   @Override
   public String toString() {
@@ -16,7 +16,7 @@ public class NoticeAttachedFile implements Serializable {
             "no=" + no +
             ", originName='" + originName + '\'' +
             ", filePath='" + filePath + '\'' +
-            ", noticeNo=" + noticeNo +
+            ", announcementNo=" + announcementNo +
             '}';
   }
 
@@ -44,11 +44,11 @@ public class NoticeAttachedFile implements Serializable {
     this.filePath = filePath;
   }
 
-  public int getNoticeNo() {
-    return noticeNo;
+  public int getAnnouncementNo() {
+    return announcementNo;
   }
 
-  public void setNoticeNo(int noticeNo) {
-    this.noticeNo = noticeNo;
+  public void setAnnouncementNo(int announcementNo) {
+    this.announcementNo = announcementNo;
   }
 }

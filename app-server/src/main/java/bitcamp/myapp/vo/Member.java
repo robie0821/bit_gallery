@@ -18,6 +18,10 @@ public class Member implements Serializable {
   private Date createdDate;
   private String photo;
 
+  public Member(int no) {
+    this.no = no;
+  }
+
   @Override
   public String toString() {
     return "Member{" +
