@@ -3,22 +3,32 @@ package bitcamp.myapp.vo;
 import java.io.Serializable;
 import java.sql.Date;
 
-public class AuctionMember implements Serializable {
+public class User implements Serializable {
   private static final long serialVersionUID = 1L;
 
 
   private int no;
-  private boolean authority;
+  private Authority authority;
   private String email;
   private String password;
   private String name;
   private String phone;
+  private Integer zonecode; // 카카오 우편번호
+  private String address;
+  private String detailAddr;
+  private Date joinDate;
+  private String profilePhoto;
+  private Integer point;
 
-  public void setNo(int no) {
-    this.no = no;
-  }
+  public void setZonecode(Integer zonecode) {this.zonecode = zonecode;}
 
-  public void setAuthority(boolean authority) {
+  public void setDetailAddr(String detailAddr) {this.detailAddr = detailAddr;}
+
+  public String getDetailAddr() {return detailAddr;}
+
+  public void setNo(int no) {this.no = no;}
+
+  public void setAuthority(Authority authority) {
     this.authority = authority;
   }
 
@@ -50,8 +60,8 @@ public class AuctionMember implements Serializable {
     this.joinDate = joinDate;
   }
 
-  public void setProfile_photo(String profile_photo) {
-    this.profile_photo = profile_photo;
+  public void setProfilePhoto(String profile_photo) {
+    this.profilePhoto = profile_photo;
   }
 
   public void setPoint(Integer point) {
@@ -62,7 +72,7 @@ public class AuctionMember implements Serializable {
     return no;
   }
 
-  public boolean isAuthority() {
+  public Authority getAuthority() {
     return authority;
   }
 
@@ -82,7 +92,7 @@ public class AuctionMember implements Serializable {
     return phone;
   }
 
-  public int getZonecode() {
+  public Integer getZonecode() {
     return zonecode;
   }
 
@@ -94,23 +104,19 @@ public class AuctionMember implements Serializable {
     return joinDate;
   }
 
-  public String getProfile_photo() {
-    return profile_photo;
+  public String getProfilePhoto() {
+    return profilePhoto;
   }
 
   public Integer getPoint() {
     return point;
   }
 
-  private int zonecode; // 카카오 우편번호
-  private String address;
-  private Date joinDate;
-  private String profile_photo;
-  private Integer point;
+
 
   @Override
   public String toString() {
-    return "ActionMember{" +
+    return "User{" +
             "no=" + no +
             ", authority=" + authority +
             ", email='" + email + '\'' +
@@ -120,7 +126,7 @@ public class AuctionMember implements Serializable {
             ", zonecode=" + zonecode +
             ", address='" + address + '\'' +
             ", joinDate=" + joinDate +
-            ", profile_photo='" + profile_photo + '\'' +
+            ", profile_photo='" + profilePhoto + '\'' +
             ", point=" + point +
             '}';
   }

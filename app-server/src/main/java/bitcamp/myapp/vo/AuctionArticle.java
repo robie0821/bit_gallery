@@ -9,7 +9,7 @@ public class AuctionArticle implements Serializable {
   private static final long serialVersionUID = 1L;
 
   private int no;
-  private AuctionMember writer;
+  private User writer;
   private String title;
   private String content;
   private int viewCount;
@@ -45,7 +45,7 @@ public class AuctionArticle implements Serializable {
     this.no = no;
   }
 
-  public void setWriter(AuctionMember writer) {
+  public void setWriter(User writer) {
     this.writer = writer;
   }
 
@@ -97,7 +97,7 @@ public class AuctionArticle implements Serializable {
     return no;
   }
 
-  public AuctionMember getWriter() {
+  public User getWriter() {
     return writer;
   }
 
