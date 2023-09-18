@@ -1,8 +1,6 @@
 package bitcamp.myapp.controller;
 
-import bitcamp.myapp.service.MemberService;
 import bitcamp.myapp.service.NcpObjectStorageService;
-import bitcamp.myapp.vo.Member;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

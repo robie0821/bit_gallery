@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset='UTF-8'>
-<title>게시글</title>
+<title>공지사항</title>
 </head>
 <body>
 
@@ -10,7 +10,7 @@
 
 <h1>게시글 목록</h1>
 <div style='margin:5px;'>
-<a data-th-href="@{/notice/form}">새 글</a>
+<a data-th-href="@{/announcement/form}">새 글</a>
 </div>
 <table border='1'>
 <thead>
@@ -18,14 +18,14 @@
 </thead>
 
 <tbody>
-    <tr data-th-each="notice : ${list}">
-      <td data-th-text="${notice.no}">100</td>
-      <td><a data-th-href="@{'/notice/detail/' + ${board.no}}"
-             data-th-text="${notice.title} ?: '제목없음'">게시글 제목</a>
+    <tr data-th-each="announcement : ${list}">
+      <td data-th-text="${announcement.no}">100</td>
+      <td><a data-th-href="@{'/announcement/detail/' + ${announcement.no}}"
+             data-th-text="${announcement.title} ?: '제목없음'">게시글 제목</a>
       </td>
-      <td data-th-text="${notice.writer.name}">홍길동</td>
-      <td data-th-text="${notice.viewCount}">27</td>
-      <td data-th-text="${#dates.format(notice.createdDate, 'yyyy-MM-dd')}">2021-09-14</td>
+      <td data-th-text="${announcement.writer.name}">홍길동</td>
+      <td data-th-text="${announcement.viewCount}">27</td>
+      <td data-th-text="${#dates.format(announcement.createdDate, 'yyyy-MM-dd')}">2021-09-14</td>
     </tr>
 </tbody>
 </table>

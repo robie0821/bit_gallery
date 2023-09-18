@@ -11,7 +11,7 @@ public class Announcement implements Serializable {
   private int no;
   private String title;
   private String content;
-  private Member writer;
+  private User writer;
   private String password;
   private Timestamp createdDate;
   private List<AnnouncementAttachedFile> announcementAttachedFiles;
@@ -70,11 +70,11 @@ public class Announcement implements Serializable {
     this.content = content;
   }
 
-  public Member getWriter() {
+  public User getWriter() {
     return writer;
   }
 
-  public void setWriter(Member writer) {
+  public void setWriter(User writer) {
     this.writer = writer;
   }
 

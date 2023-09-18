@@ -1,7 +1,6 @@
 package bitcamp.myapp.service;
 
 import bitcamp.myapp.dao.MemberDao;
-import bitcamp.myapp.vo.Member;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

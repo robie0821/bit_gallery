@@ -11,85 +11,85 @@
     <result column="content"        property="content"/>
     <result column="created_date"   property="createdDate"/>
 
-    <association property="writer" javaType="member">
+    <association property="writer" javaType="user">
       <id     column="user_no"    property="no"/>
       <result column="name"         property="name"/>
     </association>
     
-    <collection property="noticeAttachedFiles" ofType="noticeAttachedFile">
+    <collection property="announcementAttachedFiles" ofType="announcementAttachedFile">
       <id     column="file_no"    property="no"/>
       <result column="filepath"         property="filePath"/>
     </collection>
     
   </resultMap>
   
-  <resultMap type="noticeAttachedFile" id="noticeAttachedFileMap">
+  <resultMap type="announcementAttachedFile" id="announcementAttachedFileMap">
     <id     column="file_no"  property="no"/>
     <result column="filepath"       property="filePath"/>
-    <result column="notice_no"       property="noticeNo"/>
+    <result column="announcement_no"       property="announcementNo"/>
   </resultMap>
 
-  <insert id="insert" parameterType="notice"
+  <insert id="insert" parameterType="announcement"
           useGeneratedKeys="true" keyColumn="announcement_no" keyProperty="no">
     insert into auction_announcement(title,content,user_no)
     values(#{title},#{content},#{writer.no})
   </insert>
   
-  <select id="findAll" parameterType="int" resultMap="nosticeMap">
+  <select id="findAll" parameterType="int" resultMap="announcementMap">
     select
-      n.notice_no,
-      n.title,
-      n.created_date,
+      a.announcement_no,
+      a.title,
+      a.created_date,
       u.user_no,
       u.name
     from
-      auction_notice n inner join auction_user u on n.user_no=m.user_no
+      auction_announcement a inner join auction_user u on a.user_no=u.user_no
     order by
-      notice_no desc
+      announcement_no desc
   </select>
   
-  <select id="findBy" resultMap="noticeMap" parameterType="int">
+  <select id="findBy" resultMap="announcementMap" parameterType="int">
     select
-      n.notice_no,
-      n.title,
-      n.content,
-      n.created_date,
+      a.announcement_no,
+      a.title,
+      a.content,
+      a.created_date,
       u.user_no,
       u.name,
       f.file_no,
       f.filepath
     from
-      auction_notice n inner join auction_user u on n.user_no=u.user_no
-      left outer join auction_attached_file f on n.notice_no=f.notice_no
+      auction_announcement a inner join auction_user u on a.user_no=u.user_no
+      left outer join auction_attached_file f on a.announcement_no=f.announcement_no
     where
-      n.notice_no=#{noticeNo}
+      a.announcement_no=#{announcementNo}
   </select>
   
-  <update id="update" parameterType="notice">
-	  update auction_notice set
+  <update id="update" parameterType="announcement">
+	  update auction_announcement set
 	    title=#{title},
 	    content=#{content}
 	  where 
-	    notice_no=#{no}
+	    announcement_no=#{no}
   </update>
   
   <delete id="delete" parameterType="int">
-    delete from auction_notice
+    delete from auction_announcement
     where 
-      notice_no=#{no}
+      announcement_no=#{no}
   </delete>
   
-  <insert id="insertFiles" parameterType="notice">
-    insert into auction_attached_file(filepath, notice_no)
+  <insert id="insertFiles" parameterType="announcement">
+    insert into auction_attached_file(filepath, announcement_no)
     values 
-    <foreach collection="noticeAttachedFiles" item="file" separator=",">(#{file.filePath}, #{no})</foreach>
+    <foreach collection="announcementAttachedFiles" item="file" separator=",">(#{file.filePath}, #{no})</foreach>
   </insert>
   
-  <select id="findFileBy" parameterType="int" resultMap="noticeAttachedFileMap">
+  <select id="findFileBy" parameterType="int" resultMap="announcementAttachedFileMap">
     select
       file_no,
       filepath,
-      notice_no
+      announcement_no
     from
       auction_attached_file
     where
@@ -105,7 +105,7 @@
   <delete id="deleteFiles" parameterType="int">
     delete from auction_attached_file
     where
-    notice_no=#{no}
+    announcement_no=#{no}
   </delete>
 </mapper>
 

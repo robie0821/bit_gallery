@@ -10,23 +10,23 @@
 
 <h1>게시글</h1>
 
-<p data-th-unless="${notice}">해당 번호의 게시글이 없습니다!</p>
+<p data-th-unless="${announcement}">해당 번호의 게시글이 없습니다!</p>
 
-<form data-th-if="${notice}" data-th-action="@{/notice/update}" method='post' enctype='multipart/form-data'>
+<form data-th-if="${announcement}" data-th-action="@{/announcement/update}" method='post' enctype='multipart/form-data'>
     <table border='1'>
     <tr><th style='width:120px;'>번호</th>
-    <td style='width:300px;'><input type='text' name='no' value="100" data-th-value="${notice.no}" readonly></td></tr>
+    <td style='width:300px;'><input type='text' name='no' value="100" data-th-value="${announcement.no}" readonly></td></tr>
     <tr><th>제목</th>
-    <td><input type='text' name='title' value="제목입니다." data-th-value="${notice.title}"></td></tr>
+    <td><input type='text' name='title' value="제목입니다." data-th-value="${announcement.title}"></td></tr>
     <tr><th>내용</th>
-    <td><textarea name='content' style='height:200px; width:400px;' data-th-text="${notice.content}">내용입니다!</textarea></td></tr>
-    <tr><th>작성자</th> <td data-th-text="${notice.writer.name}">홍길동</td></tr>
-    <tr><th>등록일</th> <td data-th-text="${#dates.format(notice.createdDate, 'yyyy-MM-dd')}">2023-09-14</td></tr>
+    <td><textarea name='content' style='height:200px; width:400px;' data-th-text="${announcement.content}">내용입니다!</textarea></td></tr>
+    <tr><th>작성자</th> <td data-th-text="${announcement.writer.name}">홍길동</td></tr>
+    <tr><th>등록일</th> <td data-th-text="${#dates.format(announcement.createdDate, 'yyyy-MM-dd')}">2023-09-14</td></tr>
     <tr><th>첨부파일</th><td>
-        <div data-th-each="file : ${notice.attachedFiles}">
+        <div data-th-each="file : ${announcement.attachedFiles}">
             <a data-th-href="|https://kr.object.ncloudstorage.com/bitgallery/board/${file.filePath}|"
                data-th-text="${file.filePath}">okok.gif</a>
-            [<a data-th-href="|/notice/fileDelete/noticeAttachedFile;no=${file.no}|">삭제</a>]<br>
+            [<a data-th-href="|/announcement/fileDelete/announcementAttachedFile;no=${file.no}|">삭제</a>]<br>
         </div>
         <input type='file' name='files' multiple>
     </td></tr>
@@ -35,8 +35,8 @@
     <div>
     <button>변경</button>
     <button type='reset'>초기화</button>
-    <a data-th-href="@{/notice/delete,no=${notice.no})}">삭제</a>
-    <a data-th-href="@{/notice/list}">목록</a>
+    <a data-th-href="@{/announcement/delete,no=${announcement.no})}">삭제</a>
+    <a data-th-href="@{/announcement/list}">목록</a>
     </div>
 </form>
 

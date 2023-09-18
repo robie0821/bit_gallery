@@ -2,9 +2,9 @@ package bitcamp.myapp.controller;
 
 import bitcamp.myapp.service.NcpObjectStorageService;
 import bitcamp.myapp.service.AnnouncementService;
-import bitcamp.myapp.vo.Member;
 import bitcamp.myapp.vo.Announcement;
 import bitcamp.myapp.vo.AnnouncementAttachedFile;
+import bitcamp.myapp.vo.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,14 +30,12 @@ public class AnnouncementController {
 
   @PostMapping("add")
   public String add(Announcement announcement, MultipartFile[] files, HttpSession session) throws Exception {
-//    Member loginUser = (Member) session.getAttribute("loginUser");
-//    if (loginUser == null) {
-//      return "redirect:/auth/form";
-//    }
+    User loginUser = (User) session.getAttribute("loginUser");
+    if (loginUser == null) {
+      return "redirect:/auth/form";
+    }
 
-//    announcement.setWriter(loginUser);
-
-    announcement.setWriter(new Member(2));
+    announcement.setWriter(loginUser);
 
     ArrayList<AnnouncementAttachedFile> announcementAttachedFiles = new ArrayList<>();
     for (MultipartFile part : files) {
@@ -57,7 +55,7 @@ public class AnnouncementController {
 
   @GetMapping("delete")
   public String delete(int no, HttpSession session) throws Exception {
-    Member loginUser = (Member) session.getAttribute("loginUser");
+    User loginUser = (User) session.getAttribute("loginUser");
     if (loginUser == null) {
       return "redirect:/auth/form";
     }
@@ -88,7 +86,7 @@ public class AnnouncementController {
 
   @PostMapping("update")
   public String update(Announcement announcement, MultipartFile[] files, HttpSession session) throws Exception {
-    Member loginUser = (Member) session.getAttribute("loginUser");
+    User loginUser = (User) session.getAttribute("loginUser");
     if (loginUser == null) {
       return "redirect:/auth/form";
     }
@@ -116,7 +114,7 @@ public class AnnouncementController {
 
   @GetMapping("fileDelete/{announcementAttachedFile}")
   public String fileDelete(@MatrixVariable("no") int no, HttpSession session) throws Exception {
-    Member loginUser = (Member) session.getAttribute("loginUser");
+    User loginUser = (User) session.getAttribute("loginUser");
     if (loginUser == null) {
       return "redirect:/auth/form";
     }
