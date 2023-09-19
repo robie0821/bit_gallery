@@ -14,17 +14,19 @@ public class Announcement implements Serializable {
   private User writer;
   private String password;
   private Timestamp createdDate;
+  private int fixed;
   private List<AnnouncementAttachedFile> announcementAttachedFiles;
 
   @Override
   public String toString() {
-    return "Notice{" +
+    return "Announcement{" +
             "no=" + no +
             ", title='" + title + '\'' +
             ", content='" + content + '\'' +
             ", writer=" + writer +
             ", password='" + password + '\'' +
             ", createdDate=" + createdDate +
+            ", fixed=" + fixed +
             ", announcementAttachedFiles=" + announcementAttachedFiles +
             '}';
   }
@@ -92,6 +94,14 @@ public class Announcement implements Serializable {
 
   public void setCreatedDate(Timestamp createdDate) {
     this.createdDate = createdDate;
+  }
+
+  public int getFixed() {
+    return fixed;
+  }
+
+  public void setFixed(int fixed) {
+    this.fixed = fixed;
   }
 
   public List<AnnouncementAttachedFile> getAnnouncementAttachedFiles() {

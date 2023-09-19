@@ -64,7 +64,14 @@
     where
       a.announcement_no=#{announcementNo}
   </select>
-  
+
+  <!-- 공지사항의 상단 고정 여부를 업데이트하는 SQL 쿼리 추가 -->
+  <update id="setAnnouncementFixed">
+    UPDATE auction_announcement
+    SET fixed = #{fixed}
+    WHERE announcement_no = #{announcementNo}
+  </update>
+
   <update id="update" parameterType="announcement">
 	  update auction_announcement set
 	    title=#{title},

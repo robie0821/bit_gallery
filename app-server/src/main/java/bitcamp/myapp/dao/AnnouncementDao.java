@@ -3,6 +3,7 @@ package bitcamp.myapp.dao;
 import bitcamp.myapp.vo.Announcement;
 import bitcamp.myapp.vo.AnnouncementAttachedFile;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -18,4 +19,6 @@ public interface AnnouncementDao {
   AnnouncementAttachedFile findFileBy(int no);
   int deleteFile(int fileNo);
   int deleteFiles(int announcementNo);
+
+  int setAnnouncementFixed(@Param("announcementNo") int announcementNo, @Param("fixed") int fixed);
 }

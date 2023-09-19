@@ -11,6 +11,7 @@ public interface AnnouncementService {
   Announcement get(int announcementNo) throws Exception;
   int update(Announcement announcement) throws Exception;
   int delete(int announcementNo) throws Exception;
+  void setAnnouncementFixed(int announcementNo, int fixed) throws Exception;
 
   AnnouncementAttachedFile getAnnouncementAttachedFile(int fileNo) throws Exception;
   int deleteAttachedFile(int fileNo) throws Exception;

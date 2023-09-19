@@ -55,6 +55,11 @@ public class DefaultAnnouncementService implements AnnouncementService {
   }
 
   @Override
+  public void setAnnouncementFixed(int announcementNo, int fixed) throws Exception {
+    announcementDao.setAnnouncementFixed(announcementNo, fixed);
+  }
+
+  @Override
   public AnnouncementAttachedFile getAnnouncementAttachedFile(int fileNo) throws Exception {
     return announcementDao.findFileBy(fileNo);
   }
