@@ -7,9 +7,6 @@
 <body>
 <div data-th-fragment="header" style='height:50px;background-color:orange;'>
     <img src='https://www.ncloud.com/public/img/logo-m.png' style='height:40px'>
-    <a href='/article/list?status=0'>예정</a>
-    <a href='/article/list?status=1'>진행</a>
-    <a href='/article/list?status=2'>종료</a>
 
     <a data-th-if="${session.loginUser == null}" href='/auth/form'>로그인</a>
     <div style="display:inline;" data-th-if="${session.loginUser != null}">
