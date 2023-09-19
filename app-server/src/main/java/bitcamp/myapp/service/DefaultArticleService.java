@@ -30,8 +30,13 @@ public class DefaultArticleService implements ArticleService {
 
   @Override
   public List<Article> findAuctionArticlesByDate(String date) throws Exception {
-    return ArticleDao.findAuctionArticlesByDate(date);
+    return null;
   }
+
+//  @Override
+//  public List<Article> findAuctionArticlesByDate(String date) throws Exception {
+//    return ArticleDao.findAuctionArticlesByDate(date);
+//  }
 
   @Override
   public Article get(int articleNo) throws Exception {
