@@ -94,7 +94,7 @@
         article_no=#{articleNo}
     </update>
 
-    <select id="findAuctionArticlesByDate" parameterType="String" resultMap="auctionArticleMap">
+    <select id="findAuctionArticlesByDate" parameterType="String" resultMap="articleMap">
         select
         a.article_no,
         a.title,
@@ -104,7 +104,7 @@
         a.start_date,
         a.end_date,
         a.status,
-        a.current_price,
+        a.cur_price,
         a.end_price,
         a.bid_count,
         u.name

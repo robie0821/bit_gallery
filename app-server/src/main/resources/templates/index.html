@@ -15,35 +15,35 @@
 <h1>MyApp3</h1>
 <p>실습 프로젝트 입니다</p>
 
-<!--여기서부터 달력코드-->
+<!--&lt;!&ndash;여기서부터 달력코드&ndash;&gt;-->
 
-<!--<div style="display: flex;">-->
-<!--    <div id="calendar" style="width: 70%;"></div>-->
-<!--    <div id="eventBox" style="width: 30%; border: 1px solid black; padding: 10px;">-->
-<!--        Click on a date to see events!-->
+<!--&lt;!&ndash;<div style="display: flex;">&ndash;&gt;-->
+<!--&lt;!&ndash;    <div id="calendar" style="width: 70%;"></div>&ndash;&gt;-->
+<!--&lt;!&ndash;    <div id="eventBox" style="width: 30%; border: 1px solid black; padding: 10px;">&ndash;&gt;-->
+<!--&lt;!&ndash;        Click on a date to see events!&ndash;&gt;-->
+<!--&lt;!&ndash;    </div>&ndash;&gt;-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+
+<!--<div style="display: flex; justify-content: center; align-items: center; height: 80vh; gap: 20px;">-->
+<!--    <div id="calendar" style="flex: 1; max-width: 500px; background-color: #FFFFFF; padding: 20px;">-->
+<!--    </div>-->
+
+<!--    <div id="eventBox"-->
+<!--         style="flex: 1; max-width: 500px; background-color: #f5f5f5; border: 1px solid black; padding: 20px;">-->
+<!--        여기에 미술품 경매 날짜 정보 넣기-->
 <!--    </div>-->
 <!--</div>-->
-
-<div style="display: flex; justify-content: center; align-items: center; height: 80vh; gap: 20px;">
-    <div id="calendar" style="flex: 1; max-width: 500px; background-color: #FFFFFF; padding: 20px;">
-    </div>
-
-    <div id="eventBox"
-         style="flex: 1; max-width: 500px; background-color: #f5f5f5; border: 1px solid black; padding: 20px;">
-        여기에 미술품 경매 날짜 정보 넣기
-    </div>
-</div>
-<script data-th-inline="javascript">
-    $(document).ready(function () {
-      $('#calendar').fullCalendar({
-        dayClick: function (date, jsEvent, view) {
-          $.get("/getEvent", { date: date.format() }, function (data) {
-            $("#eventBox").html(data.eventDetail);
-          });
-        }
-      });
-    });
-</script>
+<!--<script data-th-inline="javascript">-->
+<!--    $(document).ready(function () {-->
+<!--      $('#calendar').fullCalendar({-->
+<!--        dayClick: function (date, jsEvent, view) {-->
+<!--          $.get("/getEvent", { date: date.format() }, function (data) {-->
+<!--            $("#eventBox").html(data.eventDetail);-->
+<!--          });-->
+<!--        }-->
+<!--      });-->
+<!--    });-->
+<!--</script>-->
 
 <div data-th-replace="footer :: footer"></div>
 
