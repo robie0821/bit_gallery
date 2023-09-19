@@ -1,6 +1,7 @@
 package bitcamp.myapp.vo;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.sql.Date;
 
 public class Article implements Serializable {
@@ -14,9 +15,9 @@ public class Article implements Serializable {
   private int viewCount;
   private Date createdDate;
   private String photo;
-  private Date startDate;
-  private Date endDate;
-  private int status;
+  private Timestamp startDate;
+  private Timestamp endDate;
+  private Status status;
   private int curPrice;
   private int endPrice;
   private int bidCount;
@@ -24,17 +25,18 @@ public class Article implements Serializable {
   @Override
   public String toString() {
     return "Article{" +
-            "no=" + articleNo +
+            "articleNo=" + articleNo +
             ", writer=" + writer +
             ", title='" + title + '\'' +
             ", content='" + content + '\'' +
+            ", artist='" + artist + '\'' +
             ", viewCount=" + viewCount +
             ", createdDate=" + createdDate +
             ", photo='" + photo + '\'' +
             ", startDate=" + startDate +
             ", endDate=" + endDate +
-            ", status=" + status +
-            ", currentPrice=" + curPrice +
+            ", status='" + status + '\'' +
+            ", curPrice=" + curPrice +
             ", endPrice=" + endPrice +
             ", bidCount=" + bidCount +
             '}';
@@ -104,27 +106,27 @@ public class Article implements Serializable {
     this.photo = photo;
   }
 
-  public Date getStartDate() {
+  public Timestamp getStartDate() {
     return startDate;
   }
 
-  public void setStartDate(Date startDate) {
+  public void setStartDate(Timestamp startDate) {
     this.startDate = startDate;
   }
 
-  public Date getEndDate() {
+  public Timestamp getEndDate() {
     return endDate;
   }
 
-  public void setEndDate(Date endDate) {
+  public void setEndDate(Timestamp endDate) {
     this.endDate = endDate;
   }
 
-  public int getStatus() {
+  public Status getStatus() {
     return status;
   }
 
-  public void setStatus(int status) {
+  public void setStatus(Status status) {
     this.status = status;
   }
 
