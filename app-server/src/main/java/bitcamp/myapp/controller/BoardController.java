@@ -45,7 +45,7 @@ public class BoardController {
     for (MultipartFile part : files) {
       if (part.getSize() > 0) {
         String uploadFileUrl = ncpObjectStorageService.uploadFile(
-                "bitcamp-nc7-bucket-118", "board/", part);
+                "bitgallery", "board/", part);
         AttachedFile attachedFile = new AttachedFile();
         attachedFile.setFilePath(uploadFileUrl);
         attachedFiles.add(attachedFile);
