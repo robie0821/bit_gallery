@@ -1,51 +1,57 @@
 package bitcamp.myapp.service;
 
-import bitcamp.myapp.dao.AuctionArticleDao;
-import bitcamp.myapp.vo.AuctionArticle;
-import bitcamp.myapp.vo.Status;
+import bitcamp.myapp.dao.ArticleDao;
+import bitcamp.myapp.vo.Article;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@Service
 public class DefaultArticleService implements ArticleService {
 
-    AuctionArticleDao auctionArticleDao;
+  ArticleDao articleDao;
 
-    public DefaultArticleService(AuctionArticleDao auctionArticleDao) {
-        this.auctionArticleDao = auctionArticleDao;
-    }
+  public DefaultArticleService(ArticleDao articleDao) {
+    this.articleDao = articleDao;
+  }
 
-    @Transactional
-    @Override
-    public int add(AuctionArticle article) throws Exception {
-        return auctionArticleDao.insert(article);
-    }
+  @Transactional
+  @Override
+  public int add(Article article) throws Exception {
+    return articleDao.insert(article);
+  }
 
-    @Override
-    public List<AuctionArticle> list(Status status) throws Exception {
-        return auctionArticleDao.findAll(status.toString());
-    }
+  @Override
+  public List<Article> list(int status) throws Exception {
+    return articleDao.findAll(status);
+  }
 
-    @Override
-    public AuctionArticle get(int articleNo) throws Exception {
-        return auctionArticleDao.findBy(articleNo);
-    }
+  @Override
+  public Article get(int articleNo) throws Exception {
+    return articleDao.findBy(articleNo);
+  }
 
-    //    @Transactional
-//    @Override
-//    public int update(AuctionArticle article) throws Exception {
-//        return 0;
-//    }
-//
-//    @Transactional
-//    @Override
-//    public int delete(int articleNo) throws Exception {
-//        return 0;
-//    }
+  @Transactional
+  @Override
+  public int update(Article article) throws Exception {
+    return articleDao.update(article);
+  }
 
-    @Transactional
-    @Override
-    public int bid(int currentPrice, int bidCount) {
-        return auctionArticleDao.bid(currentPrice, bidCount);
-    }
+  @Transactional
+  @Override
+  public int delete(int articleNo) throws Exception {
+    return articleDao.delete(articleNo);
+  }
+
+  @Override
+  public int increaseViewCount(int articleNo) throws Exception {
+    return articleDao.updateViewCount(articleNo);
+  }
+
+  @Transactional
+  @Override
+  public int bid(int currentPrice, int bidCount) {
+    return articleDao.bid(currentPrice, bidCount);
+  }
 }
