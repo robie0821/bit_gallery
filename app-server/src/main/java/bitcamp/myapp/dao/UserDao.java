@@ -1,6 +1,5 @@
 package bitcamp.myapp.dao;
 
-import bitcamp.myapp.vo.Member;
 import bitcamp.myapp.vo.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -16,4 +15,9 @@ public interface UserDao {
   int update(User user);
   int updatePoint(User user);
   int delete(int userNo);
+
+  void updatePoints(@Param("userNo") String userNo, @Param("points") int point);
+
+  void chargePoints(@Param("userNo") String userNo, @Param("points") int point);
+
 }
