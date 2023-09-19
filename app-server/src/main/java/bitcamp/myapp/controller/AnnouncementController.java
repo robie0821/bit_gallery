@@ -4,6 +4,7 @@ import bitcamp.myapp.service.NcpObjectStorageService;
 import bitcamp.myapp.service.AnnouncementService;
 import bitcamp.myapp.vo.Announcement;
 import bitcamp.myapp.vo.AnnouncementAttachedFile;
+import bitcamp.myapp.vo.Authority;
 import bitcamp.myapp.vo.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -134,18 +135,20 @@ public class AnnouncementController {
   }
 
   @PostMapping("setFixed/{announcementNo}/{fixed}")
-  public String setAnnouncementFixed(@PathVariable int announcementNo, @PathVariable int fixed, HttpSession session) throws Exception {
+  public String setAnnouncementFixed(@PathVariable int announcementNo, @PathVariable int fixed, HttpSession session, Model model) throws Exception {
     User loginUser = (User) session.getAttribute("loginUser");
     if (loginUser == null) {
+      model.addAttribute("message", "로그인 해주세요");
       return "redirect:/auth/form";
-    }
-
-    // 게시글 작성자와 로그인한 사용자가 동일한 경우에만 상단 고정 여부를 업데이트할 수 있도록 확인
-    Announcement announcement = announcementService.get(announcementNo);
-    if (announcement != null && announcement.getWriter().getNo() == loginUser.getNo()) {
-      announcementService.setAnnouncementFixed(announcementNo, fixed);
+    } else if (loginUser.getAuthority().equals(Authority.ADMIN)) {
+      Announcement announcement = announcementService.get(announcementNo);
+      if (announcement != null) {
+        announcementService.setAnnouncementFixed(announcementNo, fixed);
+      } else {
+        throw new Exception("게시글이 존재하지 않습니다.");
+      }
     } else {
-      throw new Exception("게시글이 존재하지 않거나 변경 권한이 없습니다.");
+      model.addAttribute("message", "변경 권한이 없습니다.");
     }
 
     return "redirect:/announcement/list";
