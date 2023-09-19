@@ -13,6 +13,8 @@ public interface ArticleDao {
 
   List<Article> findAll(Status status);
 
+  List<Article> findAuctionArticlesByDate(String date);
+
   Article findBy(int articleNo);
 
   int update(Article article);

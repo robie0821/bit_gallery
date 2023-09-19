@@ -52,4 +52,14 @@ public class DefaultUserService implements UserService {
   public int delete(int memberNo) throws Exception {
     return userDao.delete(memberNo);
   }
+
+  @Override
+  public void updateUserPoints(String userNo, int points) {
+    userDao.updatePoints(userNo, points);
+  }
+
+  @Override
+  public void chargeUserPoints(String userNo, int points) {
+    userDao.chargePoints(userNo, points);
+  }
 }
