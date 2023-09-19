@@ -30,7 +30,9 @@
       user_no,
       name,
       email,
-      profile_photo
+      phone,
+      address,
+      point
     from
       auction_user
     order by

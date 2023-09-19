@@ -2,6 +2,7 @@ package bitcamp.myapp.service;
 
 import bitcamp.myapp.dao.UserDao;
 import bitcamp.myapp.vo.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -10,7 +11,7 @@ import java.util.List;
 @Service
 public class DefaultUserService implements UserService {
   {
-    System.out.println("DefaultMemberService 생성됨!");
+    System.out.println("DefaultUserService 생성됨!");
   }
 
   UserDao userDao;
