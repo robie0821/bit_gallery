@@ -2,7 +2,7 @@ package bitcamp.myapp.vo;
 
 import java.io.Serializable;
 
-public class AuctionNotice implements Serializable {
+public class AuctionAnnouncement implements Serializable {
   private static final long serialVersionUID = 1L;
 
   private int no;

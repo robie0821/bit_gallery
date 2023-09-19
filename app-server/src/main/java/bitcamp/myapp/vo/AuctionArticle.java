@@ -1,31 +1,30 @@
 package bitcamp.myapp.vo;
 
-import ch.qos.logback.core.status.Status;
-
 import java.io.Serializable;
-import java.sql.Timestamp;
+import java.sql.Date;
 
 public class AuctionArticle implements Serializable {
   private static final long serialVersionUID = 1L;
 
-  private int no;
+  private int articleNo;
   private User writer;
   private String title;
   private String content;
+  private String artist;
   private int viewCount;
-  private Timestamp createdDate;
+  private Date createdDate;
   private String photo;
-  private Timestamp startDate;
-  private Timestamp endDate;
-  private Status status;
-  private int currentPrice;
+  private Date startDate;
+  private Date endDate;
+  private int status;
+  private int curPrice;
   private int endPrice;
   private int bidCount;
 
   @Override
   public String toString() {
     return "AuctionArticle{" +
-            "no=" + no +
+            "no=" + articleNo +
             ", writer=" + writer +
             ", title='" + title + '\'' +
             ", content='" + content + '\'' +
@@ -35,113 +34,121 @@ public class AuctionArticle implements Serializable {
             ", startDate=" + startDate +
             ", endDate=" + endDate +
             ", status=" + status +
-            ", currentPrice=" + currentPrice +
+            ", currentPrice=" + curPrice +
             ", endPrice=" + endPrice +
             ", bidCount=" + bidCount +
             '}';
   }
 
-  public void setNo(int no) {
-    this.no = no;
+  public int getArticleNo() {
+    return articleNo;
   }
 
-  public void setWriter(User writer) {
-    this.writer = writer;
-  }
-
-  public void setTitle(String title) {
-    this.title = title;
-  }
-
-  public void setContent(String content) {
-    this.content = content;
-  }
-
-  public void setViewCount(int viewCount) {
-    this.viewCount = viewCount;
-  }
-
-  public void setCreatedDate(Timestamp createdDate) {
-    this.createdDate = createdDate;
-  }
-
-  public void setPhoto(String photo) {
-    this.photo = photo;
-  }
-
-  public void setStartDate(Timestamp startDate) {
-    this.startDate = startDate;
-  }
-
-  public void setEndDate(Timestamp endDate) {
-    this.endDate = endDate;
-  }
-
-  public void setStatus(Status status) {
-    this.status = status;
-  }
-
-  public void setCurrentPrice(int currentPrice) {
-    this.currentPrice = currentPrice;
-  }
-
-  public void setEndPrice(int endPrice) {
-    this.endPrice = endPrice;
-  }
-
-  public void setBidCount(int bidCount) {
-    this.bidCount = bidCount;
-  }
-
-  public int getNo() {
-    return no;
+  public void setArticleNo(int articleNo) {
+    this.articleNo = articleNo;
   }
 
   public User getWriter() {
     return writer;
   }
 
+  public void setWriter(User writer) {
+    this.writer = writer;
+  }
+
   public String getTitle() {
     return title;
+  }
+
+  public void setTitle(String title) {
+    this.title = title;
   }
 
   public String getContent() {
     return content;
   }
 
+  public void setContent(String content) {
+    this.content = content;
+  }
+
+  public String getArtist() {
+    return artist;
+  }
+
+  public void setArtist(String artist) {
+    this.artist = artist;
+  }
+
   public int getViewCount() {
     return viewCount;
   }
 
-  public Timestamp getCreatedDate() {
+  public void setViewCount(int viewCount) {
+    this.viewCount = viewCount;
+  }
+
+  public Date getCreatedDate() {
     return createdDate;
+  }
+
+  public void setCreatedDate(Date createdDate) {
+    this.createdDate = createdDate;
   }
 
   public String getPhoto() {
     return photo;
   }
 
-  public Timestamp getStartDate() {
+  public void setPhoto(String photo) {
+    this.photo = photo;
+  }
+
+  public Date getStartDate() {
     return startDate;
   }
 
-  public Timestamp getEndDate() {
+  public void setStartDate(Date startDate) {
+    this.startDate = startDate;
+  }
+
+  public Date getEndDate() {
     return endDate;
   }
 
-  public Status getStatus() {
+  public void setEndDate(Date endDate) {
+    this.endDate = endDate;
+  }
+
+  public int getStatus() {
     return status;
   }
 
-  public int getCurrentPrice() {
-    return currentPrice;
+  public void setStatus(int status) {
+    this.status = status;
+  }
+
+  public int getCurPrice() {
+    return curPrice;
+  }
+
+  public void setCurPrice(int curPrice) {
+    this.curPrice = curPrice;
   }
 
   public int getEndPrice() {
     return endPrice;
   }
 
+  public void setEndPrice(int endPrice) {
+    this.endPrice = endPrice;
+  }
+
   public int getBidCount() {
     return bidCount;
+  }
+
+  public void setBidCount(int bidCount) {
+    this.bidCount = bidCount;
   }
 }
