@@ -3,7 +3,7 @@ package bitcamp.myapp.vo;
 import java.io.Serializable;
 import java.sql.Date;
 
-public class AuctionArticle implements Serializable {
+public class Article implements Serializable {
   private static final long serialVersionUID = 1L;
 
   private int articleNo;
@@ -23,7 +23,7 @@ public class AuctionArticle implements Serializable {
 
   @Override
   public String toString() {
-    return "AuctionArticle{" +
+    return "Article{" +
             "no=" + articleNo +
             ", writer=" + writer +
             ", title='" + title + '\'' +

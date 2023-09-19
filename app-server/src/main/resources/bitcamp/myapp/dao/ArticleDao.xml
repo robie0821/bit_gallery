@@ -2,9 +2,9 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="bitcamp.myapp.dao.AuctionArticleDao">
+<mapper namespace="bitcamp.myapp.dao.ArticleDao">
 
-    <resultMap id="auctionArticleMap" type="auctionArticle">
+    <resultMap id="articleMap" type="article">
         <id column="article_no"         property="articleNo"/>
         <result column="title"          property="title"/>
         <result column="content"        property="content"/>
@@ -34,12 +34,12 @@
         </association>
     </resultMap>
 
-    <insert id="insert" parameterType="auctionArticle">
+    <insert id="insert" parameterType="article">
         insert into auction_article(user_no,title,content,photo,cur_price,end_price)
         values(#{writer.no},#{title},#{content},#{photo},#{curPrice},#{endPrice})
     </insert>
 
-    <select id="findAll" parameterType="int" resultMap="auctionArticleMap">
+    <select id="findAll" parameterType="int" resultMap="articleMap">
         select
         A.*, U.*
         from
@@ -50,7 +50,7 @@
         A.article_no
     </select>
 
-    <select id="findBy" parameterType="int" resultMap="auctionArticleMap">
+    <select id="findBy" parameterType="int" resultMap="articleMap">
         select
         A.*, U.*
         from
@@ -61,7 +61,7 @@
         A.article_no
     </select>
 
-    <update id="update" parameterType="auctionArticle">
+    <update id="update" parameterType="article">
         update auction_article set
         title=#{title}
         ,content=#{content}
@@ -85,7 +85,7 @@
         article_no=#{articleNo}
     </delete>
 
-    <update id="bid" parameterType="auctionArticle">
+    <update id="bid" parameterType="article">
         update auction_article set
         cur_price=#{curPrice}
         ,bid_count = bid_count + 1

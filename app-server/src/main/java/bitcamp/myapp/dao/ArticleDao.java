@@ -1,21 +1,20 @@
 package bitcamp.myapp.dao;
 
-import bitcamp.myapp.vo.AuctionArticle;
-import bitcamp.myapp.vo.AuctionArticle;
+import bitcamp.myapp.vo.Article;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
 @Mapper
-public interface AuctionArticleDao {
-  int insert(AuctionArticle article);
+public interface ArticleDao {
+  int insert(Article article);
 
-  List<AuctionArticle> findAll(int status);
+  List<Article> findAll(int status);
 
-  AuctionArticle findBy(int articleNo);
+  Article findBy(int articleNo);
 
-  int update(AuctionArticle article);
+  int update(Article article);
 
   int delete(int articleNo);
 
