@@ -45,7 +45,7 @@
     from
       auction_announcement a inner join auction_user u on a.user_no=u.user_no
     order by
-      announcement_no desc
+      a.created_date desc;
   </select>
   
   <select id="findBy" resultMap="announcementMap" parameterType="int">
