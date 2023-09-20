@@ -19,9 +19,20 @@ public class DefaultExchangeService implements ExchangeService{
     this.exchangeDao = exchangeDao;
   }
 
+  @Transactional // 이 메서드는 트랜잭션 상태에서 실행하라고 지정
+  @Override
+  public int add(Exchange exchange) throws Exception {
+    return exchangeDao.insert(exchange);
+  }
+
   @Override
   public List<Exchange> list() throws Exception {
     return exchangeDao.findAll();
+  }
+
+  @Override
+  public Exchange get(int exchangeNo) throws Exception {
+    return exchangeDao.findBy(exchangeNo);
   }
 
 }

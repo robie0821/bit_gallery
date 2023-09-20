@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>환전 요청 게시판</title>
@@ -103,7 +103,7 @@
     <!-- 환전 요청 버튼 컨테이너 -->
     <div class="request-button-container">
         <!-- 환전 요청 버튼 -->
-        <a href="@{/exchange/form}" class="request-button">환전 요청</a>
+        <a th:href="@{/exchange/form}" class="request-button">환전 요청</a>
     </div>
 </div>
 </body>
