@@ -67,8 +67,9 @@
         title=#{title}
         ,content=#{content}
         ,photo=#{photo}
-        ,cur_price=#{cur_price}
-        ,end_price=#{end_price}
+        ,cur_price=#{curPrice}
+        ,end_price=#{endPrice}
+        ,artist=#{artist}
         where
         article_no=#{articleNo}
     </update>

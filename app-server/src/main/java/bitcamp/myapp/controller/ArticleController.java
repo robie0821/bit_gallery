@@ -30,7 +30,7 @@ public class ArticleController {
   @PostMapping("add")
   public String add(
           Article article,
-          @RequestParam("photofile") MultipartFile photofile, // 파일 업로드 파라미터로 지정
+          MultipartFile photofile, // 파일 업로드 파라미터로 지정
           HttpSession session) throws Exception {
 
     User loginUser = (User) session.getAttribute("loginUser");
@@ -40,7 +40,7 @@ public class ArticleController {
 
     article.setWriter(loginUser);
 
-    if (photofile != null && !photofile.isEmpty()) { // 파일이 업로드되었는지 확인
+    if (photofile.getSize() > 0) {
       String uploadFileUrl = ncpObjectStorageService.uploadFile(
               "bitgallery", "article/", photofile);
       article.setPhoto(uploadFileUrl);
@@ -48,7 +48,6 @@ public class ArticleController {
     articleService.add(article);
     return "redirect:list?status=expected";
   }
-
 
 
 

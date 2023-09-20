@@ -15,12 +15,20 @@
 <form data-th-if="${article}" data-th-action="@{/article/update}" method='post' enctype='multipart/form-data'>
     <table border='1'>
         <tr><th style='width:120px;'>번호</th>
-            <td style='width:300px;'><input type='text' name='no' value="100" data-th-value="${article.articleNo}" readonly></td></tr>
-
+            <td style='width:300px;'><input type='text' name='articleNo' value="100" data-th-value="${article.articleNo}" readonly></td></tr>
+        <th style='width:120px;'>작품</th>
+        <td style='width:300px;'>
+            <!--                <img data-th-unless="${article.photo}" src='/images/avatar.png' style='height:80px'>-->
+            <a data-th-href="${'https://kr.object.ncloudstorage.com/bitgallery/article/' + article.photo}"
+               data-th-if="${article.photo}">
+                <img data-th-src="${'http://tyasnlztlptw19619311.cdn.ntruss.com/article/' + article.photo + '?type=f&w=320&h=240&autorotate=false&faceopt=false&ttype=jpg'}">
+            </a>
+            <input name='photofile' type='file'>
+        </td>
+        </tr>
         <tr><th>제목</th>
             <td><input type='text' name='title' value="제목입니다." data-th-value="${article.title}"></td></tr>
-        <tr><th>내용</th>
-            <td><textarea name='content' style='height:200px; width:400px;' data-th-text="${article.content}">내용입니다!</textarea></td></tr>
+        <tr><th>작가</th> <td data-th-text="${article.artist}">홍길동</td></tr>
         <tr><th>작성자</th> <td data-th-text="${article.writer.name}">홍길동</td></tr>
         <tr><th>조회수</th> <td data-th-text="${article.viewCount}">34</td></tr>
         <tr><th>등록일</th> <td data-th-text="${#dates.format(article.createdDate, 'yyyy-MM-dd')}">2023-09-14</td></tr>
@@ -29,15 +37,7 @@
         <tr><th>현재가격</th> <td data-th-text="${article.curPrice}">34</td></tr>
         <tr><th>즉시구매가</th> <td data-th-text="${article.endPrice}">34</td></tr>
         <tr><th>입찰횟수</th> <td data-th-text="${article.bidCount}">34</td></tr>
-
-        <tr><th>첨부파일</th><td>
-            <div data-th-each="file : ${article.attachedFiles}">
-                <a data-th-href="${'https://kr.object.ncloudstorage.com/bitgallery/article/' + file.filePath}"></a>
-                   data-th-text="${file.filePath}">okok.gif</a>
-                <a data-th-href="|/article/fileDelete/attachedFile;no=${file.no}|">삭제</a><br>
-
         </div>
-        <input type='file' name='files' multiple>
         </td></tr>
     </table>
 
