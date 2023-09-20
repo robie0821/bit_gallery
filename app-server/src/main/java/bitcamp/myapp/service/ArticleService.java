@@ -10,6 +10,8 @@ public interface ArticleService {
 
   List<Article> list(Status status) throws Exception;
 
+  List<Article> search(String artist) throws Exception;
+
   List<Article> findAuctionArticlesByDate(String date) throws Exception;
 
   Article get(int articleNo) throws Exception;
