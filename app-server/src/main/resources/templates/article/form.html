@@ -10,10 +10,13 @@
 
 <h1>게시글</h1>
 <form data-th-action="@{/article/add}" method='post' enctype='multipart/form-data'>
+    <h3>글 설정</h3>
     제목 <input type='text' name='title'><br>
     내용 <textarea name='content'></textarea><br>
-    파일 <input type='file' name='photofile' multiple><br>
-    화가 <input type='text' name='artist'><br> // 임시구현
+    화가 <input type='text' name='artist'><br>
+    사진파일 <input type='file' name='photofile' multiple><br>
+    <br>
+    <h3>경매금액설정</h3>
     시작금액 <input type='text' name='curPrice' multiple><br>
     즉시구매가 <input type='text' name='endPrice' multiple><br>
     <button>등록</button>
