@@ -23,8 +23,8 @@
     <tr><th>작성자</th> <td data-th-text="${announcement.writer.name}">홍길동</td></tr>
     <tr><th>등록일</th> <td data-th-text="${#dates.format(announcement.createdDate, 'yyyy-MM-dd')}">2023-09-14</td></tr>
     <tr><th>첨부파일</th><td>
-        <div data-th-each="file : ${announcement.attachedFiles}">
-            <a data-th-href="|https://kr.object.ncloudstorage.com/bitgallery/board/${file.filePath}|"
+        <div data-th-each="file : ${announcement.announcementAttachedFiles}">
+            <a data-th-href="|https://kr.object.ncloudstorage.com/bitgallery/announcement/${file.filePath}|"
                data-th-text="${file.filePath}">okok.gif</a>
             [<a data-th-href="|/announcement/fileDelete/announcementAttachedFile;no=${file.no}|">삭제</a>]<br>
         </div>
@@ -35,8 +35,8 @@
     <div>
     <button>변경</button>
     <button type='reset'>초기화</button>
-    <a data-th-href="@{/announcement/delete,no=${announcement.no})}">삭제</a>
-    <a data-th-href="@{/announcement/list}">목록</a>
+    <a data-th-href="@{/announcement/delete(no=${announcement.no})}">삭제</a>
+    <a data-th-href="@{/announcement/list(currentPage=${currentPage})}">목록</a>
     </div>
 </form>
 

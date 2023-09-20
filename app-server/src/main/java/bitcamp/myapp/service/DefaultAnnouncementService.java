@@ -3,8 +3,10 @@ package bitcamp.myapp.service;
 import bitcamp.myapp.dao.AnnouncementDao;
 import bitcamp.myapp.vo.Announcement;
 import bitcamp.myapp.vo.AnnouncementAttachedFile;
+import bitcamp.myapp.vo.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
 
 import java.util.List;
 
@@ -28,8 +30,36 @@ public class DefaultAnnouncementService implements AnnouncementService {
   }
 
   @Override
-  public List<Announcement> list() throws Exception {
-    return announcementDao.findAll();
+  public void list(Model model) throws Exception {
+    try {
+      int currentPage = 0;
+      if (model.getAttribute("currentPage") == null) {
+        currentPage = 1;
+      } else {
+        currentPage = (Integer) model.getAttribute("currentPage");
+      }
+      List<Announcement> list = announcementDao.findAll();
+      int size = list.size();
+      int pageSize = 10;
+      int actualSize = size % 10 == 0 ? size / pageSize : size / pageSize + 1;
+      int startPage = (currentPage - 1) * pageSize ;
+      int endPage = Math.min(pageSize, size - startPage);
+      List<Announcement> subList = list.stream().skip(startPage).limit(endPage).toList();
+
+//      model.addAttribute("fixedList", this.fixedList());
+      model.addAttribute("pageSize", actualSize);
+      model.addAttribute("list", subList);
+      model.addAttribute("currentPage", currentPage);
+      model.addAttribute("actualSize", actualSize);
+
+    } catch (Exception e) {
+      throw e;
+    }
+  }
+
+  @Override
+  public List<Announcement> fixedList() throws Exception {
+    return announcementDao.findFixedList();
   }
 
   @Override

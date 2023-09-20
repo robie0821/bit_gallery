@@ -11,6 +11,7 @@ import java.util.List;
 public interface AnnouncementDao {
   int insert(Announcement announcement);
   List<Announcement> findAll();
+  List<Announcement> findFixedList();
   Announcement findBy(int no);
   int update(Announcement announcement);
   int delete(int no);

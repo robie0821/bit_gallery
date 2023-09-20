@@ -39,7 +39,7 @@ public class ArticleController {
 //      return "redirect:/auth/form";
 //    }
 
-    article.setWriter(new User());
+    article.setWriter(new User(1));
 
     if (photofile.getSize() > 0) {
       String uploadFileUrl = ncpObjectStorageService.uploadFile(

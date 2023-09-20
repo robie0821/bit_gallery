@@ -69,30 +69,18 @@ label {
 제목 <input type='text' name='title'><br>
 내용 <textarea name='content'></textarea><br>
 파일 <input type='file' name='files' multiple><br>
-<input type='hidden'>
-<button>등록</button>
+<!--<input type='hidden'>-->
+    <input type='hidden' name='currentPage' data-th-value=${currentPage}>
+    <button>등록</button>
 <label>
-    <input role="switch" type="checkbox" id="switch" onchange="toggleSwitch()"/>
+    <input role="switch" type="checkbox" name='fixed' id="switch" pattern="^[0-9]+$" value=1 />
     <span>상단고정</span>
 </label>
-<input type="hidden" id="switchValue" name="fixed" value="0">
 
 </form>
 
 <div data-th-replace="footer :: footer"></div>
 
-<script>
-    function toggleSwitch() {
-        var switchElement = document.getElementById("switch");
-        var switchValueElement = document.getElementById("switchValue");
-
-        if (switchElement.checked) {
-            switchValueElement.value = "1"; // 스위치가 켜진 경우
-        } else {
-            switchValueElement.value = "0"; // 스위치가 꺼진 경우
-        }
-    }
-</script>
 
 </body>
 </html>

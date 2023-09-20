@@ -20,6 +20,10 @@ public class User implements Serializable {
   private String profilePhoto;
   private Integer point;
 
+  public User(int no) {
+    this.no = no;
+  }
+
   public void setZonecode(Integer zonecode) {this.zonecode = zonecode;}
 
   public void setDetailAddr(String detailAddr) {this.detailAddr = detailAddr;}

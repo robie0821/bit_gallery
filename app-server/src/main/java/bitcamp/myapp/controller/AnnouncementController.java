@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequestMapping("/announcement")
@@ -26,16 +27,23 @@ public class AnnouncementController {
   NcpObjectStorageService ncpObjectStorageService;
 
   @GetMapping("form")
-  public void form() {
+  public void form(@RequestParam("currentPage") int currentPage, Model model) {
+    model.addAttribute("currentPage", currentPage);
+
   }
 
   @PostMapping("add")
-  public String add(Announcement announcement, MultipartFile[] files, HttpSession session) throws Exception {
-    User loginUser = (User) session.getAttribute("loginUser");
-    if (loginUser == null) {
-      return "redirect:/auth/form";
-    }
+  public String add(@RequestParam("currentPage") int currentPage, Announcement announcement,
+                    MultipartFile[] files, HttpSession session, Model model) throws Exception {
+//    User loginUser = (User) session.getAttribute("loginUser");
+//    if (loginUser == null) {
+//      return "redirect:/auth/form";
+//    }
+    System.out.println("add 호출");
+    model.addAttribute("currentPage", currentPage);
+    System.out.println(model.getAttribute("currentPage"));
 
+    User loginUser = new User(1);
     announcement.setWriter(loginUser);
 
     ArrayList<AnnouncementAttachedFile> announcementAttachedFiles = new ArrayList<>();
@@ -51,7 +59,7 @@ public class AnnouncementController {
     announcement.setAnnouncementAttachedFiles(announcementAttachedFiles);
 
     announcementService.add(announcement);
-    return "redirect:/announcement/list";
+    return "redirect:/announcement/list?currentPage=" + currentPage;
   }
 
   @GetMapping("delete")
@@ -71,8 +79,9 @@ public class AnnouncementController {
     }
   }
 
-  @GetMapping("detail/{no}")
-  public String detail(@PathVariable int no, Model model) throws Exception {
+  @GetMapping("detail")
+  public String detail(@RequestParam("currentPage") int currentPage, @RequestParam("no") int no, Model model) throws Exception {
+    model.addAttribute("currentPage", currentPage);
     Announcement announcement = announcementService.get(no);
     if (announcement != null) {
       model.addAttribute("announcement", announcement);
@@ -81,8 +90,9 @@ public class AnnouncementController {
   }
 
   @GetMapping("list")
-  public void list(Model model) throws Exception {
-    model.addAttribute("list");
+  public void list(@RequestParam("currentPage") int currentPage, Model model) throws Exception {
+    model.addAttribute("currentPage", currentPage);
+    announcementService.list(model);
   }
 
   @PostMapping("update")
@@ -134,25 +144,6 @@ public class AnnouncementController {
     }
   }
 
-  @PostMapping("setFixed/{announcementNo}/{fixed}")
-  public String setAnnouncementFixed(@PathVariable int announcementNo, @PathVariable int fixed, HttpSession session, Model model) throws Exception {
-    User loginUser = (User) session.getAttribute("loginUser");
-    if (loginUser == null) {
-      model.addAttribute("message", "로그인 해주세요");
-      return "redirect:/auth/form";
-    } else if (loginUser.getAuthority().equals(Authority.ADMIN)) {
-      Announcement announcement = announcementService.get(announcementNo);
-      if (announcement != null) {
-        announcementService.setAnnouncementFixed(announcementNo, fixed);
-      } else {
-        throw new Exception("게시글이 존재하지 않습니다.");
-      }
-    } else {
-      model.addAttribute("message", "변경 권한이 없습니다.");
-    }
-
-    return "redirect:/announcement/list";
-  }
 }
 
 

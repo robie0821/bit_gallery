@@ -31,8 +31,8 @@
 
   <insert id="insert" parameterType="announcement"
           useGeneratedKeys="true" keyColumn="announcement_no" keyProperty="no">
-    insert into auction_announcement(title,content,user_no)
-    values(#{title},#{content},#{writer.no})
+    insert into auction_announcement(title,content,user_no,fixed)
+    values(#{title},#{content},#{writer.no},#{fixed})
   </insert>
   
   <select id="findAll" parameterType="int" resultMap="announcementMap">
@@ -46,6 +46,21 @@
       auction_announcement a inner join auction_user u on a.user_no=u.user_no
     order by
       a.created_date desc;
+  </select>
+
+  <select id="findFixedList" parameterType="int" resultMap="announcementMap">
+    select
+    a.announcement_no,
+    a.title,
+    a.created_date,
+    a.user_no,
+    u.name
+    from
+    auction_announcement a inner join auction_user u on a.user_no=u.user_no
+    where
+    a.fixed=1
+    order by
+    a.created_date desc;
   </select>
   
   <select id="findBy" resultMap="announcementMap" parameterType="int">
