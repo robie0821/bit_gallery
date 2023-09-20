@@ -1,14 +1,16 @@
 package bitcamp.myapp.vo;
 
 import java.io.Serializable;
+import java.util.Date;
 
-public class AuctionExchange implements Serializable {
+public class Exchange implements Serializable {
   private static final long serialVersionUID = 1L;
 
   private int no;
   private User user;
   private String title;
   private String content;
+  private Date createdDate;
   private int exchangePoint;
 
   public int getNo() {
@@ -49,5 +51,13 @@ public class AuctionExchange implements Serializable {
 
   public void setExchangePoint(int exchangePoint) {
     this.exchangePoint = exchangePoint;
+  }
+
+  public Date getCreatedDate() {
+    return createdDate;
+  }
+
+  public void setCreatedDate(Date createdDate) {
+    this.createdDate = createdDate;
   }
 }

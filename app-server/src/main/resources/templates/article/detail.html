@@ -18,7 +18,6 @@
             <td style='width:300px;'><input type='text' name='articleNo' value="100" data-th-value="${article.articleNo}" readonly></td></tr>
         <th style='width:120px;'>작품</th>
         <td style='width:300px;'>
-            <!--                <img data-th-unless="${article.photo}" src='/images/avatar.png' style='height:80px'>-->
             <a data-th-href="${'https://kr.object.ncloudstorage.com/bitgallery/article/' + article.photo}"
                data-th-if="${article.photo}">
                 <img data-th-src="${'http://tyasnlztlptw19619311.cdn.ntruss.com/article/' + article.photo + '?type=f&w=320&h=240&autorotate=false&faceopt=false&ttype=jpg'}">
@@ -27,15 +26,22 @@
         </td>
         </tr>
         <tr><th>제목</th>
-            <td><input type='text' name='title' value="제목입니다." data-th-value="${article.title}"></td></tr>
-        <tr><th>작가</th> <td data-th-text="${article.artist}">홍길동</td></tr>
-        <tr><th>작성자</th> <td data-th-text="${article.writer.name}">홍길동</td></tr>
+            <td><input type='text' name='title' value="제목" data-th-value="${article.title}"></td></tr>
+        <tr><th>내용</th>
+            <td><textarea data-th-text="${article.content}" name='content' style='height:20px; width:400px;'>내용</textarea></td>
+        </tr>
+        <tr><th>작가</th>
+            <td><input type='text' name='artist' value="작가" data-th-value="${article.artist}"></td></tr>
+        <tr><th>현재가격</th>
+            <td><input type='text' name='curPrice' value="100000" data-th-value="${article.curPrice}"></td></tr>
+        <tr><th>즉시구매가격</th>
+            <td><input type='text' name='endPrice' value="500000" data-th-value="${article.endPrice}"></td></tr>
+
+        <tr><th>작성자</th> <td data-th-text="${article.writer.name}" name="name">홍길동</td></tr>
         <tr><th>조회수</th> <td data-th-text="${article.viewCount}">34</td></tr>
         <tr><th>등록일</th> <td data-th-text="${#dates.format(article.createdDate, 'yyyy-MM-dd')}">2023-09-14</td></tr>
         <tr><th>시작일</th> <td data-th-text="${#dates.format(article.startDate, 'yyyy-MM-dd hh:mm:ss')}">2023-09-14</td></tr>
         <tr><th>종료일</th> <td data-th-text="${#dates.format(article.endDate, 'yyyy-MM-dd hh:mm:ss')}">2023-09-14</td></tr>
-        <tr><th>현재가격</th> <td data-th-text="${article.curPrice}">34</td></tr>
-        <tr><th>즉시구매가</th> <td data-th-text="${article.endPrice}">34</td></tr>
         <tr><th>입찰횟수</th> <td data-th-text="${article.bidCount}">34</td></tr>
         </div>
         </td></tr>

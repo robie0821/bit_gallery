@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Controller
 @RequestMapping("/article")
@@ -52,7 +53,6 @@ public class ArticleController {
   }
 
 
-
   @GetMapping("delete")
   public String delete(Integer articleNo) throws Exception {
     if (articleNo == null) {
@@ -62,9 +62,8 @@ public class ArticleController {
     Article article = articleService.get(articleNo);
     if (article == null) {
       throw new Exception("해당 번호의 게시글이 없습니다");
-    }
 
-    else if (article.getStatus() != Status.expected) {
+    } else if (article.getStatus() != Status.expected) {
 
       throw new Exception("시작되지 않은 경매만 삭제가 가능합니다.");
     } else if (articleService.delete(article.getArticleNo()) == 0) {
@@ -90,8 +89,17 @@ public class ArticleController {
     model.addAttribute("list", articleService.list(status));
   }
 
+  @GetMapping("search/{artist}")
+  public String search(@PathVariable String artist, Model model) throws Exception{
+    List<Article> list = articleService.search(artist);
+    if (!list.isEmpty()) {
+      model.addAttribute("list", list);
+    }
+    return "article/search";
+  }
+
   @PostMapping("update")
-  public String update(Article article, MultipartFile photofile, HttpSession session) throws Exception{
+  public String update(Article article, MultipartFile photofile, HttpSession session) throws Exception {
     User loginUser = (User) session.getAttribute("loginUser");
     if (loginUser == null) {
       return "redirect:/auth/form";
@@ -105,9 +113,13 @@ public class ArticleController {
       throw new Exception("시작되지 않은 경매만 수정 가능합니다.");
     }
 
-    String uploadFileUrl = ncpObjectStorageService.uploadFile(
-            "bitgallery", "article/", photofile);
-    article.setPhoto(uploadFileUrl);
+    if (photofile.getSize() > 0) {
+      String uploadFileUrl = ncpObjectStorageService.uploadFile(
+              "bitgallery", "article/", photofile);
+      article.setPhoto(uploadFileUrl);
+    }
+
+    System.out.println(article.toString());
 
     articleService.update(article);
     return "redirect:/article/list?status=" + a.getStatus();
