@@ -12,32 +12,25 @@
 
 <p data-th-unless="${article}">해당 번호의 게시글이 없습니다!</p>
 
-<form data-th-if="${article}" data-th-action="@{/article/update}" method='post' enctype='multipart/form-data'>
+<form data-th-if="${article}" enctype='multipart/form-data'>
     <table border='1'>
-        <tr><th style='width:120px;'>번호</th>
-            <td style='width:300px;'><input type='text' name='articleNo' value="100" data-th-value="${article.articleNo}" readonly></td></tr>
-        <th style='width:120px;'>작품</th>
+        <tr><th style='width:120px;'>작품</th>
         <td style='width:300px;'>
             <a data-th-href="${'https://kr.object.ncloudstorage.com/bitgallery/article/' + article.photo}"
                data-th-if="${article.photo}">
                 <img data-th-src="${'http://tyasnlztlptw19619311.cdn.ntruss.com/article/' + article.photo + '?type=f&w=320&h=240&autorotate=false&faceopt=false&ttype=jpg'}">
             </a>
-            <input name='photofile' type='file'>
-        </td>
-        </tr>
-        <tr><th>제목</th>
-            <td><input type='text' name='title' value="제목" data-th-value="${article.title}"></td></tr>
-        <tr><th>내용</th>
-            <td><textarea data-th-text="${article.content}" name='content' style='height:20px; width:400px;'>내용</textarea></td>
-        </tr>
-        <tr><th>작가</th>
-            <td><input type='text' name='artist' value="작가" data-th-value="${article.artist}"></td></tr>
-        <tr><th>현재가격</th>
-            <td><input type='text' name='curPrice' value="100000" data-th-value="${article.curPrice}"></td></tr>
-        <tr><th>즉시구매가격</th>
-            <td><input type='text' name='endPrice' value="500000" data-th-value="${article.endPrice}"></td></tr>
+        </td></tr>
 
-        <tr><th>작성자</th> <td data-th-text="${article.writer.name}" name="name">홍길동</td></tr>
+        <tr><th>번호</th> <td data-th-text="${article.articleNo}" >-번호-</td></tr>
+        <tr><th>제목</th> <td data-th-text="${article.title}" >-제목-</td></tr>
+        <tr><th>내용</th> <td data-th-text="${article.content}" >-내용-</td></tr>
+        <tr><th>작가</th> <td data-th-text="${article.artist}">-작가-</td></tr>
+        <tr><th>현재가격</th> <td data-th-text="${article.curPrice}">-현재가격-</td></tr>
+        <tr><th>즉시구매가격</th> <td data-th-text="${article.endPrice}">-즉시구매가격-</td></tr>
+
+
+        <tr><th>작성자</th> <td data-th-text="${article.writer.name}">홍길동</td></tr>
         <tr><th>조회수</th> <td data-th-text="${article.viewCount}">34</td></tr>
         <tr><th>등록일</th> <td data-th-text="${#dates.format(article.createdDate, 'yyyy-MM-dd')}">2023-09-14</td></tr>
         <tr><th>시작일</th> <td data-th-text="${#dates.format(article.startDate, 'yyyy-MM-dd hh:mm:ss')}">2023-09-14</td></tr>
@@ -46,14 +39,9 @@
         </div>
         </td></tr>
     </table>
-
     </div>
-
-
-
     <div>
-        <button>변경</button>
-        <button type='reset'>초기화</button>
+        <a data-th-href="@{'/article/update/' + ${article.articleNo}}">변경</a>
         <a data-th-href="@{/article/delete(articleNo=${article.articleNo})}">삭제</a>
         <a data-th-href="@{/article/list(status=${article.status})}">목록</a>
     </div>
