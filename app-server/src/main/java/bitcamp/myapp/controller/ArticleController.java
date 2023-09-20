@@ -98,8 +98,18 @@ public class ArticleController {
     return "article/search";
   }
 
-  @PostMapping("update")
-  public String update(Article article, MultipartFile photofile, HttpSession session) throws Exception {
+  @GetMapping("update/{articleNo}")
+  public String update(@PathVariable int articleNo, Model model) throws Exception {
+    Article article = articleService.get(articleNo);
+    if (article != null) {
+      articleService.increaseViewCount(articleNo);
+      model.addAttribute("article", article);
+    }
+    return "article/update";
+  }
+
+  @PostMapping("commit")
+  public String commit(Article article, MultipartFile photofile, HttpSession session) throws Exception {
     User loginUser = (User) session.getAttribute("loginUser");
     if (loginUser == null) {
       return "redirect:/auth/form";
