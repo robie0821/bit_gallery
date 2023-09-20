@@ -1,6 +1,7 @@
 package bitcamp.myapp.dao;
 
 import bitcamp.myapp.vo.Article;
+import bitcamp.myapp.vo.Status;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -10,7 +11,9 @@ import java.util.List;
 public interface ArticleDao {
   int insert(Article article);
 
-  List<Article> findAll(int status);
+  List<Article> findAll(Status status);
+
+  List<Article> findAuctionArticlesByDate(String date);
 
   Article findBy(int articleNo);
 

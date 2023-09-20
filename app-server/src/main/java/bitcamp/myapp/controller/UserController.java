@@ -16,10 +16,10 @@ import org.springframework.web.multipart.MultipartFile;
 @Controller
 @RequestMapping("/user")
 public class UserController {
+  {
+    System.out.println("UserController 생성됨!");
+  }
 
-//  {
-//    System.out.println("UserController 생성됨!");
-//  }
 
   @Autowired
   UserService userService;
@@ -49,7 +49,7 @@ public class UserController {
 
   @GetMapping("{no}")
   public String detail(@PathVariable int no, Model model) throws Exception {
-    model.addAttribute("member", userService.get(no));
+    model.addAttribute("user", userService.get(no));
     return "user/detail";
   }
 

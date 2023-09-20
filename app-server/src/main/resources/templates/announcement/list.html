@@ -49,21 +49,47 @@
         <!-- 페이지 번호 추가 -->
         <script>
             // 전체 페이지 수와 현재 페이지를 서버에서 받아와야 합니다.
-            const totalPages = [[${actualSize}]];
-            const currentPage = [[${currentPage}]];
-            console.log(currentPage);
+            const totalPages = parseInt([[${pageSize}]]);
+            const currentPage = parseInt([[${currentPage}]]);
+            const row = parseInt(10);
+            const actualSize = totalPages % row == 0 ? parseInt(totalPages / row) : parseInt(totalPages / row) + 1;
 
+            const startPage = currentPage % row == 0 ? (parseInt(((currentPage-1) / row)) *row) + 1 : (parseInt((currentPage / row)) * row) + 1;
+            const endPage = startPage - 1 + Math.min(row, actualSize - startPage + 1);
             const paginationElement = document.getElementById("pagination");
 
+            console.log("currentPage=  "+ currentPage);
+            console.log("startPage=  " + startPage);
+            console.log("endPage=  " + endPage);
+            console.log("actualSize=  " + actualSize);
+            console.log("totalPages=  " + totalPages);
+
+            if (currentPage === 1) {
+                paginationElement.innerHTML += `
+                    <li class="page-item disabled" style="visibility: hidden;"><a class="page-link" href="/announcement/list?currentPage=1">Previous</a></li>`;
+            } else {
+                 paginationElement.innerHTML += `
+                    <li class="page-item active"><a class="page-link" href="/announcement/list?currentPage=${currentPage - 1}">Previous</a></li>`;
+            }
+
             // 페이지 번호 추가
-            for (let page = 1; page <= totalPages; page++) {
+            for (let page = startPage; page <= endPage; page++) {
                 paginationElement.innerHTML += `
                     <li class="page-item ${page === currentPage ? 'active' : ''}">
                         <a class="page-link" href="/announcement/list?currentPage=${page}">${page}</a>
                     </li>
                 `;
             }
+
+            if (currentPage >= actualSize) {
+                paginationElement.innerHTML += `
+                    <li class="page-item disabled" style="visibility: hidden;"><a class="page-link" href="/announcement/list?currentPage=${actualSize}">Next</a></li>`;
+            } else {
+                 paginationElement.innerHTML += `
+                    <li class="page-item active"><a class="page-link" href="/announcement/list?currentPage=${currentPage + 1}">Next</a></li>`;
+            }
         </script>
+
     </ul>
 </nav>
 

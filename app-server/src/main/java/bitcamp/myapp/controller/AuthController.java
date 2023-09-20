@@ -27,6 +27,7 @@ public class AuthController {
 
   @GetMapping("form")
   public void form(@CookieValue(required = false) String email, Model model) {
+
     model.addAttribute("email", email);
   }
 

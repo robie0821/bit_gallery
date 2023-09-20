@@ -3,6 +3,8 @@ package bitcamp.myapp.vo;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.sql.Date;
+import java.util.List;
+import java.util.Objects;
 
 public class Article implements Serializable {
   private static final long serialVersionUID = 1L;
@@ -17,29 +19,38 @@ public class Article implements Serializable {
   private String photo;
   private Timestamp startDate;
   private Timestamp endDate;
-  private String status;
+
+  private Status status;
+
   private int curPrice;
   private int endPrice;
   private int bidCount;
 
+  private List<AttachedFile> attachedFiles;
+
+
   @Override
   public String toString() {
-    return "Article{" +
-            "articleNo=" + articleNo +
-            ", writer=" + writer +
-            ", title='" + title + '\'' +
-            ", content='" + content + '\'' +
-            ", artist='" + artist + '\'' +
-            ", viewCount=" + viewCount +
-            ", createdDate=" + createdDate +
-            ", photo='" + photo + '\'' +
-            ", startDate=" + startDate +
-            ", endDate=" + endDate +
-            ", status='" + status + '\'' +
-            ", curPrice=" + curPrice +
-            ", endPrice=" + endPrice +
-            ", bidCount=" + bidCount +
-            '}';
+
+    return "Board [no=" + articleNo + ", title=" + title + ", content=" + content + ", writer=" + writer
+            + ", viewCount=" + viewCount + ", createdDate=" + createdDate
+            + ", attachedFiles=" + attachedFiles + "]";
+  }
+  @Override
+  public int hashCode() {
+    return Objects.hash(articleNo);
+  }
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj)
+      return true;
+    if (obj == null)
+      return false;
+    if (getClass() != obj.getClass())
+      return false;
+    Article other = (Article) obj;
+    return articleNo == other.articleNo;
+
   }
 
   public int getArticleNo() {
@@ -122,11 +133,13 @@ public class Article implements Serializable {
     this.endDate = endDate;
   }
 
-  public String getStatus() {
+
+  public Status getStatus() {
     return status;
   }
 
-  public void setStatus(String status) {
+  public void setStatus(Status status) {
+
     this.status = status;
   }
 
@@ -152,5 +165,13 @@ public class Article implements Serializable {
 
   public void setBidCount(int bidCount) {
     this.bidCount = bidCount;
+  }
+
+  public List<AttachedFile> getAttachedFiles() {
+    return attachedFiles;
+  }
+
+  public void setAttachedFiles(List<AttachedFile> attachedFiles) {
+    this.attachedFiles = attachedFiles;
   }
 }

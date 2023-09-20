@@ -35,16 +35,10 @@ public class AnnouncementController {
   @PostMapping("add")
   public String add(@RequestParam("currentPage") int currentPage, Announcement announcement,
                     MultipartFile[] files, HttpSession session, Model model) throws Exception {
-//    User loginUser = (User) session.getAttribute("loginUser");
-//    if (loginUser == null) {
-//      return "redirect:/auth/form";
-//    }
-    System.out.println("add 호출");
-    model.addAttribute("currentPage", currentPage);
-    System.out.println(model.getAttribute("currentPage"));
-
-    User loginUser = new User(1);
-    announcement.setWriter(loginUser);
+    User loginUser = (User) session.getAttribute("loginUser");
+    if (loginUser == null) {
+      return "redirect:/auth/form";
+    }
 
     ArrayList<AnnouncementAttachedFile> announcementAttachedFiles = new ArrayList<>();
     for (MultipartFile part : files) {
@@ -56,6 +50,7 @@ public class AnnouncementController {
         announcementAttachedFiles.add(announcementAttachedFile);
       }
     }
+    announcement.setWriter(loginUser);
     announcement.setAnnouncementAttachedFiles(announcementAttachedFiles);
 
     announcementService.add(announcement);
@@ -63,7 +58,7 @@ public class AnnouncementController {
   }
 
   @GetMapping("delete")
-  public String delete(int no, HttpSession session) throws Exception {
+  public String delete(@RequestParam("currentPage") int currentPage, int no, HttpSession session) throws Exception {
     User loginUser = (User) session.getAttribute("loginUser");
     if (loginUser == null) {
       return "redirect:/auth/form";
@@ -75,13 +70,14 @@ public class AnnouncementController {
       throw new Exception("해당 번호의 게시글이 없거나 삭제 권한이 없습니다.");
     } else {
       announcementService.delete(a.getNo());
-      return "redirect:/announcement/list";
+      return "redirect:/announcement/list?currentPage=" + currentPage;
     }
   }
 
   @GetMapping("detail")
   public String detail(@RequestParam("currentPage") int currentPage, @RequestParam("no") int no, Model model) throws Exception {
     model.addAttribute("currentPage", currentPage);
+    System.out.println(currentPage);
     Announcement announcement = announcementService.get(no);
     if (announcement != null) {
       model.addAttribute("announcement", announcement);
@@ -96,12 +92,13 @@ public class AnnouncementController {
   }
 
   @PostMapping("update")
-  public String update(Announcement announcement, MultipartFile[] files, HttpSession session) throws Exception {
+  public String update(@RequestParam("currentPage") int currentPage, Announcement announcement,
+                       MultipartFile[] files, HttpSession session) throws Exception {
+    System.out.println(currentPage + "업데이트 호출됨");
     User loginUser = (User) session.getAttribute("loginUser");
     if (loginUser == null) {
       return "redirect:/auth/form";
     }
-
     Announcement a = announcementService.get(announcement.getNo());
     if (a == null || a.getWriter().getNo() != loginUser.getNo()) {
       throw new Exception("게시글이 존재하지 않거나 변경 권한이 없습니다.");
@@ -120,27 +117,26 @@ public class AnnouncementController {
     announcement.setAnnouncementAttachedFiles(announcementAttachedFiles);
 
     announcementService.update(announcement);
-    return "redirect:/announcement/list";
+    return "redirect:/announcement/list?currentPage=" + currentPage;
   }
 
-  @GetMapping("fileDelete/{announcementAttachedFile}")
-  public String fileDelete(@MatrixVariable("no") int no, HttpSession session) throws Exception {
+  @GetMapping("fileDelete")
+  public String fileDelete(@RequestParam("currentPage") int currentPage, @RequestParam("no") int no, HttpSession session, Model model) throws Exception {
     User loginUser = (User) session.getAttribute("loginUser");
     if (loginUser == null) {
       return "redirect:/auth/form";
     }
-
     Announcement announcement = null;
     AnnouncementAttachedFile announcementAttachedFile = announcementService.getAnnouncementAttachedFile(no);
     announcement = announcementService.get(announcementAttachedFile.getAnnouncementNo());
+    System.out.println(no + "  no 호출!");
     if (announcement.getWriter().getNo() != loginUser.getNo()) {
       throw new Exception("게시글 변경 권한이 없습니다!");
     }
-
     if (announcementService.deleteAttachedFile(no) == 0) {
       throw new Exception("해당 번호의 첨부파일이 없습니다.");
     } else {
-      return "redirect:/announcement/detail/" + announcement.getNo();
+      return "redirect:/announcement/detail?currentPage=" + currentPage + "&no=" + announcement.getNo();
     }
   }
 

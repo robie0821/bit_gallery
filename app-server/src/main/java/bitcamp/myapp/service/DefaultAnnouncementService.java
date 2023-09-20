@@ -41,16 +41,14 @@ public class DefaultAnnouncementService implements AnnouncementService {
       List<Announcement> list = announcementDao.findAll();
       int size = list.size();
       int pageSize = 10;
-      int actualSize = size % 10 == 0 ? size / pageSize : size / pageSize + 1;
       int startPage = (currentPage - 1) * pageSize ;
       int endPage = Math.min(pageSize, size - startPage);
       List<Announcement> subList = list.stream().skip(startPage).limit(endPage).toList();
 
 //      model.addAttribute("fixedList", this.fixedList());
-      model.addAttribute("pageSize", actualSize);
+      model.addAttribute("pageSize", size);
       model.addAttribute("list", subList);
       model.addAttribute("currentPage", currentPage);
-      model.addAttribute("actualSize", actualSize);
 
     } catch (Exception e) {
       throw e;
