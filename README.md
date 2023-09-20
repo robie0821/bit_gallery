@@ -15,3 +15,14 @@ Article 클래스의 equals 및 hashCode 메서드 수정.
 포인트 충전 기능 추가.
 
 프로젝트 전반적인 코드 리팩터링 및 타임리프 문법 수정 등 오류해결.
+
+2023.09.20 03:45
+
+Refactor: User & Article CRUD 구현
+
+- User 및 Article의 CRUD(Create, Read, Update, Delete) 작업을 개선하고 코드를 정리함.
+
+Refactor: 포인트 충전 및 결제 기능 구현
+
+- 포인트 충전 및 결제 기능을 새로 추가함.
+- 관련 코드를 개선하고 결제 프로세스를 구현함.
