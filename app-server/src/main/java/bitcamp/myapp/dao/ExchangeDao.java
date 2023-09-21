@@ -7,5 +7,7 @@ import java.util.List;
 
 @Mapper
 public interface ExchangeDao {
+  int insert(Exchange exchange);
   List<Exchange> findAll();
+  Exchange findBy(int no);
 }

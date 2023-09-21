@@ -19,6 +19,12 @@
         </association>
     </resultMap>
 
+    <insert id="insert" parameterType="exchange"
+            useGeneratedKeys="true" keyColumn="exchange_no" keyProperty="no">
+        insert into auction_exchange (user_no, title, content, created_date, exchange_point)
+        values (#{user.no}, #{title}, #{content}, #{createdDate}, #{exchangePoint})
+    </insert>
+
     <select id="findAll" resultMap="exchangeMap">
         select
         e.exchange_no,
@@ -32,4 +38,24 @@
         order by
         e.exchange_no desc
     </select>
+
+    <select id="findBy" resultMap="exchangeMap" parameterType="int">
+        select
+        b.board_no,
+        b.title,
+        b.content,
+        b.view_count,
+        b.created_date,
+        b.category,
+        m.member_no,
+        m.name,
+        f.board_file_no,
+        f.filepath
+        from
+        auction_exchange e inner join auction_user u on e.user_no=u.user_no
+        where
+        e.exchange_no=#{boardNo}
+    </select>
+
+
 </mapper>
