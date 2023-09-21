@@ -65,6 +65,9 @@ public class ExchangeController {
 
     Exchange e = exchangeService.get(no);
 
+    System.out.println(e.getUser().getNo());
+    System.out.println(loginUser.getNo());
+
     if (e == null || e.getUser().getNo() != loginUser.getNo()) {
       throw new Exception("해당 번호의 게시글이 없거나 삭제 권한이 없습니다.");
     } else {

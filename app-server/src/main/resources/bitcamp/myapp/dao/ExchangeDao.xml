@@ -46,7 +46,8 @@
         e.content,
         e.created_date,
         e.exchange_point,
-        u.name
+        u.name,
+        e.user_no
         from
         auction_exchange e inner join auction_user u on e.user_no=u.user_no
         where
@@ -66,8 +67,5 @@
         where
         exchange_no=#{no}
     </delete>
-
-
-
 
 </mapper>

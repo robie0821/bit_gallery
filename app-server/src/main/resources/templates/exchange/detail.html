@@ -76,7 +76,11 @@
             <td data-th-text="${exchange.exchangePoint}"></td>
         </tr>
     </table>
+
+    <a data-th-href="@{/exchange/delete(no=${exchange.no})}">삭제</a>
+    <a data-th-href="@{/exchange/list}">목록</a>
 </div>
+
 
 </body>
 </html>
