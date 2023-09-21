@@ -106,8 +106,9 @@
                data-th-href="@{/article/update/(articleNo=${article.articleNo},currentPage=${currentPage})}">변경</a>
             <a data-th-if="${#strings.equals(article.status, 'expected')}"
                data-th-href="@{/article/delete(articleNo=${article.articleNo},currentPage=${currentPage})}">삭제</a>
-            <a data-th-href="@{/article/list(status=${article.status},currentPage=${currentPage})}">목록</a>
-<!--            <a data-th-if="${#strings.equals(model.path, 'search')}" data-th-href="@{/article/list(artist=${article.artist},currentPage=${currentPage})}">목록</a>-->
+
+            <a data-th-if="${article.path} == 0" data-th-href="@{/article/list(status=${article.status},currentPage=${currentPage})}">목록</a>
+            <a data-th-if="${article.path} == 1" data-th-href="@{/article/list(artist=${article.artist},currentPage=${currentPage})}">목록</a>
         </p>
     </div>
 </form>
