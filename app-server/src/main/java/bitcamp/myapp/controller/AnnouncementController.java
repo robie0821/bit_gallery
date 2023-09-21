@@ -33,6 +33,9 @@ public class AnnouncementController {
   @PostMapping("add")
   public String add(@RequestParam("currentPage") int currentPage, Announcement announcement,
                     MultipartFile[] files, HttpSession session, Model model) throws Exception {
+
+    System.out.println("AnnouncementController.add 호출");
+
     User loginUser = (User) session.getAttribute("loginUser");
     if (loginUser == null) {
       return "redirect:/auth/form";
@@ -52,7 +55,7 @@ public class AnnouncementController {
     announcement.setAnnouncementAttachedFiles(announcementAttachedFiles);
 
     if (announcementService.add(announcement) == 0) {
-
+      return "redirect:/announcement/form?currentPage" + currentPage;
     }
 
     return "redirect:/announcement/list?currentPage=" + currentPage;
@@ -126,7 +129,10 @@ public class AnnouncementController {
   }
 
   @GetMapping("fileDelete")
-  public String fileDelete(@RequestParam("currentPage") int currentPage, @RequestParam("no") int no, HttpSession session, Model model) throws Exception {
+  public String fileDelete(@RequestParam("isEdit") boolean isEdit, @RequestParam("currentPage") int currentPage,
+                           @RequestParam("no") int no, HttpSession session, Model model) throws Exception {
+    model.addAttribute("isEdit", isEdit);
+    System.out.println("AnnouncementController.fileDelete.isEdit =  " + isEdit);
     User loginUser = (User) session.getAttribute("loginUser");
     if (loginUser == null) {
       return "redirect:/auth/form";
@@ -141,7 +147,7 @@ public class AnnouncementController {
     if (announcementService.deleteAttachedFile(no) == 0) {
       throw new Exception("해당 번호의 첨부파일이 없습니다.");
     } else {
-      return "redirect:/announcement/detail?currentPage=" + currentPage + "&no=" + announcement.getNo();
+      return "redirect:/announcement/detail?currentPage=" + currentPage + "&no=" + announcement.getNo() + "&isEdit=" + isEdit;
     }
   }
 
