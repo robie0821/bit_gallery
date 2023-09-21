@@ -9,7 +9,7 @@
 <div data-th-replace="header :: header"></div>
 
 <h1>게시글</h1>
-<form data-th-action="@{/article/add}" method='post' enctype='multipart/form-data'>
+<form data-th-action="@{/article/add(currentPage=${currentPage})}" method='post' enctype='multipart/form-data'>
     <h3>글 설정</h3>
     제목 <input type='text' name='title'><br>
     내용 <textarea name='content'></textarea><br>
