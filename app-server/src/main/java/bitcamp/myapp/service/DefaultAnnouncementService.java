@@ -9,6 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class DefaultAnnouncementService implements AnnouncementService {
@@ -22,6 +24,13 @@ public class DefaultAnnouncementService implements AnnouncementService {
   @Transactional // 이 메서드는 트랜잭션 상태에서 실행하라고 지정
   @Override
   public int add(Announcement announcement) throws Exception {
+    List<Announcement> list = this.fixedList();
+    if (!list.isEmpty()) {
+      if (list.size() >= 3 && announcement.getFixed() == 1) {
+        return 0;
+      }
+    }
+//    System.out.println("타니?");
     int count = announcementDao.insert(announcement);
     if (announcement.getAnnouncementAttachedFiles().size() > 0) {
       announcementDao.insertFiles(announcement);
@@ -38,19 +47,26 @@ public class DefaultAnnouncementService implements AnnouncementService {
       } else {
         currentPage = (Integer) model.getAttribute("currentPage");
       }
+      List<Announcement> fixedList = this.fixedList();
+      int fixedListSize = fixedList.size();
+
       List<Announcement> list = announcementDao.findAll();
       int size = list.size();
-      int pageSize = 10;
+      int pageSize = 10 - fixedListSize;
       int startPage = (currentPage - 1) * pageSize ;
       int endPage = Math.min(pageSize, size - startPage);
+      System.out.println("endPage=  " + endPage);
+      System.out.println("fixedList=  " + fixedListSize);
       List<Announcement> subList = list.stream().skip(startPage).limit(endPage).toList();
+      subList = Stream.concat(fixedList.stream(), subList.stream()).collect(Collectors.toList());
 
 //      model.addAttribute("fixedList", this.fixedList());
-      model.addAttribute("pageSize", size);
+      model.addAttribute("pageSize", pageSize);
+      model.addAttribute("size", size);
       model.addAttribute("list", subList);
       model.addAttribute("currentPage", currentPage);
 
-    } catch (Exception e) {
+    } catch (RuntimeException e) {
       throw e;
     }
   }

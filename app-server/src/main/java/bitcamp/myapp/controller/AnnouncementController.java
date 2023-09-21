@@ -2,10 +2,7 @@ package bitcamp.myapp.controller;
 
 import bitcamp.myapp.service.NcpObjectStorageService;
 import bitcamp.myapp.service.AnnouncementService;
-import bitcamp.myapp.vo.Announcement;
-import bitcamp.myapp.vo.AnnouncementAttachedFile;
-import bitcamp.myapp.vo.Authority;
-import bitcamp.myapp.vo.User;
+import bitcamp.myapp.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,6 +22,7 @@ public class AnnouncementController {
 
   @Autowired
   NcpObjectStorageService ncpObjectStorageService;
+
 
   @GetMapping("form")
   public void form(@RequestParam("currentPage") int currentPage, Model model) {
@@ -53,7 +51,10 @@ public class AnnouncementController {
     announcement.setWriter(loginUser);
     announcement.setAnnouncementAttachedFiles(announcementAttachedFiles);
 
-    announcementService.add(announcement);
+    if (announcementService.add(announcement) == 0) {
+
+    }
+
     return "redirect:/announcement/list?currentPage=" + currentPage;
   }
 
@@ -75,9 +76,12 @@ public class AnnouncementController {
   }
 
   @GetMapping("detail")
-  public String detail(@RequestParam("currentPage") int currentPage, @RequestParam("no") int no, Model model) throws Exception {
+  public String detail(@RequestParam("isEdit") boolean isEdit, @RequestParam("currentPage") int currentPage,
+                       @RequestParam("no") int no, Model model) throws Exception {
+    model.addAttribute("isEdit", isEdit);
+    System.out.println("isEdit =  " + isEdit);
     model.addAttribute("currentPage", currentPage);
-    System.out.println(currentPage);
+
     Announcement announcement = announcementService.get(no);
     if (announcement != null) {
       model.addAttribute("announcement", announcement);
@@ -88,6 +92,7 @@ public class AnnouncementController {
   @GetMapping("list")
   public void list(@RequestParam("currentPage") int currentPage, Model model) throws Exception {
     model.addAttribute("currentPage", currentPage);
+    model.addAttribute("test", 1);
     announcementService.list(model);
   }
 
