@@ -23,7 +23,10 @@ public class Article implements Serializable {
   private Status status;
   private int curPrice;
   private int endPrice;
+  private int curBidder;
   private int bidCount;
+
+  private int path;
 
   @Override
   public String toString() {
@@ -175,11 +178,27 @@ public class Article implements Serializable {
     this.endPrice = endPrice;
   }
 
+  public int getCurBidder() {
+    return curBidder;
+  }
+
+  public void setCurBidder(int curBidder) {
+    this.curBidder = curBidder;
+  }
+
   public int getBidCount() {
     return bidCount;
   }
 
   public void setBidCount(int bidCount) {
     this.bidCount = bidCount;
+  }
+
+  public int getPath() {
+    return path;
+  }
+
+  public void setPath(int path) {
+    this.path = path;
   }
 }

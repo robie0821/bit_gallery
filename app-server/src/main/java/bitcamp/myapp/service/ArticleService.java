@@ -11,7 +11,7 @@ public interface ArticleService {
 
   void list(Status status, Model model) throws Exception;
 
-  List<Article> search(String artist) throws Exception;
+  void search(String artist, Model model) throws Exception;
 
   List<Article> findAuctionArticlesByDate(String date) throws Exception;
 
@@ -23,5 +23,7 @@ public interface ArticleService {
 
   int increaseViewCount(int articleNo) throws Exception;
 
-  int bid(int currentPrice, int bidCount);
+  int bid(Article article);
+
+  int buy(Article article);
 }
