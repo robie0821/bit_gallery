@@ -35,4 +35,15 @@ public class DefaultExchangeService implements ExchangeService{
     return exchangeDao.findBy(exchangeNo);
   }
 
+  @Transactional
+  @Override
+  public int update(Exchange exchange) throws Exception {
+    return exchangeDao.update(exchange);
+  }
+
+  @Transactional
+  @Override
+  public int delete(int exchangeNo) throws Exception {
+    return exchangeDao.delete(exchangeNo);
+  }
 }
