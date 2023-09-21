@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import java.util.Date;
@@ -65,9 +66,6 @@ public class ExchangeController {
 
     Exchange e = exchangeService.get(no);
 
-    System.out.println(e.getUser().getNo());
-    System.out.println(loginUser.getNo());
-
     if (e == null || e.getUser().getNo() != loginUser.getNo()) {
       throw new Exception("해당 번호의 게시글이 없거나 삭제 권한이 없습니다.");
     } else {
@@ -77,26 +75,36 @@ public class ExchangeController {
   }
 
   @GetMapping("list")
-  public void list(Model model) throws Exception {
+  public void list(Model model, HttpSession session) throws Exception {
+    User loginUser = (User) session.getAttribute("loginUser");
     model.addAttribute("list", exchangeService.list());
+
+    if (loginUser != null) {
+      model.addAttribute("currentUserId", loginUser.getNo());
+    }
   }
 
   @GetMapping("detail/{no}")
-  public String detail(@PathVariable int no, Model model) throws Exception {
+  public String detail(@PathVariable int no, Model model, HttpSession session, RedirectAttributes redirectAttrs) throws Exception {
     Exchange exchange = exchangeService.get(no);
-    if (exchange != null) {
-      String content = exchange.getContent();
-      String[] parts = content.split(",");
+    User loginUser = (User) session.getAttribute("loginUser");
 
-      // 각각의 부분을 모델에 추가
-      if (parts.length >= 3) {
-        model.addAttribute("name", parts[0]);
-        model.addAttribute("number", parts[1]);
-        model.addAttribute("bank", parts[2]);
-      }
-
-      model.addAttribute("exchange", exchange);
+    if (exchange == null || loginUser == null || exchange.getUser().getNo() != loginUser.getNo()) {
+      redirectAttrs.addFlashAttribute("error", "unauthorized");  // flash attribute를 사용하여 잠깐 동안만 저장된 메시지를 넘깁니다.
+      return "redirect:/exchange/list";  // 목록 페이지로 리다이렉트합니다.
     }
+
+    String content = exchange.getContent();
+    String[] parts = content.split(",");
+
+    // 각각의 부분을 모델에 추가
+    if (parts.length >= 3) {
+      model.addAttribute("name", parts[0]);
+      model.addAttribute("number", parts[1]);
+      model.addAttribute("bank", parts[2]);
+    }
+
+    model.addAttribute("exchange", exchange);
     return "exchange/detail";
   }
 

@@ -62,6 +62,15 @@
     </style>
 </head>
 <body>
+<div th:if="${error == 'unauthorized'}">
+    <script>
+        alert("권한이 없습니다.");
+    </script>
+</div>
+
+<!-- 현재 로그인한 사용자의 ID를 가져옴 -->
+<div th:with="currentUserId=${session.loginUser.no}" style="display:none;"></div>
+
 <!-- 페이지 컨테이너 -->
 <div class="page-container">
     <!-- 게시판 -->
@@ -75,14 +84,17 @@
         </tr>
         </thead>
         <tbody>
-            <tr data-th-each="exchange : ${list}">
-                <td data-th-text="${exchange.no}">100</td>
-                <td>
-                    <a data-th-href="@{/exchange/detail/{exchangeNo}(exchangeNo=${exchange.no})}"
-                       data-th-text="${exchange.title} ?: '제목없음'">홍길동님 환전요청</a> &#x1F512;
-                </td>
-                <td data-th-text="${#dates.format(exchange.createdDate, 'yyyy-MM-dd')}">2021-09-14</td>
-                <td data-th-text="${exchange.user.name}">홍길동</td>
+        <tr th:each="exchange : ${list}">
+            <td th:text="${exchange.no}">100</td>
+            <td>
+                <a th:href="@{/exchange/detail/{exchangeNo}(exchangeNo=${exchange.no})}"
+                   th:text="${exchange.title} ?: '제목없음'">홍길동님 환전요청</a>
+                <!-- 본인의 글이 아닐 경우에만 자물쇠 아이콘을 출력 -->
+                <span th:if="${exchange.user.no != currentUserId}">&#x1F512;</span>
+            </td>
+            <td th:text="${#dates.format(exchange.createdDate, 'yyyy-MM-dd')}">2021-09-14</td>
+            <td th:text="${exchange.user.name}">홍길동</td>
+        </tr>
         </tbody>
     </table>
 
