@@ -6,6 +6,7 @@ import bitcamp.myapp.vo.Article;
 import bitcamp.myapp.vo.Status;
 import bitcamp.myapp.vo.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Required;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +27,9 @@ public class ArticleController {
   NcpObjectStorageService ncpObjectStorageService;
 
   @GetMapping("form")
-  public void form(@RequestParam("currentPage") int currentPage, Model model) {
+  public void form(
+          @RequestParam("currentPage") int currentPage,
+          Model model) {
     model.addAttribute("currentPage", currentPage);
   }
 
@@ -57,7 +60,9 @@ public class ArticleController {
 
 
   @GetMapping("delete")
-  public String delete(@RequestParam("currentPage") int currentPage, Integer articleNo, HttpSession session) throws Exception {
+  public String delete(@RequestParam("currentPage") int currentPage,
+                       Integer articleNo,
+                       HttpSession session) throws Exception {
     User loginUser = (User) session.getAttribute("loginUser");
     if (loginUser == null) {
       return "redirect:/auth/form";
@@ -78,7 +83,9 @@ public class ArticleController {
 
 
   @GetMapping("detail")
-  public String detail(@RequestParam("currentPage") int currentPage, @RequestParam("articleNo") int articleNo, Model model) throws Exception {
+  public String detail(@RequestParam("currentPage") int currentPage,
+                       @RequestParam("articleNo") int articleNo,
+                       Model model) throws Exception {
     model.addAttribute("currentPage", currentPage);
     Article article = articleService.get(articleNo);
 
@@ -98,22 +105,24 @@ public class ArticleController {
   }
 
   @GetMapping("list")
-  public void list(@RequestParam("currentPage") int currentPage, Status status, Model model) throws Exception {
+  public void list(
+          @RequestParam("currentPage") int currentPage,
+          @RequestParam(value = "status", required = false) Status status,
+          @RequestParam(value = "artist", required = false) String artist,
+          Model model) throws Exception {
     model.addAttribute("currentPage", currentPage);
-    articleService.list(status, model);
-  }
 
-  @GetMapping("search")
-  public String search(@PathVariable String artist, Model model) throws Exception {
-    List<Article> list = articleService.search(artist);
-    if (!list.isEmpty()) {
-      model.addAttribute("list", list);
+    if (status != null) {
+      articleService.list(status, model);
+    } else if (artist != null) {
+      articleService.search(artist, model);
     }
-    return "article/search";
   }
 
   @GetMapping("update")
-  public String update(@RequestParam("currentPage") int currentPage, @RequestParam("articleNo") int articleNo, Model model) throws Exception {
+  public String update(@RequestParam("currentPage") int currentPage,
+                       @RequestParam("articleNo") int articleNo,
+                       Model model) throws Exception {
     model.addAttribute("currentPage", currentPage);
     Article article = articleService.get(articleNo);
     if (article != null) {
@@ -123,7 +132,10 @@ public class ArticleController {
   }
 
   @PostMapping("commit")
-  public String commit(@RequestParam("currentPage") int currentPage, Article article, MultipartFile photofile, HttpSession session) throws Exception {
+  public String commit(@RequestParam("currentPage") int currentPage,
+                       Article article,
+                       MultipartFile photofile,
+                       HttpSession session) throws Exception {
     User loginUser = (User) session.getAttribute("loginUser");
     if (loginUser == null) {
       return "redirect:/auth/form";
@@ -147,8 +159,15 @@ public class ArticleController {
     return "redirect:/article/list?status=" + a.getStatus() + "&currentPage=" + currentPage;
   }
 
+  @GetMapping("tender")
+
   @PostMapping("bid")
   public String bid() throws Exception {
+    return "";
+  }
+
+  @PostMapping("buy")
+  public String buy() throws Exception {
     return "";
   }
 }
