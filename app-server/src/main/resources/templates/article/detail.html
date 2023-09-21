@@ -35,15 +35,28 @@
         <tr><th>등록일</th> <td data-th-text="${#dates.format(article.createdDate, 'yyyy-MM-dd')}">2023-09-14</td></tr>
         <tr><th>시작일</th> <td data-th-text="${#dates.format(article.startDate, 'yyyy-MM-dd hh:mm:ss')}">2023-09-14</td></tr>
         <tr><th>종료일</th> <td data-th-text="${#dates.format(article.endDate, 'yyyy-MM-dd hh:mm:ss')}">2023-09-14</td></tr>
+
+        <tr><th>남은시간</th> <td><span id=RemainPeriod></span></td></tr>
+
         <tr><th>입찰횟수</th> <td data-th-text="${article.bidCount}">34</td></tr>
         </div>
         </td></tr>
     </table>
     </div>
+
     <div>
-        <a data-th-href="@{'/article/update/' + ${article.articleNo}}">변경</a>
-        <a data-th-href="@{/article/delete(articleNo=${article.articleNo})}">삭제</a>
-        <a data-th-href="@{/article/list(status=${article.status})}">목록</a>
+        <p>
+        <a data-th-if="${#strings.equals(article.status, 'progress')}" data-th-href="@{'/'}">입찰</a>
+        <a data-th-if="${#strings.equals(article.status, 'progress')}" data-th-href="@{'/'}">구매</a>
+        </p>
+    </div>
+
+    <div>
+        <p>
+        <a data-th-if="${#strings.equals(article.status, 'expected')}" data-th-href="@{/article/update/(articleNo=${article.articleNo},currentPage=${currentPage})}">변경</a>
+        <a data-th-if="${#strings.equals(article.status, 'expected')}" data-th-href="@{/article/delete(articleNo=${article.articleNo},currentPage=${currentPage})}">삭제</a>
+        <a data-th-href="@{/article/list(status=${article.status},currentPage=${currentPage})}">목록</a>
+        </p>
     </div>
 
 </form>
@@ -52,3 +65,36 @@
 
 </body>
 </html>
+
+<SCRIPT LANGUAGE="JavaScript">
+    <!--
+    var tid=0;
+    var period = parseInt([[${article.remainTime}]]);
+
+    function auctionClock()
+    {
+        period -= 1;
+        if(period<0)
+        {
+            if(tid) clearTimeout(tid);
+            window.setTimeout("location.reload();",1000);
+            return;
+        }
+
+        strTime = '';
+        var day=parseInt(period/(24*60*60));
+        var hour=parseInt((period/60/60)%24);
+        var minute=parseInt((period/60)%60);
+        var second=parseInt(period%60);
+
+        if(day>0) strTime = day + '일 '
+        strTime = strTime + hour + '시간 ' + minute + '분 ' + second + '초';
+
+        var p = document.getElementById("RemainPeriod");
+        if(p) p.innerHTML = strTime ;
+        if(tid) clearTimeout(tid);
+        tid=window.setTimeout("auctionClock()",1000);
+    }
+        if(period>0) auctionClock();
+    //-->
+</SCRIPT>

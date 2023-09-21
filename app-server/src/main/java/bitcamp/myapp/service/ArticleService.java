@@ -2,13 +2,14 @@ package bitcamp.myapp.service;
 
 import bitcamp.myapp.vo.Article;
 import bitcamp.myapp.vo.Status;
+import org.springframework.ui.Model;
 
 import java.util.List;
 
 public interface ArticleService {
   int add(Article article) throws Exception;
 
-  List<Article> list(Status status) throws Exception;
+  void list(Status status, Model model) throws Exception;
 
   List<Article> search(String artist) throws Exception;
 

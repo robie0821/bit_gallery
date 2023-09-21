@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
+import java.sql.Timestamp;
 import java.util.List;
 
 @Controller
@@ -25,11 +26,13 @@ public class ArticleController {
   NcpObjectStorageService ncpObjectStorageService;
 
   @GetMapping("form")
-  public void form() {
+  public void form(@RequestParam("currentPage") int currentPage, Model model) {
+    model.addAttribute("currentPage", currentPage);
   }
 
   @PostMapping("add")
   public String add(
+          @RequestParam("currentPage") int currentPage,
           Article article,
           MultipartFile photofile, // 파일 업로드 파라미터로 지정
           HttpSession session) throws Exception {
@@ -49,48 +52,59 @@ public class ArticleController {
       article.setPhoto(uploadFileUrl);
     }
     articleService.add(article);
-    return "redirect:list?status=expected";
+    return "redirect:list?status=expected&currentPage=" + currentPage;
   }
 
 
   @GetMapping("delete")
-  public String delete(Integer articleNo) throws Exception {
-    if (articleNo == null) {
-      throw new IllegalArgumentException("articleNo는 필수 매개변수입니다.");
+  public String delete(@RequestParam("currentPage") int currentPage, Integer articleNo, HttpSession session) throws Exception {
+    User loginUser = (User) session.getAttribute("loginUser");
+    if (loginUser == null) {
+      return "redirect:/auth/form";
     }
 
     Article article = articleService.get(articleNo);
-    if (article == null) {
-      throw new Exception("해당 번호의 게시글이 없습니다");
 
+    if (article == null || article.getArticleNo() != loginUser.getNo()) {
+      throw new Exception("해당 번호의 게시글이 없거나 삭제 권한이 없습니다.");
     } else if (article.getStatus() != Status.expected) {
-
       throw new Exception("시작되지 않은 경매만 삭제가 가능합니다.");
     } else if (articleService.delete(article.getArticleNo()) == 0) {
       throw new Exception("삭제 오류");
     } else {
-      return "redirect:list?status=expected";
+      return "redirect:list?status=expected&currentPage=" + currentPage;
     }
   }
 
 
-  @GetMapping("detail/{articleNo}")
-  public String detail(@PathVariable int articleNo, Model model) throws Exception {
+  @GetMapping("detail")
+  public String detail(@RequestParam("currentPage") int currentPage, @RequestParam("articleNo") int articleNo, Model model) throws Exception {
+    model.addAttribute("currentPage", currentPage);
     Article article = articleService.get(articleNo);
+
     if (article != null) {
       articleService.increaseViewCount(articleNo);
+
+      if (article.getStatus() == Status.expected) {
+        article.setRemainTime((article.getStartDate().getTime() - new Timestamp(System.currentTimeMillis()).getTime()) / 1000);
+      } else if (article.getStatus() == Status.progress) {
+        article.setRemainTime((article.getEndDate().getTime() - new Timestamp(System.currentTimeMillis()).getTime()) / 1000);
+      } else {
+        article.setRemainTime(200);
+      }
       model.addAttribute("article", article);
     }
     return "article/detail";
   }
 
   @GetMapping("list")
-  public void list(Status status, Model model) throws Exception {
-    model.addAttribute("list", articleService.list(status));
+  public void list(@RequestParam("currentPage") int currentPage, Status status, Model model) throws Exception {
+    model.addAttribute("currentPage", currentPage);
+    articleService.list(status, model);
   }
 
-  @GetMapping("search/{artist}")
-  public String search(@PathVariable String artist, Model model) throws Exception{
+  @GetMapping("search")
+  public String search(@PathVariable String artist, Model model) throws Exception {
     List<Article> list = articleService.search(artist);
     if (!list.isEmpty()) {
       model.addAttribute("list", list);
@@ -98,18 +112,18 @@ public class ArticleController {
     return "article/search";
   }
 
-  @GetMapping("update/{articleNo}")
-  public String update(@PathVariable int articleNo, Model model) throws Exception {
+  @GetMapping("update")
+  public String update(@RequestParam("currentPage") int currentPage, @RequestParam("articleNo") int articleNo, Model model) throws Exception {
+    model.addAttribute("currentPage", currentPage);
     Article article = articleService.get(articleNo);
     if (article != null) {
-      articleService.increaseViewCount(articleNo);
       model.addAttribute("article", article);
     }
     return "article/update";
   }
 
   @PostMapping("commit")
-  public String commit(Article article, MultipartFile photofile, HttpSession session) throws Exception {
+  public String commit(@RequestParam("currentPage") int currentPage, Article article, MultipartFile photofile, HttpSession session) throws Exception {
     User loginUser = (User) session.getAttribute("loginUser");
     if (loginUser == null) {
       return "redirect:/auth/form";
@@ -129,10 +143,8 @@ public class ArticleController {
       article.setPhoto(uploadFileUrl);
     }
 
-    System.out.println(article.toString());
-
     articleService.update(article);
-    return "redirect:/article/list?status=" + a.getStatus();
+    return "redirect:/article/list?status=" + a.getStatus() + "&currentPage=" + currentPage;
   }
 
   @PostMapping("bid")

@@ -12,7 +12,7 @@
 
 <p data-th-unless="${article}">해당 번호의 게시글이 없습니다!</p>
 
-<form data-th-if="${article}" data-th-action="@{/article/commit}" method='post'
+<form data-th-if="${article}" data-th-action="@{/article/commit/(currentPage=${currentPage})}" method='post'
       enctype='multipart/form-data'>
     <table border='1'>
         <tr>
@@ -60,7 +60,7 @@
     <div>
         <button>변경</button>
         <button type='reset'>초기화</button>
-        <a data-th-href="@{/article/list(status=${article.status})}">목록</a>
+        <a data-th-href="@{/article/list(status=${article.status},currentPage=${currentPage})}">목록</a>
     </div>
 
 </form>
