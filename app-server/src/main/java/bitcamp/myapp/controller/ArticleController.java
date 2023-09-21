@@ -85,11 +85,13 @@ public class ArticleController {
   @GetMapping("detail")
   public String detail(@RequestParam("currentPage") int currentPage,
                        @RequestParam("articleNo") int articleNo,
+                       @RequestParam("path") int path,
                        Model model) throws Exception {
     model.addAttribute("currentPage", currentPage);
     Article article = articleService.get(articleNo);
 
     if (article != null) {
+      article.setPath(path);
       articleService.increaseViewCount(articleNo);
 
       if (article.getStatus() == Status.expected) {

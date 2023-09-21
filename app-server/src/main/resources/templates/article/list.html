@@ -43,7 +43,7 @@
                  data-th-src="|http://tyasnlztlptw19619311.cdn.ntruss.com/article/${article.photo}?type=f&w=160&h=120&autorotate=false&faceopt=false&ttype=jpg|">
         </td>
         <td>
-            <a data-th-href="@{/article/detail(articleNo=${article.articleNo},(currentPage=${currentPage}))}"
+            <a data-th-href="@{/article/detail(articleNo=${article.articleNo},(path=${path}),(currentPage=${currentPage}))}"
                data-th-text="${article.title} ?: '제목없음'">게시글 제목</a>
         </td>
         <td data-th-text="${article.curPrice}">27</td>
