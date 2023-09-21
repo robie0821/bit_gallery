@@ -31,7 +31,14 @@ public class ExchangeController {
   NcpObjectStorageService ncpObjectStorageService;
 
   @GetMapping("form")
-  public void form() {
+  public void form(HttpSession session, Model model) {
+    User loginUser = (User) session.getAttribute("loginUser");
+    if (loginUser == null) {
+      // 만약 loginUser가 null이면 로그인 페이지나 다른 페이지로 리다이렉트
+      // return "redirect:/auth/form";
+    } else {
+      model.addAttribute("loginUser", loginUser);
+    }
   }
 
   @PostMapping("add")

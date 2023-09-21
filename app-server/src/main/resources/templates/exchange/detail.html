@@ -17,7 +17,7 @@
         .container {
             max-width: 400px;
             margin: 50px auto;
-            padding: 20px;
+            padding: 0 40px 40px; /* 위 0, 좌우 30px, 아래 30px */
             background-color: #fff;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             border-radius: 5px;
@@ -53,8 +53,8 @@
 
     <!-- 작성자 및 생성일 -->
     <div>
-        <strong>작성자: </strong><span data-th-text="${exchange.user.name}">기본 작성자 이름</span>
-        <strong>생성일: </strong><span data-th-text="${exchange.createdDate}">기본 생성일</span>
+        <strong>작성자: </strong><span data-th-text="${exchange.user.name}">ggg</span>
+        <strong>생성일: </strong><span data-th-text="${#dates.format(exchange.createdDate, 'yy-MM-dd HH:mm')}">23-09-14 15:34</span>
     </div>
 
     <!-- 표 부분 -->
