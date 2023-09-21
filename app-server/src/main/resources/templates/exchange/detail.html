@@ -47,7 +47,7 @@
 </head>
 <body>
 
-<div class="container">
+<div class="container" >
     <!-- 제목 -->
     <h2 data-th-text="${exchange.title}">게시판 상세페이지 제목</h2>
 
@@ -76,7 +76,11 @@
             <td data-th-text="${exchange.exchangePoint}"></td>
         </tr>
     </table>
+
+    <a data-th-href="@{/exchange/delete(no=${exchange.no})}">삭제</a>
+    <a data-th-href="@{/exchange/list}">목록</a>
 </div>
+
 
 </body>
 </html>
