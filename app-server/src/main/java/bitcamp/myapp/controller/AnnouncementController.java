@@ -4,6 +4,7 @@ import bitcamp.myapp.service.NcpObjectStorageService;
 import bitcamp.myapp.service.AnnouncementService;
 import bitcamp.myapp.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/announcement")
@@ -30,15 +32,19 @@ public class AnnouncementController {
 
   }
 
+
+  @ResponseBody
   @PostMapping("add")
-  public String add(@RequestParam("currentPage") int currentPage, Announcement announcement,
-                    MultipartFile[] files, HttpSession session, Model model) throws Exception {
-
-    System.out.println("AnnouncementController.add 호출");
-
+  public boolean addAnnouncement(
+          Announcement requestData,
+          MultipartFile[] files,
+          HttpSession session,
+          Model model
+  ) throws Exception {
+    System.out.println("announcementController.add 호출");
     User loginUser = (User) session.getAttribute("loginUser");
     if (loginUser == null) {
-      return "redirect:/auth/form";
+      throw new RuntimeException("로그인이 되어있지 않아 작업이 불가능합니다.");
     }
 
     ArrayList<AnnouncementAttachedFile> announcementAttachedFiles = new ArrayList<>();
@@ -51,15 +57,47 @@ public class AnnouncementController {
         announcementAttachedFiles.add(announcementAttachedFile);
       }
     }
-    announcement.setWriter(loginUser);
-    announcement.setAnnouncementAttachedFiles(announcementAttachedFiles);
+    requestData.setWriter(loginUser);
+    requestData.setAnnouncementAttachedFiles(announcementAttachedFiles);
 
-    if (announcementService.add(announcement) == 0) {
-      return "redirect:/announcement/form?currentPage" + currentPage;
+    if (announcementService.add(requestData) == 0) {
+      return false;
     }
-
-    return "redirect:/announcement/list?currentPage=" + currentPage;
+    return true;
   }
+
+
+//  @PostMapping("add")
+//  public String add(@RequestParam("currentPage") int currentPage, Announcement announcement,
+//                    MultipartFile[] files, HttpSession session, Model model) throws Exception {
+//
+//    System.out.println("AnnouncementController.add 호출");
+//    System.out.println("AnnouncementController.add / currentPage=  " + currentPage);
+//
+//    User loginUser = (User) session.getAttribute("loginUser");
+//    if (loginUser == null) {
+//      return "redirect:/auth/form";
+//    }
+//
+//    ArrayList<AnnouncementAttachedFile> announcementAttachedFiles = new ArrayList<>();
+//    for (MultipartFile part : files) {
+//      if (part.getSize() > 0) {
+//        String uploadFileUrl = ncpObjectStorageService.uploadFile(
+//                "bitgallery", "announcement/", part);
+//        AnnouncementAttachedFile announcementAttachedFile = new AnnouncementAttachedFile();
+//        announcementAttachedFile.setFilePath(uploadFileUrl);
+//        announcementAttachedFiles.add(announcementAttachedFile);
+//      }
+//    }
+//    announcement.setWriter(loginUser);
+//    announcement.setAnnouncementAttachedFiles(announcementAttachedFiles);
+//
+//    if (announcementService.add(announcement) == 0) {
+//      return "redirect:/announcement/form?currentPage=" + currentPage;
+//    }
+//
+//    return "redirect:/announcement/list?currentPage=" + 1;
+//  }
 
   @GetMapping("delete")
   public String delete(@RequestParam("currentPage") int currentPage, int no, HttpSession session) throws Exception {
