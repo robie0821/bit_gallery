@@ -38,6 +38,34 @@
 <!-- 세션에서 사용자 포인트를 HTML에 포함 -->
 <span id="userPoints" data-th-text="'보유포인트 : ' + ${session.loginUser.point}+원"></span>
 
+<!-- 환전 요청 버튼 컨테이너 -->
+<div class="request-button-container">
+    <a href="/exchange/form" class="request-button">환전 요청</a>
+</div>
+
+<!-- "환전 내역" 버튼 -->
+<button id="fetchData">환전 내역</button>
+
+<!-- 게시판 -->
+<div class="page-container">
+    <table id="exchangeTable" style="display: none;"> <!-- id와 스타일 추가 -->
+        <thead>
+        <tr>
+            <th>번호</th>
+            <th>예금주</th>
+            <th>은행</th>
+            <th>계좌번호</th>
+            <th>환전 금액</th> <!-- 환전 금액 칼럼 추가 -->
+            <th>작성일</th>
+        </tr>
+        </thead>
+        <tbody id="exchangeList">
+        <!-- JavaScript에서 이 부분에 동적으로 데이터를 채워넣게 됩니다. -->
+        </tbody>
+    </table>
+</div>
+
+<script src="/js/exchangeAPI.js"></script>
 
 <!-- 포인트 충전 및 입찰 스크립트 -->
 <script>
