@@ -128,15 +128,26 @@ public class AnnouncementController {
     announcementService.list(model);
   }
 
+  @ResponseBody
   @PostMapping("update")
-  public String update(@RequestParam("currentPage") int currentPage, Announcement announcement,
-                       MultipartFile[] files, HttpSession session) throws Exception {
+  public ResponseEntity<Object> update(
+          @RequestParam("currentPage") int currentPage,
+          Announcement announcement,
+          MultipartFile[] files,
+          HttpSession session,
+          Model model
+  ) throws Exception {
 //    System.out.println(currentPage + "업데이트 호출됨");
+//    System.out.println("fixed값 확인 : " + announcement.getFixed());
     Announcement a = announcementService.get(announcement.getNo());
-    User loginUser = (User) session.getAttribute("loginUser");
+    model.addAttribute("currentPage", currentPage);
 
-    if (loginUser == null || loginUser.getAuthority() != Authority.ADMIN) {
-      throw new Exception("로그인이 되어있지 않거나 권한이 없습니다.");
+    User loginUser = (User) session.getAttribute("loginUser");
+    if(loginUser == null) {
+      return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("NoLogin");
+    }
+    if (loginUser.getAuthority() != Authority.ADMIN) {
+      return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("NoAdmin");
     }
 
     ArrayList<AnnouncementAttachedFile> announcementAttachedFiles = new ArrayList<>();
@@ -149,10 +160,13 @@ public class AnnouncementController {
         announcementAttachedFiles.add(announcementAttachedFile);
       }
     }
+    announcement.setWriter(loginUser);
     announcement.setAnnouncementAttachedFiles(announcementAttachedFiles);
 
-    announcementService.update(announcement);
-    return "redirect:/announcement/list?currentPage=" + currentPage;
+    if (announcementService.update(announcement) == 0) {
+      return ResponseEntity.ok(false);
+    }
+      return ResponseEntity.ok(true);
   }
 
   @GetMapping("fileDelete")

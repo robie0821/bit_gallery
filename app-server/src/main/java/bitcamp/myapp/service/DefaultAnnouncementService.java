@@ -83,14 +83,15 @@ public class DefaultAnnouncementService implements AnnouncementService {
   @Transactional
   @Override
   public int update(Announcement announcement) throws Exception {
-    int count = announcementDao.update(announcement);
     List<Announcement> list = this.fixedList();
     if (!list.isEmpty()) {
       if (list.size() >= 3 && announcement.getFixed() == 1) {
         return 0;
       }
     }
-    if (count > 0 && announcement.getAnnouncementAttachedFiles().size() > 0) {
+
+    int count = announcementDao.update(announcement);
+    if (announcement.getAnnouncementAttachedFiles().size() > 0) {
       announcementDao.insertFiles(announcement);
     }
     return count;
