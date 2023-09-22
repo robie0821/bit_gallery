@@ -72,6 +72,29 @@
         A.artist=#{artist}
     </select>
 
+    <select id="findAuctionArticlesByDate" parameterType="String" resultMap="articleMap">
+        select
+        a.article_no,
+        a.title,
+        a.content,
+        a.view_count,
+        a.photo,
+        a.start_date,
+        a.end_date,
+        a.status,
+        a.end_price,
+        a.bid_count,
+        u.name
+        from
+        auction_article a
+        inner join auction_user u on a.user_no = u.user_no
+        where
+        a.start_date &lt;= #{date}
+        AND a.end_date >= #{date}
+        order by
+        a.article_no desc
+    </select>
+
     <update id="update" parameterType="article">
         update auction_article set
         title=#{title}
@@ -120,27 +143,4 @@
         article_no=#{articleNo}
     </update>
 
-    <select id="findAuctionArticlesByDate" parameterType="String" resultMap="articleMap">
-        select
-        a.article_no,
-        a.title,
-        a.content,
-        a.view_count,
-        a.photo,
-        a.start_date,
-        a.end_date,
-        a.status,
-        a.cur_price,
-        a.end_price,
-        a.bid_count,
-        u.name
-        from
-        auction_article a
-        inner join auction_user u on a.user_no = u.user_no
-        where
-        a.start_date &lt;= #{date}
-        AND a.end_date >= #{date}
-        order by
-        a.article_no desc
-    </select>
 </mapper>

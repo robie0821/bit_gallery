@@ -1,15 +1,30 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset='UTF-8'>
-<title>비트캠프</title>
+    <meta charset='UTF-8'>
+    <title>비트캠프</title>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js"></script>
+    <script src="/js/calendar.js"></script>
 </head>
 <body>
 
 <div data-th-replace="header :: header"></div>
 
-<h1>MyApp1</h1>
-<p>실습 프로젝트 입니다</p>
+<h1>BitGalley</h1>
+<p>달력 -  날짜로 작품 찾기 </p>
+
+<div style="display: flex; justify-content: center; align-items: center; height: 80vh; gap: 20px;">
+    <div id="calendar" style="flex: 1; max-width: 500px; background-color: #FFFFFF; padding: 20px;">
+    </div>
+
+    <div id="eventBox"
+         style="flex: 1; max-width: 500px; background-color: #f5f5f5; border: 1px solid black; padding: 20px;">
+        여기에 미술품 경매 날짜 정보 넣기
+    </div>
+</div>
 
 <div data-th-replace="footer :: footer"></div>
 

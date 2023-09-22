@@ -6,7 +6,6 @@ import bitcamp.myapp.vo.Article;
 import bitcamp.myapp.vo.Status;
 import bitcamp.myapp.vo.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Required;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -171,5 +170,11 @@ public class ArticleController {
   @PostMapping("buy")
   public String buy() throws Exception {
     return "";
+  }
+
+  @ResponseBody
+  @GetMapping("/getEvent")
+  public List<Article> getAuctionArticlesByDate(@RequestParam String date) throws Exception {
+    return articleService.findAuctionArticlesByDate(date);
   }
 }
