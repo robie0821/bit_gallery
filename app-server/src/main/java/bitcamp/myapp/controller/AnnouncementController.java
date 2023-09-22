@@ -4,7 +4,6 @@ import bitcamp.myapp.service.NcpObjectStorageService;
 import bitcamp.myapp.service.AnnouncementService;
 import bitcamp.myapp.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -12,8 +11,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 @Controller
 @RequestMapping("/announcement")
@@ -32,20 +29,23 @@ public class AnnouncementController {
 
   }
 
-
   @ResponseBody
   @PostMapping("add")
   public boolean addAnnouncement(
+//          @RequestParam("currentPage") int currentPage,
           Announcement requestData,
           MultipartFile[] files,
           HttpSession session,
           Model model
   ) throws Exception {
-    System.out.println("announcementController.add 호출");
+//    System.out.println("announcementController.add 호출");
     User loginUser = (User) session.getAttribute("loginUser");
     if (loginUser == null) {
-      throw new RuntimeException("로그인이 되어있지 않아 작업이 불가능합니다.");
+      throw new RuntimeException("로그인이 되어있지 않습니다.");
     }
+//    else if (!loginUser.getAuthority().equals("ADMIN")) {
+//      return "redirect:/announcement/list?currentPage=" + currentPage;
+//    }
 
     ArrayList<AnnouncementAttachedFile> announcementAttachedFiles = new ArrayList<>();
     for (MultipartFile part : files) {
@@ -63,6 +63,7 @@ public class AnnouncementController {
     if (announcementService.add(requestData) == 0) {
       return false;
     }
+
     return true;
   }
 
@@ -127,6 +128,7 @@ public class AnnouncementController {
     if (announcement != null) {
       model.addAttribute("announcement", announcement);
     }
+
     return "announcement/detail";
   }
 

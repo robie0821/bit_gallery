@@ -35,8 +35,8 @@ label {
   left: 1em;
 }
 [type="checkbox"]:checked {
-  background-color: tomato;
-  border-color: tomato;
+  background-color: gray;
+  border-color: gray;
 }
 [type="checkbox"]:focus-visible {
   outline-offset: max(2px, 0.1em);
@@ -67,7 +67,6 @@ label {
 <div data-th-replace="header :: header"></div>
 
 <h1>공지사항</h1>
-<!-- <form data-th-action="@{/announcement/add}" method='post' enctype='multipart/form-data'> -->
 <form id="announcement-form" onsubmit="return false;" >
   <label>제목 <input type='text' name='title' /></label><br>
   <label>내용 <textarea name='content'></textarea></label><br>

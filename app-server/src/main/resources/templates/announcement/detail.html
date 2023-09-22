@@ -36,8 +36,8 @@ background-color: white;
 left: 1em;
 }
 [type="checkbox"]:checked {
-background-color: tomato;
-border-color: tomato;
+background-color: gray;
+border-color: gray;
 }
 [type="checkbox"]:focus-visible {
 outline-offset: max(2px, 0.1em);
@@ -86,7 +86,8 @@ transition: left 250ms linear;
         <div data-th-each="file : ${announcement.announcementAttachedFiles}">
             <a data-th-href="|https://kr.object.ncloudstorage.com/bitgallery/announcement/${file.filePath}|"
                data-th-text="${file.filePath}">okok.gif</a>
-            <a id="deleteLink" style="visibility: hidden;" data-th-href="@{/announcement/fileDelete(no=${file.no},currentPage=${currentPage},isEdit=${isEdit})}">삭제</a><br>
+            <a id="deleteLink" style="visibility: hidden; text-decoration-line: none;"
+               data-th-href="@{/announcement/fileDelete(no=${file.no},currentPage=${currentPage},isEdit=${isEdit})}">&nbsp&nbsp[삭제]</a><br>
             <script>
                 // 조건을 평가하고 필요에 따라 링크를 보이게 합니다.
                 var condition = [[${isEdit}]]; // 조건을 여기에 설정
@@ -126,8 +127,8 @@ transition: left 250ms linear;
         button.textContent = "변경";
         }
     </script>
-<a data-th-href="@{/announcement/list(currentPage=${currentPage})}">목록</a>
-<a data-th-href="@{/announcement/delete(no=${announcement.no},currentPage=${currentPage})}">삭제</a>
+<a style="text-decoration-line: none;" data-th-href="@{/announcement/list(currentPage=${currentPage})}">목록</a>
+<a style="text-decoration-line: none;" data-th-href="@{/announcement/delete(no=${announcement.no},currentPage=${currentPage})}">삭제</a>
 <button id="resetButton" style="visibility: hidden;" type='reset'>초기화</button>
     <script>
         // 조건을 평가하고 필요에 따라 링크를 보이게 합니다.
@@ -145,13 +146,12 @@ transition: left 250ms linear;
     </label>
     <script>
         // 조건을 평가하고 필요에 따라 링크를 보이게 합니다.
-        var condition = [[${isEdit}]]; // 조건을 여기에 설정
+        var editCondition = [[${isEdit}]]; // 조건을 여기에 설정
 
-        if (condition) {
+        if (editCondition) {
             document.getElementById("fixSwitch").style.visibility = "visible";
         }
     </script>
-
 
 </div>
 </form>

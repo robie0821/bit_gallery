@@ -3,7 +3,6 @@ package bitcamp.myapp.service;
 import bitcamp.myapp.dao.AnnouncementDao;
 import bitcamp.myapp.vo.Announcement;
 import bitcamp.myapp.vo.AnnouncementAttachedFile;
-import bitcamp.myapp.vo.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
