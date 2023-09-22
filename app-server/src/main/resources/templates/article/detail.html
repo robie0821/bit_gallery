@@ -8,9 +8,9 @@
 
 <div data-th-replace="header :: header"></div>
 
-<h1>게시글</h1>
-<h1>게시글</h1>
-<h1>게시글</h1>
+<h1 data-th-if="${#strings.equals(article.status, 'expected')}">예정된 경매</h1>
+<h1 data-th-if="${#strings.equals(article.status, 'progress')}">진행중인 경매</h1>
+<h1 data-th-if="${#strings.equals(article.status, 'end')}">종료된 경매</h1>
 
 
 <p data-th-unless="${article}">해당 번호의 게시글이 없습니다!</p>
