@@ -2,9 +2,11 @@ package bitcamp.myapp.service;
 
 import bitcamp.myapp.dao.HistoryDao;
 import bitcamp.myapp.vo.History;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class DefaultHistoryService implements HistoryService{
 
   HistoryDao historyDao;

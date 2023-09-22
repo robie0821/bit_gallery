@@ -60,6 +60,7 @@
     email,
     join_date as joinDate,
     profile_photo as profilePhoto,
+    authority,
     point
     from
     auction_user

@@ -21,7 +21,11 @@
 
 <h1>공지사항</h1>
 <div style='margin:5px;'>
-<a style="text-decoration-line: none;" data-th-href="@{/announcement/form(currentPage=${currentPage})}">새 글</a>
+
+<a
+   style="text-decoration-line: none;"
+   data-th-if="${#strings.equals(authority, 'ADMIN')}"
+   data-th-href="@{/announcement/form(currentPage=${currentPage})}">새 글</a>
 </div>
 <table border='1'>
 <thead>
@@ -107,5 +111,5 @@
 
     <div data-th-replace="footer :: footer"></div>
 
-    </body>
-    </html>
+</body>
+</html>
