@@ -3,47 +3,8 @@
 <head>
     <meta charset='UTF-8'>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/detail.css}" />
     <title>환전 게시판 세부 정보 및 수정</title>
-    <style>
-        body {
-        margin: 0;
-        min-height: 100vh;
-        display: flex;
-        justify-content: center;  /* 수평 중앙 정렬 */
-        align-items: center;      /* 수직 중앙 정렬 */
-        }
-
-
-        .container {
-            max-width: 400px;
-            margin: 50px auto;
-            padding: 0 40px 40px; /* 위 0, 좌우 30px, 아래 30px */
-            background-color: #fff;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            border-radius: 5px;
-        }
-
-        h2 {
-            text-align: center;
-            margin-top: 50px;
-            color: #333;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        th, td {
-            border: 1px solid #ddd;
-            padding: 10px;
-            text-align: left;
-        }
-
-        th {
-            background-color: #f2f2f2;
-        }
-    </style>
 </head>
 <body>
 
@@ -80,7 +41,5 @@
     <a data-th-href="@{/exchange/delete(no=${exchange.no})}">삭제</a>
     <a data-th-href="@{/exchange/list}">목록</a>
 </div>
-
-
 </body>
 </html>
