@@ -1,6 +1,17 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <style>
+        .horizontal-pagination .page-item {
+            display: inline-block;
+        }
+
+        .horizontal-pagination .page-link {
+            padding: 8px 12px;
+            margin: 0 4px;
+        }
+    </style>
+
     <meta charset='UTF-8'>
     <title>게시글</title>
 </head>
@@ -10,7 +21,7 @@
 
 <h1>게시글 목록</h1>
 <div style='margin:5px;'>
-    <a data-th-href="@{/article/form}">새 글</a>
+    <a data-th-href="@{/article/form(currentPage=${currentPage})}">새 글</a>
 </div>
 <table border='1'>
     <thead>
@@ -31,18 +42,79 @@
             <img data-th-if="${article.photo}"
                  data-th-src="|http://tyasnlztlptw19619311.cdn.ntruss.com/article/${article.photo}?type=f&w=160&h=120&autorotate=false&faceopt=false&ttype=jpg|">
         </td>
-        <td><a data-th-href="@{'/article/detail/' + ${article.articleNo}}"
+        <td>
+            <a data-th-href="@{/article/detail(articleNo=${article.articleNo},(path=${path}),(currentPage=${currentPage}))}"
                data-th-text="${article.title} ?: '제목없음'">게시글 제목</a>
         </td>
         <td data-th-text="${article.curPrice}">27</td>
-        <td data-th-text="${article.endPrice}">27</td>
-        <td data-th-text="${#dates.format(article.startDate, 'yyyy/MM/dd hh:mm:dd')}">2021-09-14 19:20:11</td>
-        <td data-th-text="${#dates.format(article.endDate, 'yyyy/MM/dd hh:mm:dd')}">2021-09-14 19:20:11</td>
+        <td data-th-if="${#strings.equals(article.status, 'end')} and ${article.bidCount} == 0"
+            data-th-text="유찰">27
+        </td>
+        <td data-th-unless="${#strings.equals(article.status, 'end')} and ${article.bidCount} == 0"
+            data-th-text="${article.endPrice}">27
+        </td>
+        <td data-th-text="${#dates.format(article.startDate, 'yyyy/MM/dd hh:mm:dd')}">2021-09-14
+            19:20:11
+        </td>
+        <td data-th-text="${#dates.format(article.endDate, 'yyyy/MM/dd hh:mm:dd')}">2021-09-14
+            19:20:11
+        </td>
         <td data-th-text="${article.bidCount}">27</td>
     </tr>
     </tbody>
 </table>
 <a data-th-href='@{/}'>메인</a>
+
+<nav aria-label="Page navigation">
+    <ul id="pagination" class="pagination horizontal-pagination">
+        <!-- 페이지 번호 추가 -->
+        <script>
+            // 전체 페이지 수와 현재 페이지를 서버에서 받아와야 합니다.
+            const totalPages = parseInt([[${pageSize}]]);
+            const currentPage = parseInt([[${currentPage}]]);
+            const row = parseInt(10);
+            const status = "[[${status}]]";
+            const actualSize = totalPages % row == 0 ? parseInt(totalPages / row) : parseInt(totalPages / row) + 1;
+
+            const startPage = currentPage % row == 0 ? (parseInt(((currentPage-1) / row)) *row) + 1 : (parseInt((currentPage / row)) * row) + 1;
+            const endPage = startPage - 1 + Math.min(row, actualSize - startPage + 1);
+            const paginationElement = document.getElementById("pagination");
+
+            console.log("currentPage=  "+ currentPage);
+            console.log("startPage=  " + startPage);
+            console.log("endPage=  " + endPage);
+            console.log("actualSize=  " + actualSize);
+            console.log("totalPages=  " + totalPages);
+            console.log("status=  " + status);
+
+            if (currentPage === 1) {
+                paginationElement.innerHTML += `
+                    <li class="page-item disabled" style="visibility: hidden;"><a class="page-link" href="/article/list?status=${status}&currentPage=1">Previous</a></li>`;
+            } else {
+                 paginationElement.innerHTML += `
+                    <li class="page-item active"><a class="page-link" href="/article/list?status=${status}&currentPage=${currentPage - 1}">Previous</a></li>`;
+            }
+
+            // 페이지 번호 추가
+            for (let page = startPage; page <= endPage; page++) {
+                paginationElement.innerHTML += `
+                    <li class="page-item ${page === currentPage ? 'active' : ''}">
+                        <a class="page-link" href="/article/list?status=${status}&currentPage=${page}">${page}</a>
+                    </li>
+                `;
+            }
+
+            if (currentPage >= actualSize) {
+                paginationElement.innerHTML += `
+                    <li class="page-item disabled" style="visibility: hidden;"><a class="page-link" href="/article/list?status=${status}&currentPage=${actualSize}">Next</a></li>`;
+            } else {
+                 paginationElement.innerHTML += `
+                    <li class="page-item active"><a class="page-link" href="/article/list?status=${status}&currentPage=${currentPage + 1}">Next</a></li>`;
+            }
+        </script>
+
+    </ul>
+</nav>
 
 <div data-th-replace="footer :: footer"></div>
 

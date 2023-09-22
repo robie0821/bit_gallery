@@ -1,41 +1,45 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset='UTF-8'>
-    <title>환전 요청 게시판</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/detail.css}" />
+    <title>환전 게시판 세부 정보 및 수정</title>
 </head>
 <body>
 
-<!--<p data-th-unless="${exchange}">해당 번호의 게시글이 없습니다!</p>-->
+<div class="container" >
+    <!-- 제목 -->
+    <h2 data-th-text="${exchange.title}">게시판 상세페이지 제목</h2>
 
-<form data-th-if="${exchange}" data-th-action="@{/exchange/update}" method='post'>
-    <table border='1'>
-        <tr><th style='width:120px;'>이름</th>
-            <td style='width:300px;'><input type='text' name='name' value="100" data-th-value="${exchange.name}" readonly></td></tr>
-        <tr><th>제목</th>
-            <td><input type='text' name='title' value="제목입니다." data-th-value="${exchange.title}"></td></tr>
-<!--        <tr><th>내용</th>-->
-<!--            <td><textarea name='content' style='height:200px; width:400px;' data-th-text="${board.content}">내용입니다!</textarea></td></tr>-->
-<!--        <tr><th>작성자</th> <td data-th-text="${board.writer.name}">홍길동</td></tr>-->
-<!--        <tr><th>조회수</th> <td data-th-text="${board.viewCount}">34</td></tr>-->
-<!--        <tr><th>등록일</th> <td data-th-text="${#dates.format(board.createdDate, 'yyyy-MM-dd')}">2023-09-14</td></tr>-->
-<!--        <tr><th>첨부파일</th><td>-->
-<!--            <div data-th-each="file : ${board.attachedFiles}">-->
-<!--                <a data-th-href="|https://kr.object.ncloudstorage.com/bitcamp-nc7-bucket-118/board/${file.filePath}|"-->
-<!--                   data-th-text="${file.filePath}">okok.gif</a>-->
-<!--                [<a data-th-href="|/board/fileDelete/attachedFile;no=${file.no}|">삭제</a>]<br>-->
-<!--            </div>-->
-<!--            <input type='file' name='files' multiple>-->
-<!--        </td></tr>-->
+    <!-- 작성자 및 생성일 -->
+    <div>
+        <strong>작성자: </strong><span data-th-text="${exchange.user.name}">ggg</span>
+        <strong>생성일: </strong><span data-th-text="${#dates.format(exchange.createdDate, 'yy-MM-dd HH:mm')}">23-09-14 15:34</span>
+    </div>
+
+    <!-- 표 부분 -->
+    <table>
+        <tr>
+            <th>이름</th>
+            <td data-th-text="${name}"></td>
+        </tr>
+        <tr>
+            <th>계좌번호</th>
+            <td data-th-text="${number}"></td>
+        </tr>
+        <tr>
+            <th>은행</th>
+            <td data-th-text="${bank}"></td>
+        </tr>
+        <tr>
+            <th>환전할 금액</th>
+            <td data-th-text="${exchange.exchangePoint}"></td>
+        </tr>
     </table>
 
-<!--    <div>-->
-<!--        <button>변경</button>-->
-<!--        <button type='reset'>초기화</button>-->
-<!--        <a data-th-href="@{/board/delete(category=${board.category},no=${board.no})}">삭제</a>-->
-<!--        <a data-th-href="@{/board/list(category=${board.category})}">목록</a>-->
-<!--    </div>-->
-</form>
-
+    <a data-th-href="@{/exchange/delete(no=${exchange.no})}">삭제</a>
+    <a data-th-href="@{/exchange/list}">목록</a>
+</div>
 </body>
 </html>

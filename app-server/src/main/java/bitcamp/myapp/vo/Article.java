@@ -19,23 +19,36 @@ public class Article implements Serializable {
   private String photo;
   private Timestamp startDate;
   private Timestamp endDate;
-
+  private long remainTime;
   private Status status;
-
   private int curPrice;
   private int endPrice;
+  private int curBidder;
   private int bidCount;
 
-  private List<AttachedFile> attachedFiles;
-
+  private int path;
 
   @Override
   public String toString() {
-
-    return "Board [no=" + articleNo + ", title=" + title + ", content=" + content + ", writer=" + writer
-            + ", viewCount=" + viewCount + ", createdDate=" + createdDate
-            + ", attachedFiles=" + attachedFiles + "]";
+    return "Article{" +
+            "articleNo=" + articleNo +
+            ", writer=" + writer +
+            ", title='" + title + '\'' +
+            ", content='" + content + '\'' +
+            ", artist='" + artist + '\'' +
+            ", viewCount=" + viewCount +
+            ", createdDate=" + createdDate +
+            ", photo='" + photo + '\'' +
+            ", startDate=" + startDate +
+            ", endDate=" + endDate +
+            ", remainTime=" + remainTime +
+            ", status=" + status +
+            ", curPrice=" + curPrice +
+            ", endPrice=" + endPrice +
+            ", bidCount=" + bidCount +
+            '}';
   }
+
   @Override
   public int hashCode() {
     return Objects.hash(articleNo);
@@ -133,13 +146,19 @@ public class Article implements Serializable {
     this.endDate = endDate;
   }
 
+  public long getRemainTime() {
+    return remainTime;
+  }
+
+  public void setRemainTime(long remainTime) {
+    this.remainTime = remainTime;
+  }
 
   public Status getStatus() {
     return status;
   }
 
   public void setStatus(Status status) {
-
     this.status = status;
   }
 
@@ -159,6 +178,14 @@ public class Article implements Serializable {
     this.endPrice = endPrice;
   }
 
+  public int getCurBidder() {
+    return curBidder;
+  }
+
+  public void setCurBidder(int curBidder) {
+    this.curBidder = curBidder;
+  }
+
   public int getBidCount() {
     return bidCount;
   }
@@ -167,11 +194,11 @@ public class Article implements Serializable {
     this.bidCount = bidCount;
   }
 
-  public List<AttachedFile> getAttachedFiles() {
-    return attachedFiles;
+  public int getPath() {
+    return path;
   }
 
-  public void setAttachedFiles(List<AttachedFile> attachedFiles) {
-    this.attachedFiles = attachedFiles;
+  public void setPath(int path) {
+    this.path = path;
   }
 }

@@ -8,47 +8,146 @@
 
 <div data-th-replace="header :: header"></div>
 
-<h1>게시글</h1>
+<h1 data-th-if="${#strings.equals(article.status, 'expected')}">예정된 경매</h1>
+<h1 data-th-if="${#strings.equals(article.status, 'progress')}">진행중인 경매</h1>
+<h1 data-th-if="${#strings.equals(article.status, 'end')}">종료된 경매</h1>
+
 
 <p data-th-unless="${article}">해당 번호의 게시글이 없습니다!</p>
 
 <form data-th-if="${article}" enctype='multipart/form-data'>
     <table border='1'>
-        <tr><th style='width:120px;'>작품</th>
-        <td style='width:300px;'>
-            <a data-th-href="${'https://kr.object.ncloudstorage.com/bitgallery/article/' + article.photo}"
-               data-th-if="${article.photo}">
-                <img data-th-src="${'http://tyasnlztlptw19619311.cdn.ntruss.com/article/' + article.photo + '?type=f&w=320&h=240&autorotate=false&faceopt=false&ttype=jpg'}">
-            </a>
-        </td></tr>
+        <tr>
+            <th style='width:120px;'>작품</th>
+            <td style='width:300px;'>
+                <a data-th-href="${'https://kr.object.ncloudstorage.com/bitgallery/article/' + article.photo}"
+                   data-th-if="${article.photo}">
+                    <img data-th-src="${'http://tyasnlztlptw19619311.cdn.ntruss.com/article/' + article.photo + '?type=f&w=320&h=240&autorotate=false&faceopt=false&ttype=jpg'}">
+                </a>
+            </td>
+        </tr>
 
-        <tr><th>번호</th> <td data-th-text="${article.articleNo}" >-번호-</td></tr>
-        <tr><th>제목</th> <td data-th-text="${article.title}" >-제목-</td></tr>
-        <tr><th>내용</th> <td data-th-text="${article.content}" >-내용-</td></tr>
-        <tr><th>작가</th> <td data-th-text="${article.artist}">-작가-</td></tr>
-        <tr><th>현재가격</th> <td data-th-text="${article.curPrice}">-현재가격-</td></tr>
-        <tr><th>즉시구매가격</th> <td data-th-text="${article.endPrice}">-즉시구매가격-</td></tr>
+        <tr>
+            <th>번호</th>
+            <td data-th-text="${article.articleNo}">-번호-</td>
+        </tr>
+        <tr>
+            <th>제목</th>
+            <td data-th-text="${article.title}">-제목-</td>
+        </tr>
+        <tr>
+            <th>내용</th>
+            <td data-th-text="${article.content}">-내용-</td>
+        </tr>
+        <tr>
+            <th>작가</th>
+            <td data-th-text="${article.artist}">-작가-</td>
+        </tr>
+        <tr>
+            <th>현재가격</th>
+            <td data-th-text="${article.curPrice}">-현재가격-</td>
+        </tr>
+        <tr>
+            <th>즉시구매가격</th>
+            <td data-th-text="${article.endPrice}">-즉시구매가격-</td>
+        </tr>
 
 
-        <tr><th>작성자</th> <td data-th-text="${article.writer.name}">홍길동</td></tr>
-        <tr><th>조회수</th> <td data-th-text="${article.viewCount}">34</td></tr>
-        <tr><th>등록일</th> <td data-th-text="${#dates.format(article.createdDate, 'yyyy-MM-dd')}">2023-09-14</td></tr>
-        <tr><th>시작일</th> <td data-th-text="${#dates.format(article.startDate, 'yyyy-MM-dd hh:mm:ss')}">2023-09-14</td></tr>
-        <tr><th>종료일</th> <td data-th-text="${#dates.format(article.endDate, 'yyyy-MM-dd hh:mm:ss')}">2023-09-14</td></tr>
-        <tr><th>입찰횟수</th> <td data-th-text="${article.bidCount}">34</td></tr>
+        <tr>
+            <th>작성자</th>
+            <td data-th-text="${article.writer.name}">홍길동</td>
+        </tr>
+        <tr>
+            <th>조회수</th>
+            <td data-th-text="${article.viewCount}">34</td>
+        </tr>
+        <tr>
+            <th>등록일</th>
+            <td data-th-text="${#dates.format(article.createdDate, 'yyyy-MM-dd')}">2023-09-14</td>
+        </tr>
+        <tr>
+            <th>시작일</th>
+            <td data-th-text="${#dates.format(article.startDate, 'yyyy-MM-dd hh:mm:ss')}">
+                2023-09-14
+            </td>
+        </tr>
+        <tr>
+            <th>종료일</th>
+            <td data-th-text="${#dates.format(article.endDate, 'yyyy-MM-dd hh:mm:ss')}">2023-09-14
+            </td>
+        </tr>
+
+        <tr>
+            <th>남은시간</th>
+            <td><span id=RemainPeriod></span></td>
+        </tr>
+
+        <tr>
+            <th>입찰횟수</th>
+            <td data-th-text="${article.bidCount}">34</td>
+        </tr>
         </div>
         </td></tr>
     </table>
     </div>
+
     <div>
-        <a data-th-href="@{'/article/update/' + ${article.articleNo}}">변경</a>
-        <a data-th-href="@{/article/delete(articleNo=${article.articleNo})}">삭제</a>
-        <a data-th-href="@{/article/list(status=${article.status})}">목록</a>
+        <p>
+            <a data-th-if="${#strings.equals(article.status, 'progress')}"
+               data-th-href="@{/article//(articleNo=${article.articleNo},currentPage=${currentPage})}">입찰</a>
+            <a data-th-if="${#strings.equals(article.status, 'progress')}"
+               data-th-href="@{'/'}">구매</a>
+        </p>
     </div>
 
+    <div>
+        <p>
+            <a data-th-if="${#strings.equals(article.status, 'expected')}"
+               data-th-href="@{/article/update/(articleNo=${article.articleNo},currentPage=${currentPage})}">변경</a>
+            <a data-th-if="${#strings.equals(article.status, 'expected')}"
+               data-th-href="@{/article/delete(articleNo=${article.articleNo},currentPage=${currentPage})}">삭제</a>
+
+            <a data-th-if="${article.path} == 0" data-th-href="@{/article/list(status=${article.status},currentPage=${currentPage})}">목록</a>
+            <a data-th-if="${article.path} == 1" data-th-href="@{/article/list(artist=${article.artist},currentPage=${currentPage})}">목록</a>
+        </p>
+    </div>
 </form>
+
 
 <div data-th-replace="footer :: footer"></div>
 
 </body>
 </html>
+
+<SCRIPT LANGUAGE="JavaScript">
+    <!--
+    var tid=0;
+    var period = parseInt([[${article.remainTime}]]);
+
+    function auctionClock()
+    {
+        period -= 1;
+        if(period<0)
+        {
+            if(tid) clearTimeout(tid);
+            window.setTimeout("location.reload();",1000);
+            return;
+        }
+
+        strTime = '';
+        var day=parseInt(period/(24*60*60));
+        var hour=parseInt((period/60/60)%24);
+        var minute=parseInt((period/60)%60);
+        var second=parseInt(period%60);
+
+        if(day>0) strTime = day + '일 '
+        strTime = strTime + hour + '시간 ' + minute + '분 ' + second + '초';
+
+        var p = document.getElementById("RemainPeriod");
+        if(p) p.innerHTML = strTime ;
+        if(tid) clearTimeout(tid);
+        tid=window.setTimeout("auctionClock()",1000);
+    }
+        if(period>0) auctionClock();
+    //-->
+</SCRIPT>

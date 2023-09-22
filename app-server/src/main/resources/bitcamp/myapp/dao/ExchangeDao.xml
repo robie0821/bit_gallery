@@ -32,7 +32,8 @@
         e.content,
         e.created_date,
         e.exchange_point,
-        u.name
+        u.name,
+        e.user_no
         from
         auction_exchange e inner join auction_user u on e.user_no=u.user_no
         order by
@@ -41,21 +42,31 @@
 
     <select id="findBy" resultMap="exchangeMap" parameterType="int">
         select
-        b.board_no,
-        b.title,
-        b.content,
-        b.view_count,
-        b.created_date,
-        b.category,
-        m.member_no,
-        m.name,
-        f.board_file_no,
-        f.filepath
+        e.exchange_no,
+        e.title,
+        e.content,
+        e.created_date,
+        e.exchange_point,
+        u.name,
+        e.user_no
         from
         auction_exchange e inner join auction_user u on e.user_no=u.user_no
         where
-        e.exchange_no=#{boardNo}
+        e.exchange_no=#{exchangeNo}
     </select>
 
+    <update id="update" parameterType="exchange">
+        update auction_exchange set
+        name=#{name},
+        content=#{content}
+        where
+        exchange_no=#{no}
+    </update>
+
+    <delete id="delete" parameterType="int">
+        delete from auction_exchange
+        where
+        exchange_no=#{no}
+    </delete>
 
 </mapper>

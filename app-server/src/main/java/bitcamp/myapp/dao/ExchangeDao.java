@@ -10,4 +10,6 @@ public interface ExchangeDao {
   int insert(Exchange exchange);
   List<Exchange> findAll();
   Exchange findBy(int no);
+  int update(Exchange exchange);
+  int delete(int no);
 }
