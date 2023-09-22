@@ -98,9 +98,6 @@ public class AnnouncementController {
     User loginUser = (User) session.getAttribute("loginUser");
     if (loginUser == null) {
       model.addAttribute("authority", "User");
-      throw new Exception("로그인이 되어있지 않습니다.");
-    } else if (loginUser.getAuthority() != Authority.ADMIN) {
-      throw new Exception("권한이 없습니다.");
     } else {
       model.addAttribute("authority", loginUser.getAuthority());
     }
@@ -113,7 +110,6 @@ public class AnnouncementController {
     if (announcement != null) {
       model.addAttribute("announcement", announcement);
     }
-
     return "announcement/detail";
   }
 

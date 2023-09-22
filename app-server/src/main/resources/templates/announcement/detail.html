@@ -145,7 +145,12 @@ transition: left 250ms linear;
 
 <!--상단 고정 스위치-->
     <label id="fixSwitch" style="visibility:hidden;">
-        <input role="switch" type="checkbox" name='fixed' id="switch" pattern="^[0-9]+$" value=1 />
+
+<!--        <input data-th-if="${session.announcement.fixed == 1}" checked="checked" />-->
+<!--        <input data-th-if="${session.announcement.fixed == 0}" />-->
+<!--        <input role="switch" type="checkbox" name="fixed" id="switch" pattern="^[0-9]+$" />-->
+
+                <input role="switch" type="checkbox" name='fixed' id="switch" pattern="^[0-9]+$" value=1 />
         <span>상단고정</span>
     </label>
     <script>

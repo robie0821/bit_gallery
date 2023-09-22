@@ -22,8 +22,7 @@
 <h1>공지사항</h1>
 <div style='margin:5px;'>
 
-<a
-   style="text-decoration-line: none;"
+<a style="text-decoration-line: none;"
    data-th-if="${#strings.equals(authority, 'ADMIN')}"
    data-th-href="@{/announcement/form(currentPage=${currentPage})}">새 글</a>
 </div>
