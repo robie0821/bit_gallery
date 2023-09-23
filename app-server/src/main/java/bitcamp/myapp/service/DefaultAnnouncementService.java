@@ -84,8 +84,15 @@ public class DefaultAnnouncementService implements AnnouncementService {
   @Override
   public int update(Announcement announcement) throws Exception {
     List<Announcement> list = this.fixedList();
+    boolean isInclude = false;
+    for (Announcement element : list) {
+      if (announcement.getNo() == element.getNo()) {
+        isInclude = true;
+        break;
+      }
+    }
     if (!list.isEmpty()) {
-      if (list.size() >= 3 && announcement.getFixed() == 1) {
+      if (list.size() >= 3 && announcement.getFixed() == 1 && !isInclude) {
         return 0;
       }
     }
