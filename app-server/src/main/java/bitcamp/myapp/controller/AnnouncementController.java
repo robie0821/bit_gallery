@@ -1,5 +1,7 @@
 package bitcamp.myapp.controller;
 
+import bitcamp.myapp.service.DefaultAnnouncementService;
+import bitcamp.myapp.service.DefaultUserService;
 import bitcamp.myapp.service.NcpObjectStorageService;
 import bitcamp.myapp.service.AnnouncementService;
 import bitcamp.myapp.vo.*;
@@ -70,10 +72,13 @@ public class AnnouncementController {
     requestData.setWriter(loginUser);
     requestData.setAnnouncementAttachedFiles(announcementAttachedFiles);
 
-    if (announcementService.add(requestData) == 0) {
-      return ResponseEntity.ok(false);
+    int addResult = announcementService.add(requestData);
+    if (addResult == 0) {
+      return ResponseEntity.ok("add_max_reached");
+    } else if (addResult == 4) {
+      return ResponseEntity.ok("add_no_title");
     }
-    return ResponseEntity.ok(true);
+    return ResponseEntity.ok("add_commit");
   }
 
   @GetMapping("delete")
@@ -92,7 +97,7 @@ public class AnnouncementController {
   }
 
   @GetMapping("detail")
-  public String detail(@RequestParam("isEdit") boolean isEdit, @RequestParam("currentPage") int currentPage,
+  public String detail(@RequestParam("currentPage") int currentPage,
                        @RequestParam("no") int no, Model model, HttpSession session) throws Exception {
     User loginUser = (User) session.getAttribute("loginUser");
     if (loginUser == null) {
@@ -101,7 +106,6 @@ public class AnnouncementController {
       model.addAttribute("authority", loginUser.getAuthority());
     }
 
-    model.addAttribute("isEdit", isEdit);
     model.addAttribute("currentPage", currentPage);
     Announcement announcement = announcementService.get(no);
     if (announcement != null) {
@@ -175,20 +179,24 @@ public class AnnouncementController {
     }
     announcement.setWriter(loginUser);
     announcement.setAnnouncementAttachedFiles(announcementAttachedFiles);
-    announcementService.update(announcement);
-    if (announcementService.update(announcement) == 0) {
-      return ResponseEntity.ok(false);
+
+    int updateResult = announcementService.update(announcement);
+    if (updateResult == 0) {
+      return ResponseEntity.ok("update_max_reached");
+    } else if (updateResult == 3) {
+      return ResponseEntity.ok("update_no_title");
     }
-      return ResponseEntity.ok(true);
+      return ResponseEntity.ok("update_commit");
   }
 
   @GetMapping("fileDelete")
-  public String fileDelete(@RequestParam("isEdit") boolean isEdit, @RequestParam("currentPage") int currentPage,
-                           @RequestParam("no") int no, HttpSession session, Model model) throws Exception {
+  public String fileDelete(
+          @RequestParam("currentPage") int currentPage,
+          @RequestParam("no") int no,
+          HttpSession session,
+          Model model
+  ) throws Exception {
     isSessionUserAdmin(session);
-
-    model.addAttribute("isEdit", isEdit);
-//    System.out.println("AnnouncementController.fileDelete.isEdit =  " + isEdit);
 
     Announcement announcement = null;
     AnnouncementAttachedFile announcementAttachedFile = announcementService.getAnnouncementAttachedFile(no);
@@ -198,7 +206,7 @@ public class AnnouncementController {
     if (announcementService.deleteAttachedFile(no) == 0) {
       throw new Exception("해당 번호의 첨부파일이 없습니다.");
     } else {
-      return "redirect:/announcement/detail?currentPage=" + currentPage + "&no=" + announcement.getNo() + "&isEdit=" + isEdit;
+      return "redirect:/announcement/update?currentPage=" + currentPage + "&no=" + announcement.getNo();
     }
   }
 

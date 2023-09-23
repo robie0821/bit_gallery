@@ -29,6 +29,11 @@ public class DefaultAnnouncementService implements AnnouncementService {
         return 0;
       }
     }
+
+    if (announcement.getTitle().isEmpty()) {
+      return 4;
+    }
+
 //    System.out.println("타니?");
     int count = announcementDao.insert(announcement);
     if (announcement.getAnnouncementAttachedFiles().size() > 0) {
@@ -95,6 +100,10 @@ public class DefaultAnnouncementService implements AnnouncementService {
       if (list.size() >= 3 && announcement.getFixed() == 1 && !isInclude) {
         return 0;
       }
+    }
+
+    if (announcement.getTitle().isEmpty()) {
+      return 3;
     }
 
     int count = announcementDao.update(announcement);

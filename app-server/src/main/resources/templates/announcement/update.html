@@ -90,7 +90,7 @@ div#detail-content-scroll {
 
 <h1>공지사항</h1>
 <p data-th-unless="${announcement}">해당 번호의 게시글이 없습니다!</p>
-<form id="announcement-detailUpdate" enctype='multipart/form-data'>
+<form id="announcement-detailUpdate" enctype='multipart/form-data' >
     <table border='1'>
         <tr><th style='width:120px;'>번호</th>
         <td style='width:300px;'>
@@ -98,11 +98,11 @@ div#detail-content-scroll {
             <input type='hidden' name='no' data-th-value="${announcement.no}"></td></tr>
         <tr>
             <th>제목</th>
-            <td><input type='text' name='title' data-th-value="${announcement.title}"></td>
+            <td><input type='text' name='title' placeholder='제목을 입력해주세요.' data-th-value="${announcement.title}" ></td>
         </tr>
         <tr>
             <th>내용</th>
-            <td><textarea name='content' id="detail-content-scroll" style="width: 400px; height: 500px;" data-th-text="${announcement.content}" >
+            <td><textarea name='content' id="detail-content-scroll" placeholder='내용을 입력해주세요.' style="width: 400px; height: 500px;" data-th-text="${announcement.content}" >
             </textarea></td>
         </tr>
         <tr><th>작성자</th> <td data-th-text="${announcement.writer.name}">
@@ -126,7 +126,7 @@ div#detail-content-scroll {
 
     <div>
         <input type='hidden' name='currentPage' data-th-value=${currentPage} />
-        <button id="editButton" >수정</button>
+        <button id="editButton" >등록</button>
         <a style="text-decoration-line: none;" data-th-href="@{/announcement/list(currentPage=${currentPage})}">목록</a>
         <button id="resetButton" type='reset'>초기화</button>
         <!--상단 고정 스위치-->
@@ -167,10 +167,12 @@ $(document).ready(() => {
         contentType:false,
         cache:false,
         success: (data) => {
-          if(data) {
+          if(data === "update_commit") {
              location.href="http://"+window.location.host+"/announcement/list?currentPage="+1
-          } else {
+          } else if (data === "update_max_reached") {
             alert('게시글은 최대 3개까지 고정할 수 있습니다.');
+          } else if (data === "update_no_title") {
+            alert('제목을 입력해주세요.');
           }
         },
         error: (e) => {
