@@ -176,14 +176,14 @@ $(document).ready(() => {
           }
         },
         error: (e) => {
-            console.log("error", e.responseText)
+<!--            console.log("error", e.responseText)-->
             if(e.responseText === "NoLogin") {
-                console.log("noLogin");
+<!--                console.log("noLogin");-->
                 alert('로그인이 되어있지 않습니다.')
                 location.href="http://"+window.location.host+"/auth/form"
             }
             if(e.responseText === "NoAdmin") {
-                console.log("noAdmin");
+<!--                console.log("noAdmin");-->
                 alert('권한이 없습니다.')
                 location.href="http://"+window.location.host+""
             }

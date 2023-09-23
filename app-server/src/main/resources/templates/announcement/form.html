@@ -97,7 +97,7 @@ function addAnnouncement() {
     contentType:false,
     cache:false,
     success: (data) => {
-      console.log(data)
+<!--      console.log(data)-->
       if (data === "add_commit") {
          location.href="http://"+window.location.host+"/announcement/list?currentPage="+1
       } else if (data === "add_max_reached") {
@@ -110,12 +110,12 @@ function addAnnouncement() {
     error: (e) => {
         console.log("error", e.responseText)
         if(e.responseText === "NoLogin") {
-            console.log("noLogin");
+<!--            console.log("noLogin");-->
             alert('로그인이 되어있지 않습니다.')
             location.href="http://"+window.location.host+"/auth/form"
         }
         if(e.responseText === "NoAdmin") {
-            console.log("noAdmin");
+<!--            console.log("noAdmin");-->
             alert('권한이 없습니다.')
             location.href="http://"+window.location.host+""
         }

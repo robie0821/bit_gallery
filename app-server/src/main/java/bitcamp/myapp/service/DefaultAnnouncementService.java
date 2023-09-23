@@ -59,8 +59,8 @@ public class DefaultAnnouncementService implements AnnouncementService {
       int pageSize = 10 - fixedListSize;
       int startPage = (currentPage - 1) * pageSize ;
       int endPage = Math.min(pageSize, size - startPage);
-      System.out.println("endPage=  " + endPage);
-      System.out.println("fixedList=  " + fixedListSize);
+//      System.out.println("endPage=  " + endPage);
+//      System.out.println("fixedList=  " + fixedListSize);
       List<Announcement> subList = list.stream().skip(startPage).limit(endPage).toList();
       subList = Stream.concat(fixedList.stream(), subList.stream()).collect(Collectors.toList());
 
