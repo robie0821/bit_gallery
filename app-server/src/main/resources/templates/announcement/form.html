@@ -71,8 +71,8 @@ label {
 <h1>공지사항</h1>
 
 <form id="announcement-form" onsubmit="return false;" >
-  <label>제목 <input type='text' name='title' placeholder='제목을 입력하세요.' /></label><br>
-  <label>내용 <textarea name='content' placeholder='내용을 입력하세요.'></textarea></label><br>
+  <label>제목 <input type='text' name='title' placeholder='제목을 입력하세요.' style="width: 400px;" /></label><br>
+  <label>내용 <textarea name='content' placeholder='내용을 입력하세요.' style="width: 400px; height: 500px;" ></textarea></label><br>
   파일 <input type='file' name='files' multiple><br>
 
   <input type='hidden' name='currentPage' data-th-value=${currentPage}>

@@ -94,7 +94,6 @@ public class AnnouncementController {
   @GetMapping("detail")
   public String detail(@RequestParam("isEdit") boolean isEdit, @RequestParam("currentPage") int currentPage,
                        @RequestParam("no") int no, Model model, HttpSession session) throws Exception {
-
     User loginUser = (User) session.getAttribute("loginUser");
     if (loginUser == null) {
       model.addAttribute("authority", "User");
@@ -103,9 +102,7 @@ public class AnnouncementController {
     }
 
     model.addAttribute("isEdit", isEdit);
-//    System.out.println("isEdit =  " + isEdit);
     model.addAttribute("currentPage", currentPage);
-
     Announcement announcement = announcementService.get(no);
     if (announcement != null) {
       model.addAttribute("announcement", announcement);
@@ -127,6 +124,22 @@ public class AnnouncementController {
     model.addAttribute("test", 1);
     announcementService.list(model);
   }
+
+  @GetMapping("/update")
+  public String moveUpdatePage(
+          @RequestParam("no") int no,
+          @RequestParam("currentPage") int currentPage,
+          Model model,
+          HttpSession session
+  ) throws Exception {
+    if(isSessionUserAdminGetBoolean(session)){
+      return "redirect:/announcement/list?currentPage="+currentPage;
+    }
+    model.addAttribute("announcement", announcementService.get(no));
+    model.addAttribute("currentPage", currentPage);
+    return "announcement/update";
+  }
+
 
   @ResponseBody
   @PostMapping("update")
@@ -162,7 +175,7 @@ public class AnnouncementController {
     }
     announcement.setWriter(loginUser);
     announcement.setAnnouncementAttachedFiles(announcementAttachedFiles);
-
+    announcementService.update(announcement);
     if (announcementService.update(announcement) == 0) {
       return ResponseEntity.ok(false);
     }
@@ -172,10 +185,7 @@ public class AnnouncementController {
   @GetMapping("fileDelete")
   public String fileDelete(@RequestParam("isEdit") boolean isEdit, @RequestParam("currentPage") int currentPage,
                            @RequestParam("no") int no, HttpSession session, Model model) throws Exception {
-    User loginUser = (User) session.getAttribute("loginUser");
-    if (loginUser == null || loginUser.getAuthority() != Authority.ADMIN) {
-      throw new Exception("로그인이 되어있지 않거나 권한이 없습니다.");
-    }
+    isSessionUserAdmin(session);
 
     model.addAttribute("isEdit", isEdit);
 //    System.out.println("AnnouncementController.fileDelete.isEdit =  " + isEdit);
@@ -190,6 +200,17 @@ public class AnnouncementController {
     } else {
       return "redirect:/announcement/detail?currentPage=" + currentPage + "&no=" + announcement.getNo() + "&isEdit=" + isEdit;
     }
+  }
+
+  private void isSessionUserAdmin(HttpSession session) throws Exception {
+    User loginUser = (User) session.getAttribute("loginUser");
+    if (loginUser == null || loginUser.getAuthority() != Authority.ADMIN) {
+       throw new Exception("로그인이 되어있지 않거나 권한이 없습니다.");
+    }
+  }
+  private boolean isSessionUserAdminGetBoolean(HttpSession session) {
+    User loginUser = (User) session.getAttribute("loginUser");
+    return loginUser == null || loginUser.getAuthority() != Authority.ADMIN;
   }
 
 }
