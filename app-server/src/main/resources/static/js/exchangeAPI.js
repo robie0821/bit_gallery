@@ -8,12 +8,12 @@ document.getElementById('fetchData').addEventListener('click', function() {
             const tbody = document.getElementById('exchangeList');
             tbody.innerHTML = "";
 
-            data.forEach(exchange => {
+            data.forEach((exchange, index) => {
                 const [depositor, accountNumber, bank] = exchange.content.split(',').map(str => str.trim());
 
                 let row = `
                     <tr>
-                        <td>${exchange.no}</td>
+                        <td>${index + 1}</td>
                         <td>${depositor}</td>
                         <td>${bank}</td>
                         <td>${accountNumber}</td>

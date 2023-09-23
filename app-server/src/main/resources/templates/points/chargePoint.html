@@ -8,6 +8,7 @@
     <!-- 아임포트 라이브러리 추가 -->
     <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
     <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
+    <script src="/js/historyAPI.js" defer></script>
 </head>
 <body>
 <div data-th-replace="header :: header"></div>
@@ -46,7 +47,7 @@
 <!-- "환전 내역" 버튼 -->
 <button id="fetchData">환전 내역</button>
 
-<!-- 게시판 -->
+<!-- 환전 내역 테이블 -->
 <div class="page-container">
     <table id="exchangeTable" style="display: none;"> <!-- id와 스타일 추가 -->
         <thead>
@@ -66,6 +67,26 @@
 </div>
 
 <script src="/js/exchangeAPI.js"></script>
+
+<!-- "입찰 내역" 불러오기 -->
+
+<div class="container mt-5">
+    <button id="loadBidList" class="btn btn-primary mb-3">입찰 내역</button>
+    <table class="table table-bordered table-striped" style="display: none;" id="bidTable">
+        <thead>
+        <tr>
+            <th>번호</th>
+            <th>작품명</th>
+            <th>가격</th>
+            <th>입찰 여부</th>
+            <th>입찰일</th>
+        </tr>
+        </thead>
+        <tbody id="bidListBody">
+        </tbody>
+    </table>
+</div>
+
 
 <!-- 포인트 충전 및 입찰 스크립트 -->
 <script>
