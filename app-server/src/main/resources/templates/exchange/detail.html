@@ -7,6 +7,7 @@
     <title>환전 게시판 세부 정보 및 수정</title>
 </head>
 <body>
+<div data-th-replace="header :: header"></div>
 
 <div class="container" >
     <!-- 제목 -->
@@ -41,5 +42,6 @@
     <a data-th-href="@{/exchange/delete(no=${exchange.no})}">삭제</a>
     <a data-th-href="@{/exchange/list}">목록</a>
 </div>
+<div data-th-replace="footer :: footer"></div>
 </body>
 </html>
