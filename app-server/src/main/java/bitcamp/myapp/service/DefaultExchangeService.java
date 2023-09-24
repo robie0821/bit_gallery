@@ -31,6 +31,11 @@ public class DefaultExchangeService implements ExchangeService{
   }
 
   @Override
+  public List<Exchange> listByUserNo(int userNo) throws Exception {
+    return exchangeDao.findByUserNo(userNo);
+  }
+
+  @Override
   public Exchange get(int exchangeNo) throws Exception {
     return exchangeDao.findBy(exchangeNo);
   }

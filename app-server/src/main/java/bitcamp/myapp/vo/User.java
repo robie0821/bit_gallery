@@ -20,6 +20,24 @@ public class User implements Serializable {
   private String profilePhoto;
   private int point;
 
+  @Override
+  public String toString() {
+    return "User{" +
+            "no=" + no +
+            ", authority=" + authority +
+            ", email='" + email + '\'' +
+            ", password='" + password + '\'' +
+            ", name='" + name + '\'' +
+            ", phone='" + phone + '\'' +
+            ", zonecode=" + zonecode +
+            ", address='" + address + '\'' +
+            ", detailAddr='" + detailAddr + '\'' +
+            ", joinDate=" + joinDate +
+            ", profilePhoto='" + profilePhoto + '\'' +
+            ", point=" + point +
+            '}';
+  }
+
   public void setZonecode(Integer zonecode) {this.zonecode = zonecode;}
 
   public void setDetailAddr(String detailAddr) {this.detailAddr = detailAddr;}
@@ -113,21 +131,5 @@ public class User implements Serializable {
     this.point = point;
   }
 
-  @Override
-  public String toString() {
-    return "User{" +
-            "no=" + no +
-            ", authority=" + authority +
-            ", email='" + email + '\'' +
-            ", password='" + password + '\'' +
-            ", name='" + name + '\'' +
-            ", phone='" + phone + '\'' +
-            ", zonecode=" + zonecode +
-            ", address='" + address + '\'' +
-            ", joinDate=" + joinDate +
-            ", profile_photo='" + profilePhoto + '\'' +
-            ", point=" + point +
-            '}';
-  }
 }
 
