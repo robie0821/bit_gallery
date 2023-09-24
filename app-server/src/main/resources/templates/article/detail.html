@@ -1,21 +1,125 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-    <meta charset='UTF-8'>
-    <title>게시글</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>게시글 목록</title>
+    <!-- 아임포트 라이브러리 추가 -->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
+    <style>
+        /* 전체 스타일 */
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        a {
+            color: #000;
+            text-decoration: none;
+            text-shadow: 2px 2px 4px rgba(135, 206, 235, 0.5);
+        }
+
+        /* 공통 헤더와 푸터 스타일 */
+        .header,
+        .footer {
+            background-color: #D8D8D8;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .header {
+            top: 0;
+            left: 0;
+            right: 0;
+        }
+
+        .footer {
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 50px;
+        }
+
+        /* 콘텐츠 스타일 */
+        .content {
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding-top: 80px;
+            padding-bottom: 50px;
+        }
+
+        /* 테이블 스타일 */
+        table {
+            border-collapse: separate;
+            border-spacing: 0;
+            border: none;
+            border-radius: 20px;
+            max-width: 100%;
+            margin: 0 auto;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 7px;
+            text-align: center;
+            letter-spacing: 1.5px;
+        }
+
+        th {
+            text-shadow: 2px 2px 4px rgba(128, 128, 128, 0.5);
+        }
+
+        img {
+            max-width: 160px;
+            max-height: 120px;
+        }
+
+        /* 폼 스타일 */
+        form {
+            width: 40%;
+            margin: 210px auto;
+            padding: 20px;
+            border: 4px solid #D8D8D8;
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .content {
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding-top: 60px; /* 여기를 조절 */
+            padding-bottom: 50px;
+        }
+
+    </style>
+
 </head>
+
 <body>
 
 <div data-th-replace="header :: header"></div>
 
-<h1 data-th-if="${#strings.equals(article.status, 'expected')}">예정된 경매</h1>
-<h1 data-th-if="${#strings.equals(article.status, 'progress')}">진행중인 경매</h1>
-<h1 data-th-if="${#strings.equals(article.status, 'end')}">종료된 경매</h1>
 
 
 <p data-th-unless="${article}">해당 번호의 게시글이 없습니다!</p>
 
 <form data-th-if="${article}" enctype='multipart/form-data'>
+    <h1 th:text="${#strings.equals(article.status, 'progress')} ? '진행 중인 경매' : (${#strings.equals(article.status, 'expected')} ? '진행 예정 경매' : (${#strings.equals(article.status, 'end')} ? '종료된 경매' : article.title))">게시글</h1>
     <table border='1'>
         <tr>
             <th style='width:120px;'>작품</th>
@@ -52,7 +156,6 @@
             <td data-th-text="${article.endPrice}">-즉시구매가격-</td>
         </tr>
 
-
         <tr>
             <th>작성자</th>
             <td data-th-text="${article.writer.name}">홍길동</td>
@@ -86,20 +189,27 @@
             <th>입찰횟수</th>
             <td data-th-text="${article.bidCount}">34</td>
         </tr>
-        </div>
-        </td></tr>
-    </table>
-    </div>
 
+
+    </table>
+</form>
+    <!-- form 안에 넣으면 오류가 발생하는 현상 -->
+
+                <!-- 입찰/즉시구매 폼 -->
     <div>
         <p>
-            <a data-th-if="${#strings.equals(article.status, 'progress')}"
-               data-th-href="@{/article//(articleNo=${article.articleNo},currentPage=${currentPage})}">입찰</a>
-            <a data-th-if="${#strings.equals(article.status, 'progress')}"
-               data-th-href="@{'/'}">구매</a>
+            <a data-th-if="${#strings.equals(article.status, 'progress')}">
+                <input type="text" id="bidAmount" placeholder="입찰할 금액 입력" onkeyup="formatCurrency(this)">
+                <button id="bidButton" class="btn btn-primary">입찰</button>
+            </a>
+
+
+            <a data-th-if="${#strings.equals(article.status, 'progress')}" id="purchaseButton">
+                <button class="btn btn-primary">즉시구매</button>
+            </a>
         </p>
     </div>
-
+                    <!-- 변경 삭제 목록 폼 -->
     <div>
         <p>
             <a data-th-if="${#strings.equals(article.status, 'expected')}"
@@ -107,47 +217,37 @@
             <a data-th-if="${#strings.equals(article.status, 'expected')}"
                data-th-href="@{/article/delete(articleNo=${article.articleNo},currentPage=${currentPage})}">삭제</a>
 
-            <a data-th-if="${article.path} == 0" data-th-href="@{/article/list(status=${article.status},currentPage=${currentPage})}">목록</a>
-            <a data-th-if="${article.path} == 1" data-th-href="@{/article/list(artist=${article.artist},currentPage=${currentPage})}">목록</a>
+            <a data-th-if="${article.path} == 0"
+               data-th-href="@{/article/list(status=${article.status},currentPage=${currentPage})}">목록</a>
+            <a data-th-if="${article.path} == 1"
+               data-th-href="@{/article/list(artist=${article.artist},currentPage=${currentPage})}">목록</a>
         </p>
     </div>
-</form>
 
+    <!-- form 안에 넣으면 오류가 발생하는 현상 -->
+
+
+
+<!-- HTML 태그에 삽입 -->
+<div id="userNo" data-th-text="${session.loginUser.no}" style="display: none;"></div>
+<div id="articleNo" data-th-text="${article.articleNo}" style="display: none;"></div>
+<div id="endPrice" data-th-text="${article.endPrice}" style="display: none;"></div>
+<div id="userPoints" data-th-text="${session.loginUser.point}" style="display: none;"></div>
+<div id="currentPage" data-th-text="${currentPage}" style="display: none;"></div>
+<div id="path" data-th-text="0" style="display: none;"></div>
+<div id="period" data-th-text="${(article.remainTime)}" style="display: none;"></div>
+<div id="userPoint" data-th-text="${session.loginUser.point}" style="display: none;"></div>
+<div id="cuPrice" data-th-text="${article.curPrice}" style="display: none;"></div>
+
+
+<!-- 즉시구매 스크립트 -->
+<script src="/js/purchaseScript.js"></script>
+<!-- 경매시간 스크립트 -->
+<script src="/js/auctionClock.js"></script>
+<!-- 입찰 스크립트 -->
+<script src="/js/bidScript.js"></script>
 
 <div data-th-replace="footer :: footer"></div>
 
 </body>
 </html>
-
-<SCRIPT LANGUAGE="JavaScript">
-    <!--
-    var tid=0;
-    var period = parseInt([[${article.remainTime}]]);
-
-    function auctionClock()
-    {
-        period -= 1;
-        if(period<0)
-        {
-            if(tid) clearTimeout(tid);
-            window.setTimeout("location.reload();",1000);
-            return;
-        }
-
-        strTime = '';
-        var day=parseInt(period/(24*60*60));
-        var hour=parseInt((period/60/60)%24);
-        var minute=parseInt((period/60)%60);
-        var second=parseInt(period%60);
-
-        if(day>0) strTime = day + '일 '
-        strTime = strTime + hour + '시간 ' + minute + '분 ' + second + '초';
-
-        var p = document.getElementById("RemainPeriod");
-        if(p) p.innerHTML = strTime ;
-        if(tid) clearTimeout(tid);
-        tid=window.setTimeout("auctionClock()",1000);
-    }
-        if(period>0) auctionClock();
-    //-->
-</SCRIPT>

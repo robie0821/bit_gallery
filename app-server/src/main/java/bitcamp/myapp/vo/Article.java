@@ -19,8 +19,6 @@ public class Article implements Serializable {
   private String photo;
   private Timestamp startDate;
   private Timestamp endDate;
-  private String startDateStr;
-  private String endDateStr;
   private long remainTime;
   private Status status;
   private int curPrice;
@@ -202,21 +200,5 @@ public class Article implements Serializable {
 
   public void setPath(int path) {
     this.path = path;
-  }
-
-  public String getStartDateStr() {
-    return startDateStr;
-  }
-
-  public void setStartDateStr(String startDateStr) {
-    this.startDateStr = startDateStr;
-  }
-
-  public String getEndDateStr() {
-    return endDateStr;
-  }
-
-  public void setEndDateStr(String endDateStr) {
-    this.endDateStr = endDateStr;
   }
 }

@@ -59,9 +59,9 @@
         A.article_no
         from
         auction_history H
-            inner join auction_user U on H.user_no=U.user_no
-            inner join auction_article A on H.article_no=A.article_no
+        inner join auction_user U on H.user_no=U.user_no
+        inner join auction_article A on H.article_no=A.article_no
         where
-            H.user_no=#{userNo}
+        H.user_no=#{userNo}
     </select>
 </mapper>
