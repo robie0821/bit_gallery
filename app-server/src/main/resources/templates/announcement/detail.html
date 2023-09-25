@@ -101,7 +101,7 @@
         }
 
         form {
-            width: 40%;
+            width: 60%;
             margin: 210px auto;
             padding: 20px;
             border: 4px solid #D8D8D8;
@@ -122,35 +122,37 @@
 
 <div data-th-replace="header :: header"></div>
 
-<h1>공지사항</h1>
 
 <p data-th-unless="${announcement}">해당 번호의 게시글이 없습니다!</p>
-<th:block th:if="${announcement}">
+<form>
+    <h1>공지사항</h1>
+    <th:block th:if="${announcement}">
     <table border='1'>
         <tr><th style='width:120px;'>번호</th><td style='width:300px;'><div data-th-text="${announcement.no}"></div></td></tr>
-        <tr><th>제목</th><td><div data-th-text="${announcement.title}"></div></td></tr>
-        <tr><th>내용</th><td><div data-th-text="${announcement.content}" id="detail-content-scroll"></div></td></tr>
+        <tr><th>제목</th><td><div data-th-text="${announcement.title}" style="width: 500px;" ></div></td></tr>
+        <tr><th>내용</th><td><div data-th-text="${announcement.content}" id="detail-content-scroll" style="width: 500px; height: 500px;"></div></td></tr>
         <tr><th>작성자</th><td data-th-text="${announcement.writer.name}">홍길동</td></tr>
         <tr><th>등록일</th><td data-th-text="${#dates.format(announcement.createdDate, 'yyyy-MM-dd')}">2023-09-14</td></tr>
         <tr><th>첨부파일</th><td><div data-th-each="file : ${announcement.announcementAttachedFiles}"><a data-th-href="|https://kr.object.ncloudstorage.com/bitgallery/announcement/${file.filePath}|" data-th-text="${file.filePath}">okok.gif</a></div></td></tr>
     </table>
 </th:block>
+    <div>
+        <input type='hidden' name='currentPage' data-th-value=${currentPage}>
+        <th:block th:if="${#strings.equals(authority, 'ADMIN')}" >
+            <button id="editButton" onclick="moveUpdate()">변경</button>
+            <a style="text-decoration-line: none;" data-th-href="@{/announcement/delete(no=${announcement.no},currentPage=${currentPage})}">삭제</a>
+            <script>
+                function moveUpdate() {
+                   var currentPage = [[${currentPage}]]
+                   var announcementNo = [[${announcement.no}]]
+                   location.href="http://" + window.location.host + "/announcement/update?currentPage=" + currentPage + "&no=" + announcementNo;
+                }
+            </script>
+        </th:block>
+        <a style="text-decoration-line: none;" data-th-href="@{/announcement/list(currentPage=${currentPage})}">목록</a>
+    </div>
+</form>
 
-<div>
-    <input type='hidden' name='currentPage' data-th-value=${currentPage}>
-    <th:block th:if="${#strings.equals(authority, 'ADMIN')}" >
-        <button id="editButton" onclick="moveUpdate()">변경</button>
-        <a style="text-decoration-line: none;" data-th-href="@{/announcement/delete(no=${announcement.no},currentPage=${currentPage})}">삭제</a>
-        <script>
-        function moveUpdate() {
-           var currentPage = [[${currentPage}]]
-           var announcementNo = [[${announcement.no}]]
-           location.href="http://" + window.location.host + "/announcement/update?currentPage=" + currentPage + "&no=" + announcementNo;
-        }
-        </script>
-    </th:block>
-    <a style="text-decoration-line: none;" data-th-href="@{/announcement/list(currentPage=${currentPage})}">목록</a>
-</div>
 <div data-th-replace="footer :: footer"></div>
 </body>
 </html>
