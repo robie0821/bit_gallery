@@ -1,6 +1,6 @@
 CREATE EVENT IF NOT EXISTS auction_start
 	ON SCHEDULE
-		EVERY 1 HOUR STARTS '2023-09-23 00:01:00'
+		EVERY 10 MINUTE STARTS '2023-09-25 10:01:00'
 	ON COMPLETION PRESERVE
     ENABLE
     COMMENT '경매 시작'
@@ -14,7 +14,7 @@ CREATE EVENT IF NOT EXISTS auction_start
 
 CREATE EVENT IF NOT EXISTS auction_end
 	ON SCHEDULE
-		EVERY 1 HOUR STARTS '2023-09-23 00:01:00'
+		EVERY 10 MINUTE STARTS '2023-09-25 10:01:00'
 	ON COMPLETION PRESERVE
     ENABLE
     COMMENT '경매 종료'
@@ -22,7 +22,7 @@ CREATE EVENT IF NOT EXISTS auction_end
 	UPDATE
 	  auction_article A
 	  inner join auction_user U on A.user_no=U.user_no
-	  inner join auction_history H on A.cur_bidder=H.user_no AND A.article_no=H.article_no AND A.cur_price=H.price
+	  left join auction_history H on A.cur_bidder=H.user_no AND A.article_no=H.article_no AND A.cur_price=H.price
 	SET
 	 A.status='end'
 	 ,U.point=U.point+A.cur_price

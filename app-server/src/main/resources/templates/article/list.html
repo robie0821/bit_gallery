@@ -118,7 +118,7 @@
                     <img data-th-if="${article.photo}"
                          data-th-src="|http://tyasnlztlptw19619311.cdn.ntruss.com/article/${article.photo}?type=f&w=160&h=120&autorotate=false&faceopt=false&ttype=jpg|">
                 </td>
-                <td style="text-align: center;"><a data-th-href="@{/article/detail(articleNo=${article.articleNo},(path=${path}),(currentPage=${currentPage}))}" style="font-size: 14px;">게시글 제목</a></td>
+                <td style="text-align: center;"><a data-th-href="@{/article/detail(currentPage=${currentPage},path=${path},articleNo=${article.articleNo})}" style="font-size: 14px;">게시글 제목</a></td>
                 <td style="text-align: center;" data-th-text="${article.curPrice}">27</td>
                 <td style="text-align: center;" data-th-text="${article.endPrice}">27</td>
                 <td style="text-align: center;" data-th-text="${#dates.format(article.startDate, 'yyyy/MM/dd hh:mm:dd')}">2021-09-14 19:20:11</td>

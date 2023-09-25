@@ -180,7 +180,7 @@
             </td>
         </tr>
 
-        <tr>
+        <tr data-th-unless="${#strings.equals(article.status, 'end')}">
             <th>남은시간</th>
             <td><span id=RemainPeriod></span></td>
         </tr>
