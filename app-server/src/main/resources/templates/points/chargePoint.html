@@ -39,7 +39,6 @@
 <!-- 현재 로그인한 사용자의 ID를 가져옴 -->
 <div th:with="currentUserId=${session.loginUser.no}" style="display:none;"></div>
 
-
 <br>
 
 <!-- 사용자 정보 패널 -->
@@ -136,7 +135,20 @@
                             </div>
                             <div id="faq-cat-2-sub-1" class="panel-collapse collapse">
                                 <div class="panel-body">
-                                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                                    <!-- "입찰 내역" 불러오기 -->
+                                    <table class="table table-bordered table-striped" style="display: none;" id="bidTable">
+                                        <thead>
+                                        <tr>
+                                            <th>번호</th>
+                                            <th>작품명</th>
+                                            <th>가격</th>
+                                            <th>입찰 여부</th>
+                                            <th>입찰일</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody id="bidListBody">
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
@@ -153,8 +165,7 @@
         </div>
     </div>
 </div>
-
-
 <script src="/js/chargeScript.js"></script>
+<script src="/js/historyAPI.js" defer></script>
 </body>
 </html>
