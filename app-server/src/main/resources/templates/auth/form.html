@@ -22,6 +22,8 @@
 <button>로그인</button>
  <input type='checkbox' name='saveEmail' data-th-checked="${email}"> 이메일 저장
 </form>
+<a data-th-href="@{https://kauth.kakao.com/oauth/authorize?client_id=14172330052696f1fefd885e45061cc8&
+redirect_uri=http://localhost/social/kakao&response_type=code}" style="font-size: 12px; font-weight: normal; text-align: right;">Kakao Login</a>
 
 <div data-th-replace="footer :: footer"></div>
 
