@@ -2,10 +2,16 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="utf-8">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous">
 
   <!-- Optional theme -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+  <link rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+        integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+        crossorigin="anonymous">
   <meta charset="utf-8">
   <link rel="stylesheet" th:href="@{/css/signup.css}">
 
@@ -36,6 +42,7 @@
     .heading {
       text-align: center;
     }
+
   </style>
 </head>
 
@@ -58,32 +65,59 @@
               <div class="form-group">
                 <div class="col-sm-6">
                   <label class="control-label" for="email"><i class="fa fa-envelope-o"></i></label>
-                  <input class="form-control" id="email" name="email" placeholder="Email" type="email">
+                  <input class="form-control" id="email" name="email" placeholder="Email"
+                         type="email">
                 </div>
                 <div class="col-sm-6">
                   <label class="control-label" for="password"><i class="fa fa-user"></i></label>
-                  <input class="form-control" id="password" name="password" placeholder="Password" type="password">
+                  <input class="form-control" id="password" name="password" placeholder="Password"
+                         type="password">
                 </div>
               </div>
               <div class="form-group">
                 <div class="col-sm-6">
                   <label class="control-label" for="name"><i class="fa fa-user"></i></label>
-                  <input class="form-control" id="name" name="name" placeholder="Username" type="text">
+                  <input class="form-control" id="name" name="name" placeholder="Username"
+                         type="text">
                 </div>
                 <div class="col-sm-6">
                   <label class="control-label" for="phone"><i class="fa fa-envelope-o"></i></label>
-                  <input class="form-control" id="phone" name="phone" placeholder="Phone" type="tel">
+                  <input class="form-control" id="phone" name="phone" placeholder="Phone"
+                         type="tel">
                 </div>
               </div>
 
-              <input type="text" id="postcode" name="zonecode" placeholder="우편번호">
-              <input type="button" onclick="DaumPostcode()" value="우편번호 찾기"><br>
-              <input type="text" id="address" name="address" placeholder="주소"><br>
-              <input type="text" id="detailAddress" name="detailAddr" placeholder="상세주소">
-              <input type="text" id="extraAddress" placeholder="참고항목">
+              <div class="form-group">
+                <div class="col-sm-6">
+                  <input class="form-control" style="width: 400px;" type="text" id="postcode" name="zonecode"
+                         placeholder="우편번호">
+                </div>
+                <div class="clearfix" style="height: 50px; display: flex; align-items: center;">
+                  <span class="child" style="line-height: 50px; font-size: 12px; padding: 5px 10px;" onclick="DaumPostcode()">우편번호 찾기</span>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="col-sm-6">
+                  <input class="form-control" type="text" id="address" name="address"
+                         placeholder="주소">
+                </div>
+                <div class="col-sm-6">
+                  <input class="form-control" type="text" id="detailAddress" name="detailAddr"
+                         placeholder="상세주소">
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-sm-6">
+                  <input class="form-control" type="text" id="extraAddress" placeholder="참고항목">
+                </div>
+              </div>
 
               <div class="clearfix" style="display: flex; justify-content: center;">
-                <button type="submit" class="btn btn-default" style="border-radius: 20px; width: 70px; height: 40px; font-size: 14px; padding: 5px 10px;">Register</button>
+                <button type="submit" class="btn btn-default"
+                        style="border-radius: 20px; width: 70px; height: 40px; font-size: 14px; padding: 5px 10px;">
+                  Register
+                </button>
               </div>
             </div>
           </form>
