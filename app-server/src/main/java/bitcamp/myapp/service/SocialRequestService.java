@@ -4,5 +4,5 @@ import bitcamp.myapp.vo.SocialInfo;
 
 public interface SocialRequestService {
 
-    public String sendPostRequest(SocialInfo socialInfo);
+    public String KakaoTokenRequest(SocialInfo socialInfo);
 }

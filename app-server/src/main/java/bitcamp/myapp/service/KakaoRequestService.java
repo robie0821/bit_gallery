@@ -2,7 +2,6 @@ package bitcamp.myapp.service;
 
 import bitcamp.myapp.vo.KakaoInfo;
 import bitcamp.myapp.vo.SocialInfo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
@@ -26,7 +25,7 @@ public class KakaoRequestService implements SocialRequestService{
 
 
     @Override
-    public String sendPostRequest(SocialInfo socialInfo) {
+    public String KakaoTokenRequest(SocialInfo socialInfo) {
 
 
 
@@ -50,6 +49,23 @@ public class KakaoRequestService implements SocialRequestService{
                 .uri(accessTokenUri) // 대상 서버의 엔드포인트로 변경
                 .header("Content-Type", "application/x-www-form-urlencoded;charset=utf-8")
                 .body(BodyInserters.fromFormData(params))
+                .retrieve()
+                .bodyToMono(String.class)
+                .block(); // 요청을 동기적으로 실행하고 응답을 받습니다.
+        System.out.println("요청 종료");
+        return response;
+
+    }
+
+    public String KakaoUserInfoRequest(String token, String userInfoUri) {
+
+        //요청
+        System.out.println("요청시작" );
+
+        String response = WebClient.create("https://kapi.kakao.com/v2/user/me")
+                .get()
+                .uri(userInfoUri) // 대상 서버의 엔드포인트로 변경
+                .header("Authorization", "Bearer " + token)
                 .retrieve()
                 .bodyToMono(String.class)
                 .block(); // 요청을 동기적으로 실행하고 응답을 받습니다.
