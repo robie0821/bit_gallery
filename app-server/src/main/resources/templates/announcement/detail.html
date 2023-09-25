@@ -124,8 +124,8 @@
 
 
 <p data-th-unless="${announcement}">해당 번호의 게시글이 없습니다!</p>
-<form>
-    <h1>공지사항</h1>
+<div style="margin:30px; border: 8px solid #D8D8D8; padding: 50px; border-radius: 20px; ">
+    <h1 style="text-align: center; font-weight: 320;">공지사항</h1>
     <th:block th:if="${announcement}">
     <table border='1'>
         <tr><th style='width:120px;'>번호</th><td style='width:300px;'><div data-th-text="${announcement.no}"></div></td></tr>
@@ -139,8 +139,8 @@
     <div>
         <input type='hidden' name='currentPage' data-th-value=${currentPage}>
         <th:block th:if="${#strings.equals(authority, 'ADMIN')}" >
-            <button id="editButton" onclick="moveUpdate()">변경</button>
-            <a style="text-decoration-line: none;" data-th-href="@{/announcement/delete(no=${announcement.no},currentPage=${currentPage})}">삭제</a>
+            <button style="font-size: 12px; font-weight: normal; text-align: right;" id="editButton" onclick="moveUpdate()">변경</button>
+            <a style="text-decoration-line: none; font-size: 12px; font-weight: normal; text-align: right;" data-th-href="@{/announcement/delete(no=${announcement.no},currentPage=${currentPage})}">삭제</a>
             <script>
                 function moveUpdate() {
                    var currentPage = [[${currentPage}]]
@@ -149,9 +149,9 @@
                 }
             </script>
         </th:block>
-        <a style="text-decoration-line: none;" data-th-href="@{/announcement/list(currentPage=${currentPage})}">목록</a>
+        <a style="text-decoration-line: none; font-size: 12px; font-weight: normal; text-align: right;" data-th-href="@{/announcement/list(currentPage=${currentPage})}">목록</a>
     </div>
-</form>
+</div>
 
 <div data-th-replace="footer :: footer"></div>
 </body>
