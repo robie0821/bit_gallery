@@ -1,7 +1,6 @@
 package bitcamp.myapp.service;
 
 import bitcamp.myapp.dao.ArticleDao;
-import bitcamp.myapp.vo.Announcement;
 import bitcamp.myapp.vo.Article;
 import bitcamp.myapp.vo.Status;
 import org.springframework.stereotype.Service;
@@ -86,15 +85,9 @@ public class DefaultArticleService implements ArticleService {
     }
   }
 
-  @Override
   public List<Article> findAuctionArticlesByDate(String date) throws Exception {
-    return null;
+    return articleDao.findAuctionArticlesByDate(date);
   }
-
-//  @Override
-//  public List<Article> findAuctionArticlesByDate(String date) throws Exception {
-//    return ArticleDao.findAuctionArticlesByDate(date);
-//  }
 
   @Override
   public Article get(int articleNo) throws Exception {
