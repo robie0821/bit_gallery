@@ -78,9 +78,14 @@ public class DefaultArticleService implements ArticleService {
   }
 
   @Override
-  public List<Article> findAuctionArticlesByDate(String date) throws Exception{
-    return articleDao.findAuctionArticlesByDate(date);
+  public List<Article> findAuctionArticlesByDate(String date) throws Exception {
+    return null;
   }
+
+//  @Override
+//  public List<Article> findAuctionArticlesByDate(String date) throws Exception {
+//    return ArticleDao.findAuctionArticlesByDate(date);
+//  }
 
   @Override
   public Article get(int articleNo) throws Exception {
@@ -114,5 +119,20 @@ public class DefaultArticleService implements ArticleService {
   @Override
   public int buy(Article article) {
     return articleDao.buy(article);
+  }
+
+  @Override
+  public int updateArticleBidNum(int articleNo) throws Exception {
+    return articleDao.updateArticleBidNum(articleNo);
+  }
+
+  @Override
+  public void updateArticleBidPoint(int articleNo, int bidAmount) {
+    articleDao.updateArticleBidPoint(articleNo,bidAmount);
+  }
+
+  @Override
+  public void updateArticleStatus(int articleNo) throws Exception {
+    articleDao.updateArticleStatus(articleNo);
   }
 }

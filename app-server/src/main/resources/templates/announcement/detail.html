@@ -2,28 +2,113 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <style>
-        div#detail-content-scroll {
-            width: 400px;
-            height: 500px;
-            overflow: auto; /* Enable scrolling */
-            overflow-x: hidden;
-            word-break:break-all;
-            white-space: pre-wrap;
+       div#detail-content-scroll {
+           width: 400px;
+           height: 500px;
+           overflow: auto; /* Enable scrolling */
+           overflow-x: hidden;
+           word-break:break-all;
+           white-space: pre-wrap;
+       }
+
+       div#detail-content-scroll::-webkit-scrollbar {
+           width: 10px; /* Set the width of the scrollbar */
+       }
+
+       div#detail-content-scroll::-webkit-scrollbar-track {
+           background-color: #f1f1f1; /* Set the background color of the scrollbar track */
+       }
+
+       div#detail-content-scroll::-webkit-scrollbar-thumb {
+           background-color: #888; /* Set the color of the scrollbar thumb */
+           border-radius: 5px; /* Round the edges of the scrollbar thumb */
+       }
+
+        /* 전체 스타일 */
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
 
-        div#detail-content-scroll::-webkit-scrollbar {
-            width: 10px; /* Set the width of the scrollbar */
+        a {
+            color: #000;
+            text-decoration: none;
+            text-shadow: 2px 2px 4px rgba(135, 206, 235, 0.5);
         }
 
-        div#detail-content-scroll::-webkit-scrollbar-track {
-            background-color: #f1f1f1; /* Set the background color of the scrollbar track */
+        /* 공통 헤더와 푸터 스타일 */
+        .header,
+        .footer {
+            background-color: #D8D8D8;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
         }
 
-        div#detail-content-scroll::-webkit-scrollbar-thumb {
-            background-color: #888; /* Set the color of the scrollbar thumb */
-            border-radius: 5px; /* Round the edges of the scrollbar thumb */
+        .header {
+            top: 0;
+            left: 0;
+            right: 0;
         }
 
+        .footer {
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 50px;
+        }
+    
+        /* 테이블 스타일 */
+        table {
+            border-collapse: separate;
+            border-spacing: 0;
+            border: none;
+            border-radius: 20px;
+            max-width: 100%;
+            margin: 0 auto;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 7px;
+            text-align: center;
+            letter-spacing: 1.5px;
+        }
+
+        th {
+            text-shadow: 2px 2px 4px rgba(128, 128, 128, 0.5);
+        }
+
+        img {
+            max-width: 160px;
+            max-height: 120px;
+        }
+
+        /* 폼 스타일 */
+        form {
+            width: 40%;
+            margin: 210px auto;
+            padding: 20px;
+            border: 4px solid #D8D8D8;
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .content {
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding-top: 60px; /* 여기를 조절 */
+            padding-bottom: 50px;
+        }
     </style>
     <meta charset='UTF-8'>
     <title>BitGallery</title>
@@ -56,11 +141,11 @@
         <button id="editButton" onclick="moveUpdate()">변경</button>
         <a style="text-decoration-line: none;" data-th-href="@{/announcement/delete(no=${announcement.no},currentPage=${currentPage})}">삭제</a>
         <script>
-            function moveUpdate() {
-               var currentPage = [[${currentPage}]]
-               var announcementNo = [[${announcement.no}]]
-               location.href="http://" + window.location.host + "/announcement/update?currentPage=" + currentPage + "&no=" + announcementNo;
-            }
+        function moveUpdate() {
+           var currentPage = [[${currentPage}]]
+           var announcementNo = [[${announcement.no}]]
+           location.href="http://" + window.location.host + "/announcement/update?currentPage=" + currentPage + "&no=" + announcementNo;
+        }
         </script>
     </th:block>
     <a style="text-decoration-line: none;" data-th-href="@{/announcement/list(currentPage=${currentPage})}">목록</a>

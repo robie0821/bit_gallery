@@ -6,6 +6,7 @@ import bitcamp.myapp.vo.Article;
 import bitcamp.myapp.vo.Status;
 import bitcamp.myapp.vo.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Required;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -44,6 +45,12 @@ public class ArticleController {
       return "redirect:/auth/form";
     }
 
+    if (article.getEndPrice() <= article.getCurPrice()) {
+      throw new Exception("시작가격은 즉시구입 가격보다 높아야 합니다.");
+    }
+    if(article.getCurPrice()*2 >= article.getEndPrice()) {
+      throw new Exception("즉시구입 가격은 시작가격의 2배 이상으로 해야합니다.");
+    }
 
     article.setWriter(loginUser);
 
@@ -170,11 +177,5 @@ public class ArticleController {
   @PostMapping("buy")
   public String buy() throws Exception {
     return "";
-  }
-
-  @ResponseBody
-  @GetMapping("/getEvent")
-  public List<Article> getAuctionArticlesByDate(@RequestParam String date) throws Exception {
-    return articleService.findAuctionArticlesByDate(date);
   }
 }
