@@ -75,7 +75,8 @@
     email,
     join_date as joinDate,
     profile_photo as profilePhoto,
-    point
+    point,
+    authority
     from
     auction_user
     where
