@@ -30,6 +30,7 @@ public class ArticleController {
   public void form(
           @RequestParam("currentPage") int currentPage,
           Model model) {
+    //System.out.println("Article-form");
     model.addAttribute("currentPage", currentPage);
   }
 
@@ -93,6 +94,7 @@ public class ArticleController {
                        @RequestParam("articleNo") int articleNo,
                        @RequestParam("path") int path,
                        Model model) throws Exception {
+    //System.out.println("detail - currentPage : " + currentPage);
     model.addAttribute("currentPage", currentPage);
     Article article = articleService.get(articleNo);
 
@@ -108,6 +110,7 @@ public class ArticleController {
         article.setRemainTime(200);
       }
       model.addAttribute("article", article);
+      model.addAttribute("currentPage", currentPage);
     }
     return "article/detail";
   }
