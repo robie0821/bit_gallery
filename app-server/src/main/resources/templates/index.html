@@ -160,12 +160,23 @@
                         <div style="margin-top: 40px;"></div>
 
                         <div style="display: flex; justify-content: center; align-items: center;">
-                            <input type="text" class="form-control" placeholder="작가명을 입력하세요."
+                            <input type="text" class="form-control" placeholder="작가명을 입력하세요." id="artist"
                                    style="border-radius: 20px; width: 50%; margin-right: 5px; text-align: center;">
-                            <button class="btn btn-custom" type="button"
+                            <button class="btn btn-custom" type="button" data-th-onclick='search()'
                                     style="height: 34px; border-radius: 20px; width: 15%; display: flex; justify-content: center; align-items: center;">
                                 <span th:text="'search'" style="font-size: 14px; text-transform: lowercase;"></span>
                             </button>
+
+                            <script th:inline="javascript">
+                                /*<![CDATA[*/
+                                function search() {
+                                    const artist = document.getElementById('artist').value;
+
+                                    location.href='article/list?currentPage=1&path=1&artist=' + artist;
+                                }
+                                /*<![CDATA[*/
+                            </script>
+
                         </div>
                         <br>
                         <br>
@@ -219,3 +230,5 @@
 <script th:src="@{/js/main.js}"></script>
 </body>
 </html>
+
+</script>
