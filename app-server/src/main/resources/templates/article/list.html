@@ -142,11 +142,12 @@
                 <!-- 페이지 번호 추가 -->
                 <script>
                     // 전체 페이지 수와 현재 페이지를 서버에서 받아와야 합니다.
-                    const totalPages = parseInt([[${pageSize}]]);
+                    const totalPages = parseInt([[${size}]]);
                     const currentPage = parseInt([[${currentPage}]]);
-                    const row = parseInt(10);
+                    const pageSize = parseInt([[${pageSize}]]);
+                    const row = parseInt(5);
                     const status = "[[${status}]]";
-                    const actualSize = totalPages % row == 0 ? parseInt(totalPages / row) : parseInt(totalPages / row) + 1;
+                    const actualSize = totalPages % pageSize == 0 ? parseInt(totalPages / pageSize) : parseInt(totalPages / pageSize) + 1;
 
                     const startPage = currentPage % row == 0 ? (parseInt(((currentPage-1) / row)) *row) + 1 : (parseInt((currentPage / row)) * row) + 1;
                     const endPage = startPage - 1 + Math.min(row, actualSize - startPage + 1);
@@ -189,6 +190,8 @@
                             <li class="page-item active"><a class="page-link" href="/article/list?status=${status}&currentPage=${currentPage + 1}">Next</a></li>`;
                     }
                 </script>
+
+
 
             </ul>
         </nav>
