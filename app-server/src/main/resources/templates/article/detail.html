@@ -126,9 +126,9 @@
     <!-- 변경 삭제 목록 폼 -->
     <div style="text-align: center;">
         <p>
-            <a style="font-size: 12px; font-weight: normal; text-align: right;" data-th-if="${#strings.equals(article.status, 'expected')}"
+            <a style="font-size: 12px; font-weight: normal; text-align: right;" data-th-if="${#strings.equals(article.status, 'expected')} and ${editable}"
                data-th-href="@{/article/update/(articleNo=${article.articleNo},currentPage=${currentPage})}">변경</a>&nbsp
-            <a style="font-size: 12px; font-weight: normal; text-align: right;" data-th-if="${#strings.equals(article.status, 'expected')}"
+            <a style="font-size: 12px; font-weight: normal; text-align: right;" data-th-if="${#strings.equals(article.status, 'expected')} and ${editable}"
                data-th-href="@{/article/delete(articleNo=${article.articleNo},currentPage=${currentPage})}">삭제</a>&nbsp
 
             <a style="font-size: 12px; font-weight: normal; text-align: right;" data-th-if="${article.path} == 0"
@@ -252,5 +252,3 @@
 <!-- 입찰 스크립트 -->
 <script src="/js/bidScript.js"></script>
 </html>
-
-

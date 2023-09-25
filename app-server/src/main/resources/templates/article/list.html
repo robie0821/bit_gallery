@@ -101,12 +101,10 @@
 <div class="content" style="margin:10px;">
     <div style="border: 8px solid #D8D8D8; padding: 75px; border-radius: 20px;">
 
-
-
         <h2 style="text-align: center; font-weight: 320; letter-spacing: 2px;" th:text="${status == 'progress' ? '진행 중인 경매' : (status == 'expected' ? '진행 예정 경매' : (status == 'end' ? '종료된 경매' : '게시글 목록'))}"></h2>
 
         <div style='margin:5px;'>
-            <a data-th-href="@{/article/form(currentPage=${currentPage})}" style="font-size: 12px; font-weight: normal; text-align: right;">new</a>
+            <a data-th-if="${writable}" data-th-href="@{/article/form(currentPage=${currentPage})}" style="font-size: 12px; font-weight: normal; text-align: right;">new</a>
         </div>
         <table>
             <thead>
@@ -127,7 +125,7 @@
                     <img data-th-if="${article.photo}"
                          data-th-src="|http://tyasnlztlptw19619311.cdn.ntruss.com/article/${article.photo}?type=f&w=160&h=120&autorotate=false&faceopt=false&ttype=jpg|">
                 </td>
-                <td style="text-align: center;"><a data-th-href="@{/article/detail(currentPage=${currentPage},path=${path},articleNo=${article.articleNo})}" style="font-size: 14px;">게시글 제목</a></td>
+                <td style="text-align: center;"><a data-th-href="@{/article/detail(currentPage=${currentPage},path=${path},articleNo=${article.articleNo})}" data-th-text="${article.title}" style="font-size: 14px;">게시글 제목</a></td>
                 <td style="text-align: center;" data-th-text="${article.curPrice}">27</td>
                 <td style="text-align: center;" data-th-text="${article.endPrice}">27</td>
                 <td style="text-align: center;" data-th-text="${#dates.format(article.startDate, 'yyyy/MM/dd hh:mm:dd')}">2021-09-14 19:20:11</td>
