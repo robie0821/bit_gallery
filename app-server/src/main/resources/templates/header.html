@@ -61,14 +61,17 @@
         <li><a href='/article/list?status=expected&currentPage=1' style="margin-left: 40px; font-weight: 500; text-decoration: none; color: black; font-weight: 300; font-size: 15px;">예정경매</a></li>
         <li><a href='/article/list?status=progress&currentPage=1' style="margin-left: 40px; font-weight: 500; text-decoration: none; color: black; font-weight: 300; font-size: 15px;">진행경매</a></li>
         <li><a href='/article/list?status=end&currentPage=1' style="margin-left: 40px; font-weight: 500; text-decoration: none; color: black; font-weight: 300; font-size: 15px;">종료경매</a></li>
-
+        <li data-th-if="${session.loginUser == null}" style="margin-left: 40px; font-weight: 500; text-decoration: none; color: black; font-weight: 300; font-size: 15px;">
+            <a href='/auth/form'>로그인</a>
+        </li>
         <li data-th-if="${session.loginUser != null}" style="display: flex; align-items: center; margin-left: 40px; font-weight: 500; text-decoration: none; color: black; font-weight: 300; font-size: 15px;">
             <a data-th-href="@{/points/chargePoint}">
-                <span data-th-text="'&quot;' + ${session.loginUser.name} + '&quot;님, 보유 포인트 : ' + ${session.loginUser.point}" style="text-decoration: none; cursor: pointer;"></span>
+                <span data-th-text="'&quot;' + ${session.loginUser.name.toUpperCase()} + '&quot;님, 보유 포인트 : ' + ${session.loginUser.point}" style="text-decoration: none; cursor: pointer;"></span>
             </a>
-
-            <br>
-            <a href='/auth/logout' style="font-size: 7px; margin-left: 40px;">[로그아웃]</a>
+            <a href='/auth/logout' style="font-size: 7px; margin-left: 30px; font-weight: 500; text-decoration: none; color: black; font-weight: 300; text-decoration: none; cursor: pointer;">[로그아웃]</a>
+        </li>
+        <li data-th-if="${session.loginUser == null}" style="margin-left: 40px; font-weight: 500; text-decoration: none; color: black; font-weight: 300; font-size: 15px;">
+            <a href="/user/form" class="page-scroll">회원가입</a>
         </li>
     </ul>
 </div>
