@@ -100,7 +100,6 @@ public class AnnouncementController {
   public String detail(@RequestParam("currentPage") int currentPage,
                        @RequestParam("no") int no, Model model, HttpSession session) throws Exception {
     User loginUser = (User) session.getAttribute("loginUser");
-    System.out.println("유저 : " + loginUser.toString());
     if (loginUser == null) {
       model.addAttribute("authority", "User");
     } else {
