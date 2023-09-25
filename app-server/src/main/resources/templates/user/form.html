@@ -89,27 +89,25 @@
 
               <div class="form-group">
                 <div class="col-sm-6">
-                  <input class="form-control" style="width: 400px;" type="text" id="postcode" name="zonecode"
+                  <input class="form-control" onclick="DaumPostcode()" type="text" id="postcode" name="zonecode"
                          placeholder="우편번호">
                 </div>
-                <div class="clearfix" style="height: 50px; display: flex; align-items: center;">
-                  <span class="child" style="line-height: 50px; font-size: 12px; padding: 5px 10px;" onclick="DaumPostcode()">우편번호 찾기</span>
+<!--                <div class="clearfix" style="height: 50px; text-align: right display: flex; align-items: center;">-->
+<!--                  <span class="child" style="line-height: 50px; font-size: 12px; padding: 5px 10px;" onclick="DaumPostcode()">우편번호 찾기</span>-->
+<!--                </div>-->
+                <div class="col-sm-6">
+                  <input class="form-control" type="text" id="address" name="address"
+                         placeholder="주소">
                 </div>
               </div>
 
               <div class="form-group">
                 <div class="col-sm-6">
-                  <input class="form-control" type="text" id="address" name="address"
-                         placeholder="주소">
+                  <input class="form-control" type="text" id="extraAddress" placeholder="참고항목">
                 </div>
                 <div class="col-sm-6">
                   <input class="form-control" type="text" id="detailAddress" name="detailAddr"
                          placeholder="상세주소">
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="col-sm-6">
-                  <input class="form-control" type="text" id="extraAddress" placeholder="참고항목">
                 </div>
               </div>
 
