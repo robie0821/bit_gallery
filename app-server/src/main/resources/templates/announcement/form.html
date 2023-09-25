@@ -72,7 +72,7 @@
             margin: 20px 0;
         }
         form {
-            width: 40%;
+            width: 60%;
             margin: 210px auto;
             padding: 20px;
             border: 4px solid #D8D8D8;
@@ -91,7 +91,7 @@
         input[type="text"],
         input[type="file"] {
             width: 100%;
-            max-width: 300px; /* 최대 너비 설정 */
+            max-width: 500px; /* 최대 너비 설정 */
             padding: 8px;
             border: 1px solid #ccc;
             border-radius: 5px;
@@ -99,7 +99,7 @@
         }
         textarea {
             width: 100%;
-            max-width: 300px; /* 최대 너비 설정 */
+            max-width: 500px; /* 최대 너비 설정 */
             height: 100px; /* 높이 조정 */
             padding: 8px;
             border: 1px solid #ccc;
@@ -136,12 +136,12 @@
 
 <div data-th-replace="header :: header"></div>
 
-<h1>공지사항</h1>
 
 <form id="announcement-form" onsubmit="return false;" >
-  <label>제목 <input type='text' name='title' style="width: 400px;" placeholder='제목을 입력해주세요.' /></label><br>
-  <label>내용 <textarea name='content' placeholder='내용을 입력해주세요.' style="width: 400px; height: 500px;" ></textarea></label><br>
-  파일 <input type='file' name='files' multiple><br>
+    <h1>공지사항</h1>
+    <label>제목 <input type='text' name='title' style="width: 500px;" placeholder='제목을 입력해주세요.' /></label><br>
+  <label>내용 <textarea name='content' placeholder='내용을 입력해주세요.' style="width: 500px; height: 500px;" ></textarea></label><br>
+  <input type='file' name='files' multiple><br>
 
   <input type='hidden' name='currentPage' data-th-value=${currentPage}>
   <button id="submit-btn" onclick="addAnnouncement();" >등록</button>
