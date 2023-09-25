@@ -62,23 +62,30 @@
                 </div>
                 <div class="col-sm-6">
                   <label class="control-label" for="exampleInputName2"><i class="fa fa-envelope-o"></i></label>
-                  <input class="form-control" id="exampleInputName2" placeholder="Email" type="email">
+                  <input class="form-control" id="exampleInputName3" placeholder="Email" type="email">
                 </div>
               </div>
               <div class="form-group">
                 <div class="col-sm-6">
                   <label class="control-label" for="exampleInputName2"><i class="fa fa-user"></i></label>
-                  <input class="form-control" id="exampleInputName2" placeholder="Password" type="text">
+                  <input class="form-control" id="exampleInputName4" placeholder="Password" type="text">
                 </div>
                 <div class="col-sm-6">
                   <label class="control-label" for="exampleInputName2"><i class="fa fa-envelope-o"></i></label>
-                  <input class="form-control" id="exampleInputName2" placeholder="Phone" type="email">
+                  <input class="form-control" id="exampleInputName5" placeholder="Phone" type="email">
                 </div>
               </div>
               <div class="form-group">
                 <div class="col-sm-12">
                   <label class="control-label" for="exampleInputName2"><i class="fa fa-lock"></i></label>
-                  <input class="form-control" id="exampleInputName2" placeholder="Address" type="text">
+                  <input class="form-control" id="exampleInputName6" placeholder="Address" type="text">
+                  <input type="text" id="sample4_postcode" placeholder="우편번호">
+                  <input type="button" onclick="sample4_execDaumPostcode()" value="우편번호 찾기"><br>
+                  <input type="text" id="sample4_roadAddress" placeholder="도로명주소">
+                  <input type="text" id="sample4_jibunAddress" placeholder="지번주소">
+                  <span id="guide" style="color:#999;display:none"></span>
+                  <input type="text" id="sample4_detailAddress" placeholder="상세주소">
+                  <input type="text" id="sample4_extraAddress" placeholder="참고항목">
                 </div>
               </div>
 
@@ -101,5 +108,7 @@
 
 <div data-th-replace="footer :: footer"></div>
 
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script th:src="@{/js/kakaoAddress.js}"></script>
 </body>
 </html>
