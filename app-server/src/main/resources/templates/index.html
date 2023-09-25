@@ -12,7 +12,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js"></script>
 
-
     <!-- Favicons -->
     <link rel="shortcut icon" th:href="@{/img/favicon.ico}" type="image/x-icon">
     <link rel="apple-touch-icon" th:href="@{/img/apple-touch-icon.png}">
@@ -160,12 +159,31 @@
                         <div style="margin-top: 40px;"></div>
 
                         <div style="display: flex; justify-content: center; align-items: center;">
-                            <input type="text" class="form-control" placeholder="작가명을 입력하세요."
-                                   style="border-radius: 20px; width: 50%; margin-right: 5px; text-align: center;">
-                            <button class="btn btn-custom" type="button"
+                            <input type="text" class="form-control" placeholder="작가명을 입력하세요." id="artist"
+                                   style="border-radius: 20px; width: 50%; margin-right: 5px; text-align: center;"
+                                   onkeydown="if (event.keyCode === 13) search();">
+                            <button class="btn btn-custom" type="button" data-th-onclick='search()'
                                     style="height: 34px; border-radius: 20px; width: 15%; display: flex; justify-content: center; align-items: center;">
                                 <span th:text="'search'" style="font-size: 14px; text-transform: lowercase;"></span>
                             </button>
+
+                            <script th:inline="javascript">
+                                /*<![CDATA[*/
+                                function search() {
+                                    const artist = document.getElementById('artist').value;
+
+                                    location.href='article/list?currentPage=1&path=1&artist=' + artist;
+                                }
+                                /*<![CDATA[*/
+
+
+                                function search() {
+                                    const artist = document.getElementById('artist').value;
+                                    location.href = 'article/list?currentPage=1&path=1&artist=' + artist;
+                                }
+
+                            </script>
+
                         </div>
                         <br>
                         <br>
@@ -208,7 +226,7 @@
     </footer>
 </div>
 
-<!-- JavaScript Libraries -->
+<!— JavaScript Libraries —>
 
 <script th:src="@{/js/calendar.js}"></script>
 <script th:src="@{/js/bootstrap.js}"></script>
@@ -219,3 +237,5 @@
 <script th:src="@{/js/main.js}"></script>
 </body>
 </html>
+
+</script>

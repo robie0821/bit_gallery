@@ -107,19 +107,17 @@
         }
 
     </style>
-
 </head>
-
 <body>
 
 <div data-th-replace="header :: header"></div>
 
 
-
 <p data-th-unless="${article}">해당 번호의 게시글이 없습니다!</p>
 
 <form data-th-if="${article}" enctype='multipart/form-data'>
-    <h1 th:text="${#strings.equals(article.status, 'progress')} ? '진행 중인 경매' : (${#strings.equals(article.status, 'expected')} ? '진행 예정 경매' : (${#strings.equals(article.status, 'end')} ? '종료된 경매' : article.title))">게시글</h1>
+    <h1 th:text="${#strings.equals(article.status, 'progress')} ? '진행 중인 경매' : (${#strings.equals(article.status, 'expected')} ? '진행 예정 경매' : (${#strings.equals(article.status, 'end')} ? '종료된 경매' : article.title))">
+        게시글</h1>
     <table border='1'>
         <tr>
             <th style='width:120px;'>작품</th>
@@ -130,7 +128,22 @@
                 </a>
             </td>
         </tr>
-
+        <!-- 입찰/즉시구매 폼 -->
+        <div>
+            <p>
+            <form id="bidForm" th:action="@{/history/add}" method="post" onsubmit="return validateForm();"
+                  data-th-if="${#strings.equals(article.status, 'progress')} and ${session.loginUser}">
+                <a>
+                    <input type="text" id="bidAmount" name="bidAmount" placeholder="입찰할 금액 입력"
+                           onkeyup="formatCurrency(this)">
+                    <button id="bidButton" class="btn btn-primary">입찰</button>
+                </a>
+            </form>
+            <a data-th-if="${#strings.equals(article.status, 'progress')} and ${session.loginUser}" id="purchaseButton">
+                <button class="btn btn-primary">즉시구매</button>
+            </a>
+            </p>
+        </div>
         <tr>
             <th>번호</th>
             <td data-th-text="${article.articleNo}">-번호-</td>
@@ -190,26 +203,10 @@
             <td data-th-text="${article.bidCount}">34</td>
         </tr>
 
-
     </table>
-</form>
-    <!-- form 안에 넣으면 오류가 발생하는 현상 -->
-
-                <!-- 입찰/즉시구매 폼 -->
-    <div>
-        <p>
-            <a data-th-if="${#strings.equals(article.status, 'progress')}">
-                <input type="text" id="bidAmount" placeholder="입찰할 금액 입력" onkeyup="formatCurrency(this)">
-                <button id="bidButton" class="btn btn-primary">입찰</button>
-            </a>
 
 
-            <a data-th-if="${#strings.equals(article.status, 'progress')}" id="purchaseButton">
-                <button class="btn btn-primary">즉시구매</button>
-            </a>
-        </p>
-    </div>
-                    <!-- 변경 삭제 목록 폼 -->
+    <!-- 변경 삭제 목록 폼 -->
     <div>
         <p>
             <a data-th-if="${#strings.equals(article.status, 'expected')}"
@@ -224,30 +221,31 @@
         </p>
     </div>
 
+
     <!-- form 안에 넣으면 오류가 발생하는 현상 -->
 
+    <!-- form 안에 넣으면 오류가 발생하는 현상 -->
+    <div id="userNo" data-th-if="${session.loginUser}" data-th-text="${session.loginUser.no}" style="display: none;"></div>
+    <div id="userPoints" data-th-if="${session.loginUser}" data-th-text="${session.loginUser.point}"
+         style="display: none;"></div>
+    <div id="userPoint" data-th-if="${session.loginUser}" data-th-text="${session.loginUser.point}"
+         style="display: none;"></div>
+    <div id="articleNo" data-th-text="${article.articleNo}" style="display: none;"></div>
+    <div id="endPrice" data-th-text="${article.endPrice}" style="display: none;"></div>
+    <div id="currentPage" data-th-text="${currentPage}" style="display: none;"></div>
+    <div id="path" data-th-text="0" style="display: none;"></div>
+    <div id="period" data-th-text="${(article.remainTime)}" style="display: none;"></div>
+    <div id="cuPrice" data-th-text="${article.curPrice}" style="display: none;"></div>
 
-
-<!-- HTML 태그에 삽입 -->
-<div id="userNo" data-th-text="${session.loginUser.no}" style="display: none;"></div>
-<div id="articleNo" data-th-text="${article.articleNo}" style="display: none;"></div>
-<div id="endPrice" data-th-text="${article.endPrice}" style="display: none;"></div>
-<div id="userPoints" data-th-text="${session.loginUser.point}" style="display: none;"></div>
-<div id="currentPage" data-th-text="${currentPage}" style="display: none;"></div>
-<div id="path" data-th-text="0" style="display: none;"></div>
-<div id="period" data-th-text="${(article.remainTime)}" style="display: none;"></div>
-<div id="userPoint" data-th-text="${session.loginUser.point}" style="display: none;"></div>
-<div id="cuPrice" data-th-text="${article.curPrice}" style="display: none;"></div>
-
-
+</form>
+</body>
+<div data-th-replace="footer :: footer"></div>
 <!-- 즉시구매 스크립트 -->
 <script src="/js/purchaseScript.js"></script>
 <!-- 경매시간 스크립트 -->
 <script src="/js/auctionClock.js"></script>
 <!-- 입찰 스크립트 -->
 <script src="/js/bidScript.js"></script>
-
-<div data-th-replace="footer :: footer"></div>
-
-</body>
 </html>
+
+
