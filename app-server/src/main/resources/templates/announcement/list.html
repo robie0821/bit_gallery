@@ -143,8 +143,8 @@
 </table>
 <a style="text-decoration-line: none;" data-th-href='@{/}'>메인</a>
 
-<nav aria-label="Page navigation">
-    <ul id="pagination" class="pagination horizontal-pagination">
+<nav aria-label="Page navigation" style="text-align: center;">
+    <ul id="pagination" class="pagination horizontal-pagination" style="padding: 0px 0px 0px 0px;">
 
         <!-- 페이지 번호 추가 -->
         <script>
@@ -167,10 +167,10 @@
 
             if (currentPage === 1) {
                 paginationElement.innerHTML += `
-                    <li class="page-item disabled" style="visibility: hidden;"><a class="page-link" href="/announcement/list?currentPage=1">Previous</a></li>`;
+                    <li class="page-item disabled" style="visibility: hidden;"><a class="page-link" href="/announcement/list?currentPage=1">이전</a></li>`;
             } else {
                  paginationElement.innerHTML += `
-                    <li class="page-item active"><a class="page-link" href="/announcement/list?currentPage=${currentPage - 1}">Previous</a></li>`;
+                    <li class="page-item active"><a class="page-link" href="/announcement/list?currentPage=${currentPage - 1}">이전</a></li>`;
             }
 
             // 페이지 번호 추가
@@ -190,10 +190,10 @@
 
             if (currentPage >= actualSize) {
                 paginationElement.innerHTML += `
-                    <li class="page-item disabled" style="visibility: hidden;"><a class="page-link" href="/announcement/list?currentPage=${actualSize}">Next</a></li>`;
+                    <li class="page-item disabled" style="visibility: hidden;"><a class="page-link" href="/announcement/list?currentPage=${actualSize}">다음</a></li>`;
             } else {
                  paginationElement.innerHTML += `
-                    <li class="page-item active"><a class="page-link" href="/announcement/list?currentPage=${currentPage + 1}">Next</a></li>`;
+                    <li class="page-item active"><a class="page-link" href="/announcement/list?currentPage=${currentPage + 1}">다음</a></li>`;
             }
         </script>
 
