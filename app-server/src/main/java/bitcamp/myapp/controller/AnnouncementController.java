@@ -120,9 +120,9 @@ public class AnnouncementController {
 
     User loginUser = (User) session.getAttribute("loginUser");
     if (loginUser == null) {
-      model.addAttribute("authority", "User");
+      model.addAttribute("authority", Authority.USER);
     } else {
-      model.addAttribute("authority", "ADMIN");
+      model.addAttribute("authority", loginUser.getAuthority());
     }
     System.out.println("현재 유저 등급 : " + model.getAttribute("authority"));
     model.addAttribute("test", 1);
