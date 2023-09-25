@@ -186,7 +186,7 @@ public class AnnouncementController {
     } else if (updateResult == 3) {
       return ResponseEntity.ok("update_no_title");
     }
-    return ResponseEntity.ok("update_commit");
+      return ResponseEntity.ok("update_commit");
   }
 
   @GetMapping("fileDelete")
@@ -213,7 +213,7 @@ public class AnnouncementController {
   private void isSessionUserAdmin(HttpSession session) throws Exception {
     User loginUser = (User) session.getAttribute("loginUser");
     if (loginUser == null || loginUser.getAuthority() != Authority.ADMIN) {
-      throw new Exception("로그인이 되어있지 않거나 권한이 없습니다.");
+       throw new Exception("로그인이 되어있지 않거나 권한이 없습니다.");
     }
   }
   private boolean isSessionUserAdminGetBoolean(HttpSession session) {
@@ -222,3 +222,14 @@ public class AnnouncementController {
   }
 
 }
+
+
+
+
+
+
+
+
+
+
+
