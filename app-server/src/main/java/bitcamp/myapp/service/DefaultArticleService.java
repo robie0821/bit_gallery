@@ -41,7 +41,8 @@ public class DefaultArticleService implements ArticleService {
       int endPage = Math.min(pageSize, size - startPage);
       List<Article> subList = list.stream().skip(startPage).limit(endPage).toList();
 
-      model.addAttribute("pageSize", size);
+      model.addAttribute("pageSize", pageSize);
+      model.addAttribute("size", size);
       model.addAttribute("list", subList);
       model.addAttribute("currentPage", currentPage);
       model.addAttribute("status", status.name());
@@ -77,9 +78,15 @@ public class DefaultArticleService implements ArticleService {
     }
   }
 
+  @Override
   public List<Article> findAuctionArticlesByDate(String date) throws Exception {
-    return articleDao.findAuctionArticlesByDate(date);
+    return null;
   }
+
+//  @Override
+//  public List<Article> findAuctionArticlesByDate(String date) throws Exception {
+//    return ArticleDao.findAuctionArticlesByDate(date);
+//  }
 
   @Override
   public Article get(int articleNo) throws Exception {
