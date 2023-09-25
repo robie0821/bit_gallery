@@ -68,7 +68,7 @@
             border-spacing: 0; /* 테두리 간격을 0으로 설정 */
             border: none; /* 테두리 없애기 */
             border-radius: 20px; /* 표 전체에 둥글게 설정 */
-            max-width: 100%; /* 표의 최대 너비를 80%로 설정 */
+            max-width: 80%; /* 표의 최대 너비를 80%로 설정 */
             margin: 0 auto; /* 가운데 정렬을 위해 추가 */
         }
 
@@ -77,11 +77,13 @@
             padding: 7px;
             text-align: center;
             letter-spacing: 1.5px;
+            font-size: 13px;
 
         }
 
         th {
             text-shadow: 2px 2px 4px rgba(128, 128, 128, 0.5); /* 형광펜 효과 추가 */
+            font-size: 12px; font-weight: normal; text-align: center;
         }
 
         img {
@@ -90,8 +92,9 @@
         }
 
         form {
-            width: 70%;
-            margin: 210px auto;
+            width: 500px;
+            height: 500px;
+            margin: 30px;
             padding: 20px;
             border: 4px solid #D8D8D8;
             border-radius: 20px;
@@ -107,15 +110,16 @@
 <body>
 
 <div data-th-replace="header :: header"></div>
-
-<form>
-<h1>공지사항</h1>
+<div class="content" style="margin:30px;">
+<form style="border: 8px solid #D8D8D8; padding: 20px; border-radius: 20px;">
+<h2 style="text-align: center; font-weight: 320; letter-spacing: 2px;">공지사항</h2>
 
 <div style='margin:5px;'>
 <a style="text-decoration-line: none;"
    data-th-if="${#strings.equals(authority, 'ADMIN')}"
-   data-th-href="@{/announcement/form(currentPage=${currentPage})}">새 글</a>
+   data-th-href="@{/announcement/form(currentPage=${currentPage})}">new</a>
 </div>
+    <br>
 
 <table border='1'>
 <thead>
@@ -141,7 +145,6 @@
 </tbody>
 
 </table>
-<a style="text-decoration-line: none;" data-th-href='@{/}'>메인</a>
 
 <nav aria-label="Page navigation" style="text-align: center;">
     <ul id="pagination" class="pagination horizontal-pagination" style="padding: 0px 0px 0px 0px;">
@@ -176,7 +179,7 @@
             // 페이지 번호 추가
             for (let page = startPage; page <= endPage; page++) {
                 const pageItemClass = page === currentPage ? 'current-page' : '';
-                const pageStyle = page === currentPage ? 'font-weight: bold; color: blue;' : '';
+                const pageStyle = page === currentPage ? 'font-weight: bold; color: lightblue;' : '';
 
                 // 현재 페이지에 해당하는 <li> 요소에 스타일을 추가하고 라인 번호를 표시합니다.
                 const pageLink = `
@@ -200,8 +203,9 @@
     </ul>
 </nav>
 </form>
-
+</div>
+<footer>
     <div data-th-replace="footer :: footer"></div>
-
+</footer>
 </body>
 </html>
