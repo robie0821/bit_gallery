@@ -2,27 +2,27 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <style>
-       div#detail-content-scroll {
-           width: 400px;
-           height: 500px;
-           overflow: auto; /* Enable scrolling */
-           overflow-x: hidden;
-           word-break:break-all;
-           white-space: pre-wrap;
-       }
+        div#detail-content-scroll {
+            width: 400px;
+            height: 500px;
+            overflow: auto; /* Enable scrolling */
+            overflow-x: hidden;
+            word-break:break-all;
+            white-space: pre-wrap;
+        }
 
-       div#detail-content-scroll::-webkit-scrollbar {
-           width: 10px; /* Set the width of the scrollbar */
-       }
+        div#detail-content-scroll::-webkit-scrollbar {
+            width: 10px; /* Set the width of the scrollbar */
+        }
 
-       div#detail-content-scroll::-webkit-scrollbar-track {
-           background-color: #f1f1f1; /* Set the background color of the scrollbar track */
-       }
+        div#detail-content-scroll::-webkit-scrollbar-track {
+            background-color: #f1f1f1; /* Set the background color of the scrollbar track */
+        }
 
-       div#detail-content-scroll::-webkit-scrollbar-thumb {
-           background-color: #888; /* Set the color of the scrollbar thumb */
-           border-radius: 5px; /* Round the edges of the scrollbar thumb */
-       }
+        div#detail-content-scroll::-webkit-scrollbar-thumb {
+            background-color: #888; /* Set the color of the scrollbar thumb */
+            border-radius: 5px; /* Round the edges of the scrollbar thumb */
+        }
 
     </style>
     <meta charset='UTF-8'>
@@ -56,11 +56,11 @@
         <button id="editButton" onclick="moveUpdate()">변경</button>
         <a style="text-decoration-line: none;" data-th-href="@{/announcement/delete(no=${announcement.no},currentPage=${currentPage})}">삭제</a>
         <script>
-        function moveUpdate() {
-           var currentPage = [[${currentPage}]]
-           var announcementNo = [[${announcement.no}]]
-           location.href="http://" + window.location.host + "/announcement/update?currentPage=" + currentPage + "&no=" + announcementNo;
-        }
+            function moveUpdate() {
+               var currentPage = [[${currentPage}]]
+               var announcementNo = [[${announcement.no}]]
+               location.href="http://" + window.location.host + "/announcement/update?currentPage=" + currentPage + "&no=" + announcementNo;
+            }
         </script>
     </th:block>
     <a style="text-decoration-line: none;" data-th-href="@{/announcement/list(currentPage=${currentPage})}">목록</a>
