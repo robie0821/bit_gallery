@@ -81,6 +81,15 @@
             max-width: 160px;
             max-height: 120px;
         }
+
+        .horizontal-pagination .page-item {
+            display: inline-block;
+        }
+
+        .horizontal-pagination .page-link {
+            padding: 8px 12px;
+            margin: 0 4px;
+        }
     </style>
 
 
@@ -127,6 +136,63 @@
             </tr>
             </tbody>
         </table>
+
+        <nav aria-label="Page navigation">
+            <ul id="pagination" class="pagination horizontal-pagination">
+                <!-- 페이지 번호 추가 -->
+                <script>
+                    // 전체 페이지 수와 현재 페이지를 서버에서 받아와야 합니다.
+                    const totalPages = parseInt([[${pageSize}]]);
+                    const currentPage = parseInt([[${currentPage}]]);
+                    const row = parseInt(10);
+                    const status = "[[${status}]]";
+                    const actualSize = totalPages % row == 0 ? parseInt(totalPages / row) : parseInt(totalPages / row) + 1;
+
+                    const startPage = currentPage % row == 0 ? (parseInt(((currentPage-1) / row)) *row) + 1 : (parseInt((currentPage / row)) * row) + 1;
+                    const endPage = startPage - 1 + Math.min(row, actualSize - startPage + 1);
+                    const paginationElement = document.getElementById("pagination");
+
+                    console.log("currentPage=  "+ currentPage);
+                    console.log("startPage=  " + startPage);
+                    console.log("endPage=  " + endPage);
+                    console.log("actualSize=  " + actualSize);
+                    console.log("totalPages=  " + totalPages);
+                    console.log("status=  " + status);
+
+                    if (currentPage === 1) {
+                        paginationElement.innerHTML += `
+                            <li class="page-item disabled" style="visibility: hidden;"><a class="page-link" href="/article/list?status=${status}&currentPage=1">Previous</a></li>`;
+                    } else {
+                         paginationElement.innerHTML += `
+                            <li class="page-item active"><a class="page-link" href="/article/list?status=${status}&currentPage=${currentPage - 1}">Previous</a></li>`;
+                    }
+
+                    // 페이지 번호 추가
+                    for (let page = startPage; page <= endPage; page++) {
+                        const pageItemClass = page === currentPage ? 'current-page' : '';
+                        const pageStyle = page === currentPage ? 'font-weight: bold; color: blue;' : '';
+
+                        const pageLink = `
+                            <li class="page-item ${pageItemClass}" style="display: inline-block;">
+                                <a class="page-link" href="/article/list?currentPage=${page}&status=${status}" style="${pageStyle}">${page}</a>
+                            </li>
+                        `;
+
+                        paginationElement.innerHTML += pageLink;
+                    }
+
+                    if (currentPage >= actualSize) {
+                        paginationElement.innerHTML += `
+                            <li class="page-item disabled" style="visibility: hidden;"><a class="page-link" href="/article/list?status=${status}&currentPage=${actualSize}">Next</a></li>`;
+                    } else {
+                         paginationElement.innerHTML += `
+                            <li class="page-item active"><a class="page-link" href="/article/list?status=${status}&currentPage=${currentPage + 1}">Next</a></li>`;
+                    }
+                </script>
+
+            </ul>
+        </nav>
+
     </div>
 </div>
 
