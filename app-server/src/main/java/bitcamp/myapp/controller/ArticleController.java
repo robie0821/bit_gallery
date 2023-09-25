@@ -8,6 +8,8 @@ import bitcamp.myapp.vo.Status;
 import bitcamp.myapp.vo.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Required;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -36,15 +38,15 @@ public class ArticleController {
   }
 
   @PostMapping("add")
-  public String add(
+  public ResponseEntity<Object> add(
           @RequestParam("currentPage") int currentPage,
           Article article,
           MultipartFile photofile, // 파일 업로드 파라미터로 지정
           HttpSession session) throws Exception {
 
     User loginUser = (User) session.getAttribute("loginUser");
-    if (loginUser == null) {
-      return "redirect:/auth/form";
+    if(loginUser == null) {
+      return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("NoLogin");
     }
 
     if (article.getEndPrice() <= article.getCurPrice()) {
@@ -56,14 +58,21 @@ public class ArticleController {
 
     article.setWriter(loginUser);
 
-
     if (photofile.getSize() > 0) {
       String uploadFileUrl = ncpObjectStorageService.uploadFile(
               "bitgallery", "article/", photofile);
       article.setPhoto(uploadFileUrl);
     }
-    articleService.add(article);
-    return "redirect:list?status=expected&currentPage=" + currentPage;
+
+    int result = articleService.add(article);
+    if (result == 2) {
+      return ResponseEntity.ok("add_no_title");
+    } else if (result == 3) {
+      return ResponseEntity.ok("add_no_artist");
+    } else if (result == 4) {
+      return ResponseEntity.ok("add_no_photo");
+    }
+    return ResponseEntity.ok("add_commit");
   }
 
 

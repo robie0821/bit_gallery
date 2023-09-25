@@ -22,6 +22,14 @@ public class DefaultArticleService implements ArticleService {
   @Transactional
   @Override
   public int add(Article article) throws Exception {
+
+    if (article.getTitle().isEmpty()) {
+      return 2;
+    } else if (article.getArtist().isEmpty()) {
+      return 3;
+    } else if (article.getPhoto() == null) {
+      return 4;
+    }
     return articleDao.insert(article);
   }
 
