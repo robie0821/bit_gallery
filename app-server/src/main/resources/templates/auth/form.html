@@ -7,6 +7,7 @@
 <body style="margin: 0; padding: 0;">
 
 
+
 <div style="display: flex; justify-content: center; align-items: center; height: calc(100vh - 100px); margin-bottom: 50px;">
     <div style="border: 8px solid #D8D8D8; padding: 75px; border-radius: 20px; text-align: center;">
         <h1 style="color: darkgray;">Please Sign In</h1> <!-- 글자색 변경 -->
@@ -31,6 +32,8 @@
                 <button style="font-size: 14px; background-color: #D8D8D8; border-radius: 20px; border: none; padding: 6px 12px; color: white; cursor: pointer;">LogIn</button>
             </div>
         </form>
+        <a data-th-href="@{https://kauth.kakao.com/oauth/authorize?client_id=6884053a11c3626cab670763f77b2bf0&
+redirect_uri=http://localhost/social/kakao&response_type=code}" style="font-size: 12px; font-weight: normal; text-align: right;">Kakao Login</a>
     </div>
 </div>
 </body>

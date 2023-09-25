@@ -53,6 +53,21 @@
     user_no=#{no}
   </select>
 
+  <select id="findByEmail" parameterType="String" resultMap="userMap">
+    select
+    user_no,
+    name,
+    email,
+    address,
+    join_date as joinDate,
+    profile_photo as profilePhoto,
+    point
+    from
+    auction_user
+    where
+    email=#{email}
+  </select>
+
   <select id="findByEmailAndPassword" resultMap="userMap">
     select
     user_no,
