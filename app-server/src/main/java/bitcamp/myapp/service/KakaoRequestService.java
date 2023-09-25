@@ -16,7 +16,7 @@ public class KakaoRequestService implements SocialRequestService{
     private WebClient webClient;
 
     private final String grantType = "authorization_code";
-    private final String clientId = "14172330052696f1fefd885e45061cc8";
+    private final String clientId = "6884053a11c3626cab670763f77b2bf0";
     private final String redirectUri = "http://localhost/social/kakao";
     private String code = "";
     private final String accessTokenUri = "https://kauth.kakao.com/oauth/token";
@@ -40,10 +40,10 @@ public class KakaoRequestService implements SocialRequestService{
         //params.add("client_secret", clientSecret); // 보안 했을경우 필수
 
         //요청
-        System.out.println("요청시작" + "\n" + grantType +"\n"+ clientId +"\n"
-                + redirectUri +"\n"
-                + code +"\n"
-                + accessTokenUri +"\n");
+//        System.out.println("요청시작" + "\n" + grantType +"\n"+ clientId +"\n"
+//                + redirectUri +"\n"
+//                + code +"\n"
+//                + accessTokenUri +"\n");
         String response = WebClient.create("https://api.example.com")
                 .post()
                 .uri(accessTokenUri) // 대상 서버의 엔드포인트로 변경
@@ -52,7 +52,7 @@ public class KakaoRequestService implements SocialRequestService{
                 .retrieve()
                 .bodyToMono(String.class)
                 .block(); // 요청을 동기적으로 실행하고 응답을 받습니다.
-        System.out.println("요청 종료");
+        //System.out.println("요청 종료");
         return response;
 
     }
@@ -60,7 +60,7 @@ public class KakaoRequestService implements SocialRequestService{
     public String KakaoUserInfoRequest(String token, String userInfoUri) {
 
         //요청
-        System.out.println("요청시작" );
+        //System.out.println("요청시작" );
 
         String response = WebClient.create("https://kapi.kakao.com/v2/user/me")
                 .get()
@@ -69,7 +69,7 @@ public class KakaoRequestService implements SocialRequestService{
                 .retrieve()
                 .bodyToMono(String.class)
                 .block(); // 요청을 동기적으로 실행하고 응답을 받습니다.
-        System.out.println("요청 종료");
+        //System.out.println("요청 종료");
         return response;
 
     }
