@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,6 +9,7 @@
     <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
     <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
     <style>
+        /* 전체 스타일 */
         /* 전체 스타일 */
         body {
             margin: 0;
@@ -70,10 +70,12 @@
         }
 
         th, td {
-            border: 1px solid #ddd;
+            border: 1px solid #ddd; /* 셀 테두리 한 줄로 설정 */
             padding: 7px;
             text-align: center;
             letter-spacing: 1.5px;
+            font-size: 13px;
+
         }
 
         th {
@@ -107,6 +109,8 @@
         }
 
     </style>
+
+    </style>
 </head>
 <body>
 
@@ -114,13 +118,29 @@
 
 
 <p data-th-unless="${article}">해당 번호의 게시글이 !없습니다</p>
+<div style="display: flex; align-items: center; justify-content: center;">
+<div data-th-if="${article}"  style="margin:30px; border: 8px solid #D8D8D8; padding: 50px; border-radius: 20px; " >
+    <h2 style="text-align: center; font-weight: 320;" th:text="${#strings.equals(article.status, 'progress')} ? '진행 중인 경매' : (${#strings.equals(article.status, 'expected')} ? '진행 예정 경매' : (${#strings.equals(article.status, 'end')} ? '종료된 경매' : article.title))">
+        게시글</h2>
 
-<form data-th-if="${article}" enctype='multipart/form-data'>
-    <h1 th:text="${#strings.equals(article.status, 'progress')} ? '진행 중인 경매' : (${#strings.equals(article.status, 'expected')} ? '진행 예정 경매' : (${#strings.equals(article.status, 'end')} ? '종료된 경매' : article.title))">
-        게시글</h1>
+    <!-- 변경 삭제 목록 폼 -->
+    <div style="text-align: center;">
+        <p>
+            <a style="font-size: 12px; font-weight: normal; text-align: right;" data-th-if="${#strings.equals(article.status, 'expected')}"
+               data-th-href="@{/article/update/(articleNo=${article.articleNo},currentPage=${currentPage})}">변경</a>&nbsp
+            <a style="font-size: 12px; font-weight: normal; text-align: right;" data-th-if="${#strings.equals(article.status, 'expected')}"
+               data-th-href="@{/article/delete(articleNo=${article.articleNo},currentPage=${currentPage})}">삭제</a>&nbsp
+
+            <a style="font-size: 12px; font-weight: normal; text-align: right;" data-th-if="${article.path} == 0"
+               data-th-href="@{/article/list(status=${article.status},currentPage=${currentPage})}">목록</a>&nbsp
+            <a style="font-size: 12px; font-weight: normal; text-align: right;" data-th-if="${article.path} == 1"
+               data-th-href="@{/article/list(artist=${article.artist},currentPage=${currentPage})}">목록</a>
+        </p>
+    </div>
+
     <table border='1'>
         <tr>
-            <th style='width:120px;'>작품</th>
+            <th style='width:120px; font-size: 12px; font-weight: normal; text-align: center;'>작품</th>
             <td style='width:300px;'>
                 <a data-th-href="${'https://kr.object.ncloudstorage.com/bitgallery/article/' + article.photo}"
                    data-th-if="${article.photo}">
@@ -128,98 +148,82 @@
                 </a>
             </td>
         </tr>
+
         <!-- 입찰/즉시구매 폼 -->
-        <div>
+        <div style="text-align: center;">
             <p>
-            <form id="bidForm" th:action="@{/history/add}" method="post" onsubmit="return validateForm();"
-                  data-th-if="${#strings.equals(article.status, 'progress')} and ${session.loginUser}">
-                <a>
-                    <input type="text" id="bidAmount" name="bidAmount" placeholder="입찰할 금액 입력"
-                           onkeyup="formatCurrency(this)">
-                    <button id="bidButton" class="btn btn-primary">입찰</button>
-                </a>
-            </form>
+            <a style="text-align: center;">
+                <input type="text" id="bidAmount" name="bidAmount" placeholder="입찰할 금액 입력"
+                       onkeyup="formatCurrency(this)">
+                <button id="bidButton" class="btn btn-primary">입찰</button>
+            </a>
+
             <a data-th-if="${#strings.equals(article.status, 'progress')} and ${session.loginUser}" id="purchaseButton">
                 <button class="btn btn-primary">즉시구매</button>
             </a>
             </p>
         </div>
+
         <tr>
-            <th>번호</th>
+            <th style='width:120px; font-size: 12px; font-weight: normal; text-align: center;'>번호</th>
             <td data-th-text="${article.articleNo}">-번호-</td>
         </tr>
         <tr>
-            <th>제목</th>
+            <th style='width:120px; font-size: 12px; font-weight: normal; text-align: center;'>제목</th>
             <td data-th-text="${article.title}">-제목-</td>
         </tr>
         <tr>
-            <th>내용</th>
+            <th style='width:120px; font-size: 12px; font-weight: normal; text-align: center;'>내용</th>
             <td data-th-text="${article.content}">-내용-</td>
         </tr>
         <tr>
-            <th>작가</th>
+            <th style='width:120px; font-size: 12px; font-weight: normal; text-align: center;'>작가</th>
             <td data-th-text="${article.artist}">-작가-</td>
         </tr>
         <tr>
-            <th>현재가격</th>
+            <th style='width:120px; font-size: 12px; font-weight: normal; text-align: center;'>현재가격</th>
             <td data-th-text="${article.curPrice}">-현재가격-</td>
         </tr>
         <tr>
-            <th>즉시구매가격</th>
+            <th style='width:120px; font-size: 12px; font-weight: normal; text-align: center;'>즉시구매가격</th>
             <td data-th-text="${article.endPrice}">-즉시구매가격-</td>
         </tr>
 
         <tr>
-            <th>작성자</th>
+            <th style='width:120px; font-size: 12px; font-weight: normal; text-align: center;'>작성자</th>
             <td data-th-text="${article.writer.name}">홍길동</td>
         </tr>
         <tr>
-            <th>조회수</th>
+            <th style='width:120px; font-size: 12px; font-weight: normal; text-align: center;'>조회수</th>
             <td data-th-text="${article.viewCount}">34</td>
         </tr>
         <tr>
-            <th>등록일</th>
+            <th style='width:120px; font-size: 12px; font-weight: normal; text-align: center;'>등록일</th>
             <td data-th-text="${#dates.format(article.createdDate, 'yyyy-MM-dd')}">2023-09-14</td>
         </tr>
         <tr>
-            <th>시작일</th>
+            <th style='width:120px; font-size: 12px; font-weight: normal; text-align: center;'>시작일</th>
             <td data-th-text="${#dates.format(article.startDate, 'yyyy-MM-dd hh:mm:ss')}">
                 2023-09-14
             </td>
         </tr>
         <tr>
-            <th>종료일</th>
+            <th style='width:120px; font-size: 12px; font-weight: normal; text-align: center;'>종료일</th>
             <td data-th-text="${#dates.format(article.endDate, 'yyyy-MM-dd hh:mm:ss')}">2023-09-14
             </td>
         </tr>
 
         <tr>
-            <th>남은시간</th>
+            <th style='width:120px; font-size: 12px; font-weight: normal; text-align: center;'>남은시간</th>
             <td><span id=RemainPeriod></span></td>
         </tr>
 
         <tr>
-            <th>입찰횟수</th>
+            <th style='width:120px; font-size: 12px; font-weight: normal; text-align: center;'>입찰횟수</th>
             <td data-th-text="${article.bidCount}">34</td>
         </tr>
 
     </table>
-
-
-    <!-- 변경 삭제 목록 폼 -->
-    <div>
-        <p>
-            <a data-th-if="${#strings.equals(article.status, 'expected')}"
-               data-th-href="@{/article/update/(articleNo=${article.articleNo},currentPage=${currentPage})}">변경</a>
-            <a data-th-if="${#strings.equals(article.status, 'expected')}"
-               data-th-href="@{/article/delete(articleNo=${article.articleNo},currentPage=${currentPage})}">삭제</a>
-
-            <a data-th-if="${article.path} == 0"
-               data-th-href="@{/article/list(status=${article.status},currentPage=${currentPage})}">목록</a>
-            <a data-th-if="${article.path} == 1"
-               data-th-href="@{/article/list(artist=${article.artist},currentPage=${currentPage})}">목록</a>
-        </p>
-    </div>
 
 
     <!-- form 안에 넣으면 오류가 발생하는 현상 -->
@@ -237,7 +241,8 @@
     <div id="period" data-th-text="${(article.remainTime)}" style="display: none;"></div>
     <div id="cuPrice" data-th-text="${article.curPrice}" style="display: none;"></div>
 
-</form>
+</div>
+</div>
 </body>
 <div data-th-replace="footer :: footer"></div>
 <!-- 즉시구매 스크립트 -->
