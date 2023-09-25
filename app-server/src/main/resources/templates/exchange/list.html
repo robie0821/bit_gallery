@@ -6,6 +6,7 @@
     <link rel="stylesheet" th:href="@{/css/list.css}" />
 </head>
 <body>
+<div data-th-replace="header :: header"></div>
 <div th:if="${error == 'unauthorized'}">
     <script>
         alert("권한이 없습니다.");
@@ -48,5 +49,6 @@
         <a th:href="@{/exchange/form}" class="request-button">환전 요청</a>
     </div>
 </div>
+<div data-th-replace="footer :: footer"></div>
 </body>
 </html>

@@ -25,4 +25,5 @@ public class DefaultHistoryService implements HistoryService{
   public List<History> list(int userNo) throws Exception {
     return historyDao.findAll(userNo);
   }
+
 }

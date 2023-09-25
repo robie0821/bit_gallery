@@ -6,6 +6,8 @@ import bitcamp.myapp.service.UserService;
 import bitcamp.myapp.vo.Exchange;
 import bitcamp.myapp.vo.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +15,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/exchange")
@@ -63,7 +68,7 @@ public class ExchangeController {
     User updatedUser = userService.get(loginUser.getNo());
     session.setAttribute("loginUser", updatedUser);
 
-    return "redirect:/exchange/list";
+    return "redirect:/chargePoint";
   }
 
   @GetMapping("delete")
@@ -91,6 +96,24 @@ public class ExchangeController {
     if (loginUser != null) {
       model.addAttribute("currentUserId", loginUser.getNo());
     }
+  }
+
+  @GetMapping("listUserExchanges")
+  @ResponseBody  // API로 동작하게 만들기 위해 추가
+  public ResponseEntity<Object> listUserExchanges(HttpSession session) throws Exception {
+    User loginUser = (User) session.getAttribute("loginUser");
+
+    if (loginUser == null) {
+      // 로그인하지 않은 사용자에게 응답
+      Map<String, String> errorResponse = new HashMap<>();
+      errorResponse.put("status", "error");
+      errorResponse.put("message", "User not logged in");
+      return new ResponseEntity<>(errorResponse, HttpStatus.UNAUTHORIZED);
+    }
+
+    // 로그인한 사용자의 환전 요청만 가져옵니다.
+    List<Exchange> userExchanges = exchangeService.listByUserNo(loginUser.getNo());
+    return new ResponseEntity<>(userExchanges, HttpStatus.OK);
   }
 
   @GetMapping("detail/{no}")
