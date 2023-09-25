@@ -170,6 +170,12 @@ public class ArticleController {
     return "redirect:/article/list?status=" + a.getStatus() + "&currentPage=" + currentPage;
   }
 
+  @ResponseBody
+  @GetMapping("/getEvent")
+  public List<Article> getAuctionArticlesByDate(@RequestParam String date) throws Exception {
+    return articleService.findAuctionArticlesByDate(date);
+  }
+
   @GetMapping("tender")
 
   @PostMapping("bid")

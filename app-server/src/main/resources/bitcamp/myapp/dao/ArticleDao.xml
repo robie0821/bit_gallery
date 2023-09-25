@@ -148,7 +148,6 @@
         a.start_date,
         a.end_date,
         a.status,
-        a.cur_price,
         a.end_price,
         a.bid_count,
         u.name
