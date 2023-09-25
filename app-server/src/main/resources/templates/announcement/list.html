@@ -152,7 +152,7 @@
             const totalPages = parseInt([[${size}]]);
             const currentPage = parseInt([[${currentPage}]]);
             const pageSize = parseInt([[${pageSize}]]);
-            const row = parseInt(10);
+            const row = parseInt(5);
             const actualSize = totalPages % pageSize == 0 ? parseInt(totalPages / pageSize) : parseInt(totalPages / pageSize) + 1;
 
             const startPage = currentPage % row == 0 ? (parseInt(((currentPage-1) / row)) *row) + 1 : (parseInt((currentPage / row)) * row) + 1;
