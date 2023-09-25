@@ -7,7 +7,6 @@ import bitcamp.myapp.vo.Authority;
 import bitcamp.myapp.vo.Status;
 import bitcamp.myapp.vo.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Required;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
