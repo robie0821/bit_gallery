@@ -113,7 +113,7 @@
 <div data-th-replace="header :: header"></div>
 
 
-<p data-th-unless="${article}">해당 번호의 게시글이 없습니다!</p>
+<p data-th-unless="${article}">해당 번호의 게시글이 !없습니다</p>
 
 <form data-th-if="${article}" enctype='multipart/form-data'>
     <h1 th:text="${#strings.equals(article.status, 'progress')} ? '진행 중인 경매' : (${#strings.equals(article.status, 'expected')} ? '진행 예정 경매' : (${#strings.equals(article.status, 'end')} ? '종료된 경매' : article.title))">
