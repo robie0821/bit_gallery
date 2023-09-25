@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -60,14 +59,11 @@
         }
 
         /* 테이블 스타일 */
-        table {
-            border-collapse: separate;
-            border-spacing: 0;
-            border: none;
-            border-radius: 20px;
-            max-width: 100%;
-            margin: 0 auto;
-        }
+
+
+<!--        table {-->
+<!--            -->
+<!--        }-->
 
         th, td {
             border: 1px solid #ddd;
@@ -115,7 +111,7 @@
 
 <p data-th-unless="${article}">해당 번호의 게시글이 !없습니다</p>
 
-<form data-th-if="${article}" enctype='multipart/form-data'>
+<div data-th-if="${article}"  style="margin:30px; border: 8px solid #D8D8D8; padding: 60px; border-radius: 20px; " >
     <h1 th:text="${#strings.equals(article.status, 'progress')} ? '진행 중인 경매' : (${#strings.equals(article.status, 'expected')} ? '진행 예정 경매' : (${#strings.equals(article.status, 'end')} ? '종료된 경매' : article.title))">
         게시글</h1>
     <table border='1'>
@@ -131,14 +127,15 @@
         <!-- 입찰/즉시구매 폼 -->
         <div>
             <p>
-            <form id="bidForm" th:action="@{/history/add}" method="post" onsubmit="return validateForm();"
-                  data-th-if="${#strings.equals(article.status, 'progress')} and ${session.loginUser}">
-                <a>
-                    <input type="text" id="bidAmount" name="bidAmount" placeholder="입찰할 금액 입력"
-                           onkeyup="formatCurrency(this)">
-                    <button id="bidButton" class="btn btn-primary">입찰</button>
-                </a>
-            </form>
+<!--            <form id="bidForm" th:action="@{/history/add}" method="post" onsubmit="return validateForm();"-->
+<!--                  data-th-if="${#strings.equals(article.status, 'progress')} and ${session.loginUser}">-->
+<!--     -->
+<!--            </form>-->
+            <a>
+                <input type="text" id="bidAmount" name="bidAmount" placeholder="입찰할 금액 입력"
+                       onkeyup="formatCurrency(this)">
+                <button id="bidButton" class="btn btn-primary">입찰</button>
+            </a>
             <a data-th-if="${#strings.equals(article.status, 'progress')} and ${session.loginUser}" id="purchaseButton">
                 <button class="btn btn-primary">즉시구매</button>
             </a>
@@ -237,7 +234,7 @@
     <div id="period" data-th-text="${(article.remainTime)}" style="display: none;"></div>
     <div id="cuPrice" data-th-text="${article.curPrice}" style="display: none;"></div>
 
-</form>
+</div>
 </body>
 <div data-th-replace="footer :: footer"></div>
 <!-- 즉시구매 스크립트 -->

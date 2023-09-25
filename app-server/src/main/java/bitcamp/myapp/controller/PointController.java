@@ -55,6 +55,7 @@ public class PointController {
     @PostMapping("bidPoint") //입찰
     public ResponseEntity<Map<String, Object>> bidPoint(
             @RequestParam("userNo") String userNo,
+            @RequestParam("currentPage") int currentPage,
             @RequestParam("articleNo") int articleNo,
             @RequestParam("bidAmount") int bidAmount, HttpSession session) throws Exception {
 
@@ -79,6 +80,7 @@ public class PointController {
         Map<String, Object> response = new HashMap<>();
         response.put("userNo", userNo);
         response.put("bidAmount", bidAmount);
+        response.put("currentPage", currentPage);
 
         return ResponseEntity.ok(response);
     }
@@ -107,6 +109,7 @@ public class PointController {
     @PostMapping("checkPoint") //결제검증
     public ResponseEntity<Map<String, Object>> checkPoint(
             @RequestParam("userNo") String userNo,
+            @RequestParam("currentPage") String currentPage,
             @RequestParam("articleNo") int articleNo,
             @RequestParam("bidAmount") int bidAmount, HttpSession session) throws Exception {
 
