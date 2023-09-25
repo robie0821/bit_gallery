@@ -15,7 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
-
+//
 @Controller
 @RequestMapping("/announcement")
 public class AnnouncementController {
@@ -100,6 +100,7 @@ public class AnnouncementController {
   public String detail(@RequestParam("currentPage") int currentPage,
                        @RequestParam("no") int no, Model model, HttpSession session) throws Exception {
     User loginUser = (User) session.getAttribute("loginUser");
+    System.out.println("유저 : " + loginUser.toString());
     if (loginUser == null) {
       model.addAttribute("authority", "User");
     } else {
@@ -122,9 +123,9 @@ public class AnnouncementController {
     if (loginUser == null) {
       model.addAttribute("authority", "User");
     } else {
-      model.addAttribute("authority", loginUser.getAuthority());
+      model.addAttribute("authority", "ADMIN");
     }
-
+    System.out.println("현재 유저 등급 : " + model.getAttribute("authority"));
     model.addAttribute("test", 1);
     announcementService.list(model);
   }
