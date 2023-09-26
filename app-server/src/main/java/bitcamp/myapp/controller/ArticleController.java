@@ -89,7 +89,7 @@ public class ArticleController {
 
     if (article == null) {
       throw new Exception("해당 번호의 게시글이 없습니다.");
-    } else if (!(article.getArticleNo() == loginUser.getNo() || loginUser.getAuthority() == Authority.ADMIN)) {
+    } else if (!(article.getWriter().getNo() == loginUser.getNo() || loginUser.getAuthority() == Authority.ADMIN)) {
       throw new Exception("삭제 권한이 없습니다.");
     } else if (article.getStatus() != Status.expected) {
       throw new Exception("시작되지 않은 경매만 삭제가 가능합니다.");
@@ -181,7 +181,7 @@ public class ArticleController {
 
     if (a == null) {
       throw new Exception("해당 번호의 게시글이 없습니다.");
-    } else if (!(article.getArticleNo() == loginUser.getNo() || loginUser.getAuthority() == Authority.ADMIN)) {
+    } else if (!(a.getWriter().getNo() == loginUser.getNo() || loginUser.getAuthority() == Authority.ADMIN)) {
       throw new Exception("수정 권한이 없습니다.");
     } else if (a.getStatus() != Status.expected) {
       throw new Exception("시작되지 않은 경매만 수정 가능합니다.");

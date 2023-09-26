@@ -131,8 +131,13 @@ public class DefaultArticleService implements ArticleService {
   }
 
   @Override
-  public void updateArticleBidPoint(int articleNo, int bidAmount) {
-    articleDao.updateArticleBidPoint(articleNo,bidAmount);
+  public void updateArticleBidPoint(int articleNo, int bidAmount, int userNo) {
+    articleDao.updateArticleBidPoint(articleNo,bidAmount, userNo);
+  }
+
+  @Override
+  public void returnPoint(int articleNo) {
+    articleDao.returnPoint(articleNo);
   }
 
   @Override
