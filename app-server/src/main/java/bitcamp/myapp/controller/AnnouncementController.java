@@ -1,5 +1,6 @@
 package bitcamp.myapp.controller;
 
+import bitcamp.myapp.App;
 import bitcamp.myapp.service.DefaultAnnouncementService;
 import bitcamp.myapp.service.DefaultUserService;
 import bitcamp.myapp.service.NcpObjectStorageService;
@@ -34,7 +35,7 @@ public class AnnouncementController {
   ) throws Exception {
     model.addAttribute("currentPage", currentPage);
 
-    User loginUser = (User) session.getAttribute("loginUser");
+    User loginUser = App.loginHandler.getUser(session.getId());
     if (loginUser == null || loginUser.getAuthority() != Authority.ADMIN) {
       throw new Exception("로그인이 되어있지 않거나 권한이 없습니다.");
     }
@@ -49,9 +50,9 @@ public class AnnouncementController {
           HttpSession session,
           Model model
   ) throws Exception {
-    model.addAttribute("currentPage", currentPage);
+    User loginUser = App.loginHandler.getUser(session.getId());
 
-    User loginUser = (User) session.getAttribute("loginUser");
+
     if(loginUser == null) {
       return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("NoLogin");
     }
@@ -59,6 +60,7 @@ public class AnnouncementController {
       return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("NoAdmin");
     }
 
+    model.addAttribute("currentPage", currentPage);
     ArrayList<AnnouncementAttachedFile> announcementAttachedFiles = new ArrayList<>();
     for (MultipartFile part : files) {
       if (part.getSize() > 0) {
@@ -84,7 +86,7 @@ public class AnnouncementController {
   @GetMapping("delete")
   public String delete(@RequestParam("currentPage") int currentPage, int no, HttpSession session) throws Exception {
     Announcement announcement = announcementService.get(no);
-    User loginUser = (User) session.getAttribute("loginUser");
+    User loginUser = App.loginHandler.getUser(session.getId());
 
     if (loginUser == null || loginUser.getAuthority() != Authority.ADMIN) {
       throw new Exception("로그인이 되어있지 않거나 권한이 없습니다.");
@@ -99,7 +101,7 @@ public class AnnouncementController {
   @GetMapping("detail")
   public String detail(@RequestParam("currentPage") int currentPage,
                        @RequestParam("no") int no, Model model, HttpSession session) throws Exception {
-    User loginUser = (User) session.getAttribute("loginUser");
+    User loginUser = App.loginHandler.getUser(session.getId());
     if (loginUser == null) {
       model.addAttribute("authority", "User");
     } else {
@@ -118,7 +120,7 @@ public class AnnouncementController {
   public void list(@RequestParam("currentPage") int currentPage, Model model, HttpSession session) throws Exception {
     model.addAttribute("currentPage", currentPage);
 
-    User loginUser = (User) session.getAttribute("loginUser");
+    User loginUser = App.loginHandler.getUser(session.getId());
     if (loginUser == null) {
       model.addAttribute("authority", Authority.USER);
     } else {
@@ -159,7 +161,7 @@ public class AnnouncementController {
     Announcement a = announcementService.get(announcement.getNo());
     model.addAttribute("currentPage", currentPage);
 
-    User loginUser = (User) session.getAttribute("loginUser");
+    User loginUser = App.loginHandler.getUser(session.getId());
     if(loginUser == null) {
       return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("NoLogin");
     }
@@ -211,13 +213,13 @@ public class AnnouncementController {
   }
 
   private void isSessionUserAdmin(HttpSession session) throws Exception {
-    User loginUser = (User) session.getAttribute("loginUser");
+    User loginUser = App.loginHandler.getUser(session.getId());
     if (loginUser == null || loginUser.getAuthority() != Authority.ADMIN) {
        throw new Exception("로그인이 되어있지 않거나 권한이 없습니다.");
     }
   }
   private boolean isSessionUserAdminGetBoolean(HttpSession session) {
-    User loginUser = (User) session.getAttribute("loginUser");
+    User loginUser = App.loginHandler.getUser(session.getId());
     return loginUser == null || loginUser.getAuthority() != Authority.ADMIN;
   }
 

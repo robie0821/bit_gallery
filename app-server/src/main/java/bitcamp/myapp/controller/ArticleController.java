@@ -1,5 +1,6 @@
 package bitcamp.myapp.controller;
 
+import bitcamp.myapp.App;
 import bitcamp.myapp.service.ArticleService;
 import bitcamp.myapp.service.NcpObjectStorageService;
 import bitcamp.myapp.vo.Article;
@@ -43,9 +44,9 @@ public class ArticleController {
           MultipartFile photofile, // 파일 업로드 파라미터로 지정
           HttpSession session) throws Exception {
 
-    User loginUser = (User) session.getAttribute("loginUser");
+    User loginUser = App.loginHandler.getUser(session.getId());
     if(loginUser == null) {
-      return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("NoLogin");
+      return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인이 필요한 서비스입니다");
     }
 
     if (article.getEndPrice() <= article.getCurPrice()) {
@@ -79,7 +80,7 @@ public class ArticleController {
   public String delete(@RequestParam("currentPage") int currentPage,
                        Integer articleNo,
                        HttpSession session) throws Exception {
-    User loginUser = (User) session.getAttribute("loginUser");
+    User loginUser = App.loginHandler.getUser(session.getId());
     if (loginUser == null) {
       return "redirect:/auth/form";
     }
@@ -111,7 +112,7 @@ public class ArticleController {
 
     Article article = articleService.get(articleNo);
 
-    User loginUser = (User) session.getAttribute("loginUser");
+    User loginUser = App.loginHandler.getUser(session.getId());
     if (loginUser != null && (loginUser.getNo() == article.getWriter().getNo() || loginUser.getAuthority() == Authority.ADMIN)) {
       model.addAttribute("editable", true);
     }
@@ -142,7 +143,7 @@ public class ArticleController {
           Model model) throws Exception {
     model.addAttribute("currentPage", currentPage);
 
-    User loginUser = (User) session.getAttribute("loginUser");
+    User loginUser = App.loginHandler.getUser(session.getId());
     if (loginUser != null) {
       model.addAttribute("writable", true);
     }
@@ -171,7 +172,7 @@ public class ArticleController {
                        Article article,
                        MultipartFile photofile,
                        HttpSession session) throws Exception {
-    User loginUser = (User) session.getAttribute("loginUser");
+    User loginUser = App.loginHandler.getUser(session.getId());
     if (loginUser == null) {
       return "redirect:/auth/form";
     }
@@ -213,4 +214,5 @@ public class ArticleController {
   public String buy() throws Exception {
     return "";
   }
+
 }

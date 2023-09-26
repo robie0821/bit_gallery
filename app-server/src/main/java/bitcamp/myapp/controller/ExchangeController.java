@@ -1,5 +1,6 @@
 package bitcamp.myapp.controller;
 
+import bitcamp.myapp.App;
 import bitcamp.myapp.service.ExchangeService;
 import bitcamp.myapp.service.NcpObjectStorageService;
 import bitcamp.myapp.service.UserService;
@@ -37,10 +38,10 @@ public class ExchangeController {
 
   @GetMapping("form")
   public void form(HttpSession session, Model model) {
-    User loginUser = (User) session.getAttribute("loginUser");
+    User loginUser = App.loginHandler.getUser(session.getId());
     if (loginUser == null) {
       // 만약 loginUser가 null이면 로그인 페이지나 다른 페이지로 리다이렉트
-      // return "redirect:/auth/form";
+      //return "redirect:/auth/form";
     } else {
       model.addAttribute("loginUser", loginUser);
     }
@@ -48,7 +49,7 @@ public class ExchangeController {
 
   @PostMapping("add")
   public String add(Exchange exchange, HttpSession session) throws Exception {
-    User loginUser = (User) session.getAttribute("loginUser");
+    User loginUser = App.loginHandler.getUser(session.getId());
     if (loginUser == null) {
       return "redirect:/auth/form";
     }
@@ -72,7 +73,7 @@ public class ExchangeController {
 
   @GetMapping("delete")
   public String delete(int no, HttpSession session) throws Exception {
-    User loginUser = (User) session.getAttribute("loginUser");
+    User loginUser = App.loginHandler.getUser(session.getId());
     if (loginUser == null) {
       return "redirect:/auth/form";
     }
@@ -89,7 +90,7 @@ public class ExchangeController {
 
   @GetMapping("list")
   public void list(Model model, HttpSession session) throws Exception {
-    User loginUser = (User) session.getAttribute("loginUser");
+    User loginUser = App.loginHandler.getUser(session.getId());
     model.addAttribute("list", exchangeService.list());
 
     if (loginUser != null) {
@@ -100,7 +101,7 @@ public class ExchangeController {
   @GetMapping("listUserExchanges")
   @ResponseBody  // API로 동작하게 만들기 위해 추가
   public ResponseEntity<Object> listUserExchanges(HttpSession session) throws Exception {
-    User loginUser = (User) session.getAttribute("loginUser");
+    User loginUser =App.loginHandler.getUser(session.getId());
 
     if (loginUser == null) {
       // 로그인하지 않은 사용자에게 응답
@@ -118,7 +119,7 @@ public class ExchangeController {
   @GetMapping("detail/{no}")
   public String detail(@PathVariable int no, Model model, HttpSession session, RedirectAttributes redirectAttrs) throws Exception {
     Exchange exchange = exchangeService.get(no);
-    User loginUser = (User) session.getAttribute("loginUser");
+    User loginUser = App.loginHandler.getUser(session.getId());
 
     if (exchange == null || loginUser == null || exchange.getUser().getNo() != loginUser.getNo()) {
       redirectAttrs.addFlashAttribute("error", "unauthorized");  // flash attribute를 사용하여 잠깐 동안만 저장된 메시지를 넘깁니다.
@@ -147,7 +148,7 @@ public class ExchangeController {
                        @RequestParam int userNo,
                        HttpSession session) throws Exception {
 
-    User loginUser = (User) session.getAttribute("loginUser");
+    User loginUser = App.loginHandler.getUser(session.getId());
     if (loginUser == null) {
       return "redirect:/auth/form";
     }
