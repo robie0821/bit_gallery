@@ -17,6 +17,7 @@
     <result column="joinDate" property="joinDate"/>
     <result column="profilePhoto"        property="profilePhoto"/>
     <result column="point" property="point"/>
+    <result column="zonecode" property="zonecode"/>
   </resultMap>
 
   <insert id="insert" parameterType="user">
@@ -31,6 +32,8 @@
     email,
     phone,
     address,
+    zonecode,
+    detailAddr,
     point
     from
     auction_user
@@ -44,6 +47,9 @@
     name,
     email,
     address,
+    phone,
+    zonecode,
+    detail_addr,
     join_date as joinDate,
     profile_photo as profilePhoto,
     point
@@ -59,6 +65,9 @@
     name,
     email,
     address,
+    phone,
+    zonecode,
+    detailAddr,
     join_date as joinDate,
     profile_photo as profilePhoto,
     point
@@ -73,6 +82,10 @@
     user_no,
     name,
     email,
+    address,
+    zonecode,
+    detail_addr
+    phone,
     join_date as joinDate,
     profile_photo as profilePhoto,
     point,
@@ -95,12 +108,26 @@
     ,phone=#{phone}
     ,address=#{address}
     ,detail_addr=#{detailAddr}
+    ,zonecode=#{zonecode}
     <if test="profilePhoto != null">
       ,photo=#{profilePhoto}
     </if>
     where
     user_no=#{no}
   </update>
+
+
+  <update id="editUpdate" parameterType="user">
+    update auction_user set
+    name=#{name}
+    ,phone=#{phone}
+    ,address=#{address}
+    ,detail_addr=#{detailAddr}
+    ,zonecode=#{zonecode}
+    where
+    user_no=#{no}
+  </update>
+
 
   <delete id="delete" parameterType="int">
     delete from auction_user

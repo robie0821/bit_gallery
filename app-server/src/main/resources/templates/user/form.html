@@ -23,10 +23,10 @@
     }
 
     a {
-    color: #000;
-    text-decoration: none;
-    text-shadow: 2px 2px 4px rgba(135, 206, 235, 0.5);
-     }
+      color: #000;
+      text-decoration: none;
+      text-shadow: 2px 2px 4px rgba(135, 206, 235, 0.5);
+    }
 
     /* 수정된 CSS */
     .form-horizontal {
@@ -101,9 +101,9 @@
                   <input class="form-control" onclick="DaumPostcode()" type="text" id="postcode" name="zonecode"
                          placeholder="우편번호">
                 </div>
-<!--                <div class="clearfix" style="height: 50px; text-align: right display: flex; align-items: center;">-->
-<!--                  <span class="child" style="line-height: 50px; font-size: 12px; padding: 5px 10px;" onclick="DaumPostcode()">우편번호 찾기</span>-->
-<!--                </div>-->
+                <!--                <div class="clearfix" style="height: 50px; text-align: right display: flex; align-items: center;">-->
+                <!--                  <span class="child" style="line-height: 50px; font-size: 12px; padding: 5px 10px;" onclick="DaumPostcode()">우편번호 찾기</span>-->
+                <!--                </div>-->
                 <div class="col-sm-6">
                   <input class="form-control" type="text" id="address" name="address"
                          placeholder="주소">
@@ -139,39 +139,39 @@
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
   function DaumPostcode() {
-      new daum.Postcode({
-          oncomplete: function(data) {
-              var addr = '';
-              var extraAddr = '';
+    new daum.Postcode({
+      oncomplete: function(data) {
+        var addr = '';
+        var extraAddr = '';
 
-              if (data.userSelectedType === 'R') {
-                  addr = data.roadAddress;
-              } else {
-                  addr = data.jibunAddress;
-              }
+        if (data.userSelectedType === 'R') {
+          addr = data.roadAddress;
+        } else {
+          addr = data.jibunAddress;
+        }
 
-              if(data.userSelectedType === 'R'){
-                  if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
-                      extraAddr += data.bname;
-                  }
-                  if(data.buildingName !== '' && data.apartment === 'Y'){
-                      extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
-                  }
-                  if(extraAddr !== ''){
-                      extraAddr = ' (' + extraAddr + ')';
-                  }
-                  document.getElementById("extraAddress").value = extraAddr;
-
-              } else {
-                  document.getElementById("extraAddress").value = '';
-              }
-
-              document.getElementById('postcode').value = data.zonecode;
-              document.getElementById("address").value = addr;
-
-              document.getElementById("detailAddress").focus();
+        if(data.userSelectedType === 'R'){
+          if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+            extraAddr += data.bname;
           }
-      }).open();
+          if(data.buildingName !== '' && data.apartment === 'Y'){
+            extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+          }
+          if(extraAddr !== ''){
+            extraAddr = ' (' + extraAddr + ')';
+          }
+          document.getElementById("extraAddress").value = extraAddr;
+
+        } else {
+          document.getElementById("extraAddress").value = '';
+        }
+
+        document.getElementById('postcode').value = data.zonecode;
+        document.getElementById("address").value = addr;
+
+        document.getElementById("detailAddress").focus();
+      }
+    }).open();
   }
 </script>
 <script>
@@ -179,6 +179,16 @@
     var autoHypenPhone = function (str) {
       str = str.replace(/[^0-9]/g, '');
       var tmp = '';
+
+      if (str.length > 11) {
+        tmp += str.substr(0, 3);
+        tmp += '-';
+        tmp += str.substr(3, 4);
+        tmp += '-';
+        tmp += str.substr(7,4);
+        return tmp;
+      }
+
       if (str.length < 4) {
         return str;
       } else if (str.length < 7) {
@@ -198,7 +208,7 @@
         tmp += '-';
         tmp += str.substr(3, 4);
         tmp += '-';
-        tmp += str.substr(7);
+        tmp += str.substr(7,4);
         return tmp;
       }
       return str;
