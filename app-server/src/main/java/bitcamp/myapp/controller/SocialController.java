@@ -17,8 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-
+import java.util.Random;
 
 
 @Controller
@@ -57,11 +56,12 @@ public class SocialController {
         //로그인 처리
         User loginUser = userService.get(email);
         if (loginUser == null) {
+
             //유저 생성코드 추가
             System.out.println(email);
             User user = new User();
             user.setEmail(email);
-            user.setPassword("1111");
+            user.setPassword(createRandomPassword(12));
             user.setPhone("000-0000-0000");
             user.setAddress("기본주소");
             user.setDetailAddr("상세주소");
@@ -74,5 +74,19 @@ public class SocialController {
 
         session.setAttribute("loginUser", loginUser);
         return "redirect:/";
+    }
+    private String createRandomPassword(int length) {
+        String charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        StringBuilder randomString = new StringBuilder();
+        // 랜덤 객체 생성
+        Random random = new Random();
+        // 문자열 길이만큼 반복하여 랜덤 문자열 생성
+        for (int i = 0; i < length; i++) {
+            int randomIndex = random.nextInt(charset.length());
+            char randomChar = charset.charAt(randomIndex);
+            randomString.append(randomChar);
+        }
+
+        return randomString.toString();
     }
 }
