@@ -39,8 +39,14 @@
 
     <style>
 
+        strong {
+            display: block; /* <strong> 요소를 블록 레벨 요소로 설정 */
+            text-align: center; /* 가로 방향 가운데 정렬 */
+            }
+
         #eventBox {
-            box-sizing: border-box; /* Ensures padding and borders are included in the total width */
+            box-sizing: border-box;
+            text-align: center;
         }
 
 
@@ -53,47 +59,55 @@
             text-align: center;
             box-sizing: border-box;
             width: 100%;
-            display: flex;          /* Setting up flexbox */
-            flex-direction: column; /* Elements are stacked vertically */
-            justify-content: center; /* Centering items horizontally */
-            align-items: center;    /* Centering items vertically */
-            height: auto;           /* Adjust the height as needed */
-
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: auto;
          }
 
-        .auction-title {
+        div.auction-title {
             font-weight: bold;
-            margin-bottom: 10px;
+            font-size: 20px;
+            text-align: center;
+            color: gray;
         }
 
         .auction-date {
             font-size: 14px;
+            text-align: center;
         }
 
         div#eventBox {
-           width: 400px;
-           height: 500px;
-           overflow: auto; /* Enable scrolling */
-           overflow-x: hidden;
-           word-break:break-all;
-           white-space: pre-wrap;
-       }
+            width: 400px;
+            height: 500px;
+            overflow: auto; /* 스크롤 가능하게 설정 */
+            overflow-x: hidden;
+            word-break: break-all;
+            white-space: pre-wrap;
+            text-align: center; /* 가로 방향 가운데 정렬 */
+        }
+
 
        div#eventBox::-webkit-scrollbar {
            width: 10px; /* Set the width of the scrollbar */
+           text-align: center;
        }
 
        div#eventBox::-webkit-scrollbar-track {
            background-color: #f1f1f1; /* Set the background color of the scrollbar track */
+           text-align: center;
        }
 
        div#eventBox::-webkit-scrollbar-thumb {
            background-color: #888; /* Set the color of the scrollbar thumb */
            border-radius: 5px; /* Round the edges of the scrollbar thumb */
+           text-align: center;
        }
 
         .fc-day-number {
             color: black; /* 검정색으로 변경할 색상을 지정하세요. */
+
         }
 
         .btn-circle {
@@ -259,14 +273,14 @@
 <!-- Contact Section -->
 <div id="contact" class="text-center">
     <!--style="background-image: url('img/secondPG.jpg'); background-size: cover;-->
-    <div class="container">
+    <div class="container" style="text-align: center;">
 
         <div style="display: flex; justify-content: center; align-items: center; height: 60vh; gap: 15px;">
             <div id="calendar" style="flex: 1; margin-right : 20px; width: 500px; height: 500px; max-width: 500px; border-radius: 20px; background-color: #fff; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2); padding: 20px;">
             </div>
 
             <div id="eventBox"
-                 style="flex: 1; max-width: 500px; width: 500px; height: 500px; border-radius: 20px; background-color: #f5f5f5; border: 1px solid black; padding: 80px; box-sizing: border-box; color: black;">
+                 style="text-align: center; flex: 1; max-width: 500px; width: 500px; height: 500px; border-radius: 20px; background-color: #f5f5f5; border: 1px solid black; padding: 80px; box-sizing: border-box; color: black;">
             </div>
         </div>
     </div>
@@ -275,7 +289,7 @@
 <!-- Footer Section -->
 <div id="footer" th:fragment="footer">
     <footer class="container text-center">
-        <p>Shared by <i class="fa fa-love"></i><a href="https://ncamp.kr/">비트캠프 + 매직에꼴 + 네이버클라우드@2023</a></p>
+        <p><i class="fa fa-love"></i><a href="https://ncamp.kr/">BITGALLERY@2023</a></p>
     </footer>
 </div>
 

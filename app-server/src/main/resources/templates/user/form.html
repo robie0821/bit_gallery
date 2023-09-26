@@ -22,6 +22,12 @@
       padding: 0;
     }
 
+    a {
+    color: #000;
+    text-decoration: none;
+    text-shadow: 2px 2px 4px rgba(135, 206, 235, 0.5);
+     }
+
     /* 수정된 CSS */
     .form-horizontal {
       margin-top: 20px;
@@ -44,6 +50,9 @@
     }
 
   </style>
+
+
+
 </head>
 
 <body>
@@ -164,6 +173,44 @@
           }
       }).open();
   }
+</script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    var autoHypenPhone = function (str) {
+      str = str.replace(/[^0-9]/g, '');
+      var tmp = '';
+      if (str.length < 4) {
+        return str;
+      } else if (str.length < 7) {
+        tmp += str.substr(0, 3);
+        tmp += '-';
+        tmp += str.substr(3);
+        return tmp;
+      } else if (str.length < 11) {
+        tmp += str.substr(0, 3);
+        tmp += '-';
+        tmp += str.substr(3, 3);
+        tmp += '-';
+        tmp += str.substr(6);
+        return tmp;
+      } else {
+        tmp += str.substr(0, 3);
+        tmp += '-';
+        tmp += str.substr(3, 4);
+        tmp += '-';
+        tmp += str.substr(7);
+        return tmp;
+      }
+      return str;
+    }
+
+    var phone = document.getElementById('phone');
+
+    phone.onkeyup = function () {
+      console.log(this.value);
+      this.value = autoHypenPhone(this.value);
+    }
+  });
 </script>
 
 </body>

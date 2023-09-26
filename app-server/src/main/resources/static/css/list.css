@@ -16,6 +16,13 @@ table {
     border-radius: 5px;
 }
 
+        a {
+            color: #000;
+            text-decoration: none;
+            text-shadow: 2px 2px 4px rgba(135, 206, 235, 0.5);
+            font-weight: 100;
+        }
+
 th, td {
     border: 1px solid #ddd;
     padding: 8px;
