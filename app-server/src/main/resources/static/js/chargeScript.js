@@ -32,7 +32,6 @@ document.getElementById('rechargeButton').addEventListener('click', function () 
         return;
     }
 
-
     // KG이니시스 창을 열어 포인트를 충전하고, 성공 또는 실패 여부를 처리합니다.
     IMP.init('imp15221536'); // KG이니시스 가맹점 식별코드를 설정
 
