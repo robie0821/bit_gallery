@@ -144,16 +144,34 @@ table {
 <br>
     <h2 style="text-align: center; font-weight: 320; letter-spacing: 2px;">공지사항</h2>
 
+    <th:block th:unless="${#strings.equals(authority, 'ADMIN')}">
+        <div style="display: flex; justify-content: center;">
+            <a style="text-decoration-line: none; font-size: 12px; font-weight: normal; text-align: center; display: inline-block; margin-left: 5px;" id="userToList" onclick="userToList()">목록</a>
+        </div>
+        <script>
+            function userToList() {
+                var currentPage = [[${currentPage}]]
+                location.href="http://" + window.location.host + "/announcement/list?currentPage=" + currentPage;
+            }
+        </script>
+    </th:block>
+
     <th:block th:if="${#strings.equals(authority, 'ADMIN')}" >
         <div style="display: flex; justify-content: center;">
-            <a style="font-size: 12px; font-weight: normal; text-align: center; display: inline-block; margin-right: 5px;" id="editButton" onclick="moveUpdate()">변경</a>
-            <a style="text-decoration-line: none; font-size: 12px; font-weight: normal; text-align: center; display: inline-block; margin-left: 5px;" data-th-href="@{/announcement/delete(no=${announcement.no},currentPage=${currentPage})}">삭제</a>
+            <a style="text-decoration-line: none; font-size: 12px; font-weight: normal; text-align: center; display: inline-block; margin-right: 5px;" id="editButton" onclick="moveUpdate()">변경</a>
+            <a style="text-decoration-line: none; font-size: 12px; font-weight: normal; text-align: center; display: inline-block; margin-left: 5px; margin-right: 5px;" data-th-href="@{/announcement/delete(no=${announcement.no},currentPage=${currentPage})}">삭제</a>
+            <a style="text-decoration-line: none; font-size: 12px; font-weight: normal; text-align: center; display: inline-block; margin-left: 5px;" id="adminToList" onclick="adminToList()">목록</a>
         </div>
         <script>
             function moveUpdate() {
                var currentPage = [[${currentPage}]]
                var announcementNo = [[${announcement.no}]]
                location.href="http://" + window.location.host + "/announcement/update?currentPage=" + currentPage + "&no=" + announcementNo;
+            }
+
+            function adminToList() {
+                var currentPage = [[${currentPage}]]
+                location.href="http://" + window.location.host + "/announcement/list?currentPage=" + currentPage;
             }
         </script>
     </th:block>
@@ -169,9 +187,10 @@ table {
         <tr><th style='width:100px; height: 30px'>첨부파일</th><td><div data-th-each="file : ${announcement.announcementAttachedFiles}"><a data-th-href="|https://kr.object.ncloudstorage.com/bitgallery/announcement/${file.filePath}|" data-th-text="${file.filePath}">okok.gif</a></div></td></tr>
     </table>
 </th:block>
+
 </form>
 
-    <div>
+<div>
         <input type='hidden' name='currentPage' data-th-value=${currentPage}>
     </div>
 <div data-th-replace="footer :: footer"></div>
