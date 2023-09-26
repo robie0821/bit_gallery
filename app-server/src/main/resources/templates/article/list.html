@@ -101,7 +101,7 @@
 <div data-th-replace="header :: header"></div>
 
 <div class="content" style="margin:30px;">
-  <div style="border: 8px solid #D8D8D8; padding: 40px; border-radius: 20px;">
+  <div style="border: 8px solid #D8D8D8; padding: 35px; border-radius: 20px;">
 
     <h2 style="text-align: center; font-weight: 320; letter-spacing: 2px;"
         th:text="${status == 'progress' ? '진행 중인 경매' : (status == 'expected' ? '진행 예정 경매' : (status == 'end' ? '종료된 경매' : '게시글 목록'))}"></h2>
@@ -145,6 +145,7 @@
       </tr>
       </tbody>
     </table>
+    <br>
 
     <nav aria-label="Page navigation" style="text-align: center;">
       <ul id="pagination" class="pagination horizontal-pagination"

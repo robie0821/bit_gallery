@@ -20,10 +20,15 @@
     <link rel="stylesheet" th:href="@{/css/list.css}"/>
 
     <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
         a {
-            color: #000;
             text-decoration: none;
             text-shadow: 2px 2px 4px rgba(135, 206, 235, 0.5);
+            font-weight: 300;
         }
     </style>
 
@@ -45,24 +50,22 @@
 <!-- 사용자 정보 패널 -->
 <div class="card card-container">
 
-    <div style="text-align: center;">
-        <a href="/user/edit">회원정보 수정</a>
-    </div>
-
 
     <!-- <img class="profile-img-card" src="//lh3.googleusercontent.com/-6V8xOA6M7BA/AAAAAAAAAAI/AAAAAAAAAAA/rzlHcD0KYwo/photo.jpg?sz=120" alt="" /> -->
     <img id="profile-img" class="profile-img-card" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"/>
     <p id="profile-name" class="profile-name-card">
-        <span id="userName" data-th-text="${session.loginUser.name}+님 + ', 안녕하세요.'"></span><br>
+        <span id="userName" data-th-text="${session.loginUser.name}+님 + ', 안녕하세요.'"></span>
     </p>
-
+    <div style="text-align: center;">
+        <a href="/user/edit" style="text-decoration: none; font-size:13px;">회원정보 수정</a>
+    </div>
     <br>
     <span id="email" data-th-text="'이메일 : ' + ${session.loginUser.email}"
-          style="display: block; text-align: center;"></span>
+          style="display: block; text-align: center; font-weight: 300;"></span>
     <span id="phone" data-th-text="'핸드폰번호 : ' + ${session.loginUser.phone}"
-          style="display: block; text-align: center;"></span>
+          style="display: block; text-align: center; font-weight: 300;"></span>
     <span id="address" data-th-text="'주소 : ' + ${session.loginUser.address}"
-          style="display: block; text-align: center;"></span>
+          style="display: block; text-align: center; font-weight: 300;"></span>
 
     <br>
     <!-- 포인트 충전 입력 필드 -->
@@ -82,9 +85,8 @@
     <div id="userPoint" data-th-text="${session.loginUser.point}" style="display: none;"></div>
 
 </div><!-- /card-container -->
-<br>
 
-<div class="container">
+<div class="container" style="width: 60%;">
     <div class="row">
         <div class="col-md-12">  <!-- 환전, 입찰 내역 container 크기 수정-->
             <!-- Nav tabs category -->
@@ -100,14 +102,17 @@
                         <div class="panel panel-default panel-faq">
                             <div class="panel-heading">
                                 <a data-toggle="collapse" data-parent="#accordion-cat-1" href="#faq-cat-1-sub-1">
-                                    <h4 class="panel-title">
-                                        환전 목록
+                                    <h4 class="panel-title" style="background-color:white;">
+                                        &nbsp;
                                         <span class="pull-right"><i class="glyphicon glyphicon-plus"></i></span>
                                     </h4>
                                 </a>
                             </div>
                             <div id="faq-cat-1-sub-1" class="panel-collapse collapse">
                                 <div class="panel-body">
+                                    <div style="text-align: center;">
+                                        <a th:href="@{/exchange/form}" class="request-button" style="background-color: #D8D8D8; border-radius: 20px; font-size:10px;">환전 요청</a>
+                                    </div>
                                     <table id="exchangeTable" style="display: none;"> <!-- id와 스타일 추가 -->
                                         <thead>
                                         <tr>
@@ -122,7 +127,7 @@
                                         <tbody id="exchangeList">
                                         </tbody>
                                     </table>
-                                    <a th:href="@{/exchange/form}" class="request-button">환전 요청</a>
+
                                 </div>
                                 <script src="/js/exchangeAPI.js"></script>
                             </div>
@@ -130,14 +135,7 @@
                         <div class="panel panel-default panel-faq">
                             <div id="faq-cat-1-sub-2" class="panel-collapse collapse">
                                 <div class="panel-body">
-                                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry
-                                    richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor
-                                    brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt
-                                    aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et.
-                                    Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente
-                                    ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer
-                                    farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them
-                                    accusamus labore sustainable VHS.
+                                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
                                 </div>
                             </div>
                         </div>
@@ -148,8 +146,8 @@
                         <div class="panel panel-default panel-faq">
                             <div class="panel-heading">
                                 <a data-toggle="collapse" data-parent="#accordion-cat-2" href="#faq-cat-2-sub-1">
-                                    <h4 class="panel-title">
-                                        입찰 목록
+                                    <h4 class="panel-title" style="background-color:white;">
+                                        &nbsp;
                                         <span class="pull-right"><i class="glyphicon glyphicon-plus"></i></span>
                                     </h4>
                                 </a>
@@ -157,8 +155,7 @@
                             <div id="faq-cat-2-sub-1" class="panel-collapse collapse">
                                 <div class="panel-body">
                                     <!-- "입찰 내역" 불러오기 -->
-                                    <table class="table table-bordered table-striped" style="display: none;"
-                                           id="bidTable">
+                                    <table class="table table-bordered table-striped" style="display: none;" id="bidTable">
                                         <thead>
                                         <tr>
                                             <th>번호</th>
@@ -174,20 +171,6 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="panel panel-default panel-faq">
-                            <div id="faq-cat-2-sub-2" class="panel-collapse collapse">
-                                <div class="panel-body">
-                                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry
-                                    richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor
-                                    brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt
-                                    aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et.
-                                    Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente
-                                    ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer
-                                    farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them
-                                    accusamus labore sustainable VHS.
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -196,5 +179,10 @@
 </div>
 <script src="/js/chargeScript.js"></script>
 <script src="/js/historyAPI.js" defer></script>
+
+
+<div data-th-replace="footer :: footer"></div>
+
+
 </body>
 </html>

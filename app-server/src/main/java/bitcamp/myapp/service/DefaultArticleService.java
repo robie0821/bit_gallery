@@ -43,7 +43,7 @@ public class DefaultArticleService implements ArticleService {
       }
       List<Article> list = articleDao.findAll(status);
       int size = list.size();
-      int pageSize = 5;
+      int pageSize = 4;
       int startPage = (currentPage - 1) * pageSize ;
       int endPage = Math.min(pageSize, size - startPage);
       List<Article> subList = list.stream().skip(startPage).limit(endPage).toList();
@@ -71,7 +71,7 @@ public class DefaultArticleService implements ArticleService {
       }
       List<Article> list = articleDao.findByArtist(artist);
       int size = list.size();
-      int pageSize = 5;
+      int pageSize = 4;
       int startPage = (currentPage - 1) * pageSize ;
       int endPage = Math.min(pageSize, size - startPage);
       List<Article> subList = list.stream().skip(startPage).limit(endPage).toList();
