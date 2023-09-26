@@ -63,6 +63,10 @@ public class DefaultAnnouncementService implements AnnouncementService {
 //      System.out.println("fixedList=  " + fixedListSize);
       List<Announcement> subList = list.stream().skip(startPage).limit(endPage).toList();
       subList = Stream.concat(fixedList.stream(), subList.stream()).collect(Collectors.toList());
+//      for (Announcement announcement : subList) {
+////        System.out.printf("fixed : %d\n", announcement.getFixed());
+////        System.out.println("fixedList : " + announcementDao.findFixedList());
+//      }
 
 //      model.addAttribute("fixedList", this.fixedList());
       model.addAttribute("pageSize", pageSize);

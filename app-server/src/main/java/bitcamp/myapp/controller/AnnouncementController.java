@@ -126,7 +126,7 @@ public class AnnouncementController {
     } else {
       model.addAttribute("authority", loginUser.getAuthority());
     }
-    System.out.println("현재 유저 등급 : " + model.getAttribute("authority"));
+//    System.out.println("현재 유저 등급 : " + model.getAttribute("authority"));
     model.addAttribute("test", 1);
     announcementService.list(model);
   }
