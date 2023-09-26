@@ -23,6 +23,9 @@ import java.util.Map;
 @RequestMapping("/exchange")
 public class ExchangeController {
 
+  {
+  }
+
   @Autowired
   ExchangeService exchangeService;
 
@@ -64,7 +67,7 @@ public class ExchangeController {
     User updatedUser = userService.get(loginUser.getNo());
     session.setAttribute("loginUser", updatedUser);
 
-    return "redirect:/chargePoint";
+    return "redirect:/points/chargePoint";
   }
 
   @GetMapping("delete")
