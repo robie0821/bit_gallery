@@ -64,7 +64,7 @@ public class ExchangeController {
     User updatedUser = userService.get(loginUser.getNo());
     session.setAttribute("loginUser", updatedUser);
 
-    return "redirect:/chargePoint";
+    return "redirect:/points/chargePoint";
   }
 
   @GetMapping("delete")
