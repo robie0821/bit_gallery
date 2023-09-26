@@ -25,11 +25,6 @@ import javax.servlet.http.HttpSession;
 @RequestMapping("/social")
 public class SocialController {
 
-    {
-        System.out.println("KakaoController 생성됨!");
-    }
-
-
     KakaoRequestService kakaoRequestService= new KakaoRequestService();
 
     @Autowired

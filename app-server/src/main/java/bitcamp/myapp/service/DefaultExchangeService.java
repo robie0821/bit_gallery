@@ -9,9 +9,6 @@ import java.util.List;
 
 @Service
 public class DefaultExchangeService implements ExchangeService{
-  {
-    System.out.println("DefaultExchangeService 생성됨!");
-  }
 
   ExchangeDao exchangeDao;
 
