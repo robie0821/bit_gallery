@@ -23,6 +23,9 @@ import java.util.Map;
 @RequestMapping("/exchange")
 public class ExchangeController {
 
+  {
+  }
+
   @Autowired
   ExchangeService exchangeService;
 

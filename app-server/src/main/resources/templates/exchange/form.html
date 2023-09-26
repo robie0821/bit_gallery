@@ -5,26 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" th:href="@{/css/form.css}" />
     <title>환전 게시판 입력 폼</title>
-
-
-    <style>
-
-        a {
-color: #000;
-text-decoration: none;
-text-shadow: 2px 2px 4px rgba(135, 206, 235, 0.5);
-}
-
-
-    </style>
 </head>
 <body data-th-attr="data-user-points=${loginUser.point}">
 <div data-th-replace="header :: header"></div>
-<br>
-<br>
-<br>
-<br>
-<br>
+
 <form th:action="@{/exchange/add}" method='post' onsubmit="return validateForm();">
 
     <label for="name">이름:</label><br>
@@ -48,7 +32,7 @@ text-shadow: 2px 2px 4px rgba(135, 206, 235, 0.5);
     <div style="display: flex; align-items: center;">
         <label for="exchangePoint" style="text-align: left;">환전할 금액 :</label>
 
-        <span style="color: lightblue; font-size: 15px; margin-left: auto;" id="userPoints"
+        <span style="color: blue; font-size: 15px; margin-left: auto;" id="userPoints"
               data-th-text="'보유포인트 : ' + ${session.loginUser.point} + '원'"></span>
 
     </div>
