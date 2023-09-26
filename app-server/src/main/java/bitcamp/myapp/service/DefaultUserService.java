@@ -10,6 +10,9 @@ import java.util.List;
 
 @Service
 public class DefaultUserService implements UserService {
+  {
+    System.out.println("DefaultUserService 생성됨!");
+  }
 
   UserDao userDao;
 
@@ -47,6 +50,12 @@ public class DefaultUserService implements UserService {
   @Override
   public int update(User user) throws Exception {
     return userDao.update(user);
+  }
+
+  @Transactional
+  @Override
+  public int editUpdate(User user) throws Exception {
+    return userDao.editUpdate(user);
   }
 
   @Transactional

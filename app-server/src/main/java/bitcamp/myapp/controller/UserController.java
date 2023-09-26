@@ -6,16 +6,18 @@ import bitcamp.myapp.vo.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.http.HttpSession;
 
 
 @Controller
 @RequestMapping("/user")
 public class UserController {
+  {
+  }
+
 
   @Autowired
   UserService userService;
@@ -27,11 +29,26 @@ public class UserController {
   public void form() {
   }
 
+  @GetMapping("edit")
+  public String showEditPage(HttpSession session, Model model) {
+    User loginUser = (User) session.getAttribute("loginUser");
+    String email = (String) session.getAttribute("email");
+
+    // 모델에 이메일 값을 추가합니다.
+    model.addAttribute("email", email);
+    if (loginUser == null) {
+      return "redirect:/login";
+    } else {
+      model.addAttribute("user", loginUser); // "user"라는 이름으로 사용자 객체 추가
+      return "user/edit";
+    }
+  }
+
   @PostMapping("add")
   public String add(User user) throws Exception {
     System.out.println(user.toString());
     userService.add(user);
-    return "redirect:list";
+    return "redirect:/";
   }
 
   @GetMapping("delete")
@@ -66,6 +83,29 @@ public class UserController {
       throw new Exception("회원이 없습니다.");
     } else {
       return "redirect:list";
+    }
+  }
+
+  @PostMapping("editUpdate")
+  public String editUpdate(@ModelAttribute("user") User updatedUser, HttpSession session) throws Exception {
+    User loginUser = (User) session.getAttribute("loginUser");
+
+    if (loginUser == null) {
+      return "redirect:/login";
+    }
+
+    // 현재 로그인한 사용자의 정보로 업데이트할 정보 설정
+    updatedUser.setNo(loginUser.getNo());
+    updatedUser.setEmail(loginUser.getEmail());
+
+    // 세션 정보 업데이트
+    session.setAttribute("loginUser", updatedUser); // 세션 업데이트
+
+    // 사용자 정보 업데이트
+    if (userService.editUpdate(updatedUser) == 0) {
+      throw new Exception("회원 정보 업데이트에 실패했습니다.");
+    } else {
+      return "redirect:/points/chargePoint";
     }
   }
 }

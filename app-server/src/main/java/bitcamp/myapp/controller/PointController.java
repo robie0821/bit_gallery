@@ -2,8 +2,10 @@ package bitcamp.myapp.controller;
 
 import bitcamp.myapp.dto.RequestPaymentDTO;
 import bitcamp.myapp.service.ArticleService;
+import bitcamp.myapp.service.HistoryService;
 import bitcamp.myapp.service.UserService;
 import bitcamp.myapp.vo.Article;
+import bitcamp.myapp.vo.History;
 import bitcamp.myapp.vo.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -21,9 +23,12 @@ public class PointController {
     private final UserService userService;
     private final ArticleService articleService;
 
-    public PointController(UserService userService, ArticleService articleService) {
+    private final HistoryService historyService;
+
+    public PointController(UserService userService, ArticleService articleService, HistoryService historyService) {
         this.userService = userService;
         this.articleService = articleService;
+        this.historyService = historyService;
     }
 
     @GetMapping("chargePoint") //
@@ -55,31 +60,43 @@ public class PointController {
     @PostMapping("bidPoint") //입찰
     public ResponseEntity<Map<String, Object>> bidPoint(
             @RequestParam("userNo") String userNo,
+            @RequestParam("currentPage") int currentPage,
             @RequestParam("articleNo") int articleNo,
             @RequestParam("bidAmount") int bidAmount, HttpSession session) throws Exception {
 
-        // 세션 정보 업데이트
-        User updatedUser = userService.get(Integer.parseInt(userNo)); // 업데이트된 회원 정보 가져오기
-        session.setAttribute("loginUser", updatedUser); // 세션 업데이트
 
-        // articleNo를 사용하여 article 정보 가져오기
-        Article article = articleService.get((articleNo));
-        session.setAttribute("article", article);
-
+        // SQL처리
         articleService.updateArticleBidPoint(articleNo, bidAmount);
         articleService.updateArticleBidNum((articleNo));
         userService.updateUserPoints(userNo, bidAmount);
 
+        // 세션 정보 업데이트
+        User updatedUser = userService.get(Integer.parseInt(userNo)); // 업데이트된 회원 정보 가져오기
+        // articleNo를 사용하여 article 정보 가져오기
+        Article article = articleService.get((articleNo));
+
+
+        User loginUser = (User) session.getAttribute("loginUser");
+
+
         session.setAttribute("loginUser", updatedUser); // 세션 업데이트
         session.setAttribute("article", article); // 세션 업데이트
+
+        History history = new History();
+        history.setBidder(loginUser);
+        history.setArticle(article);
+        history.setPrice(bidAmount);
+        historyService.add(history);
 
         // 응답 데이터 생성 및 반환
         Map<String, Object> response = new HashMap<>();
         response.put("userNo", userNo);
         response.put("bidAmount", bidAmount);
+        response.put("currentPage", currentPage);
 
         return ResponseEntity.ok(response);
     }
+
 
 
     @ResponseBody
@@ -94,10 +111,18 @@ public class PointController {
         User updatedUser = userService.get(Integer.parseInt(dto.getUserNo())); // 업데이트된 회원 정보 가져오기
         session.setAttribute("loginUser", updatedUser); // 세션 업데이트
 
+        User loginUser = (User) session.getAttribute("loginUser");
 
-        articleService.updateArticleStatus(Integer.parseInt(dto.getArticleNo()));
-        articleService.updateArticleBidNum(Integer.parseInt(dto.getArticleNo()));
-        userService.updateUserPoints(dto.getUserNo(), dto.getBidAmount());
+          articleService.updateArticleBidPoint(Integer.parseInt(dto.getArticleNo()), dto.getBidAmount());     
+          articleService.updateArticleStatus(Integer.parseInt(dto.getArticleNo()));
+          articleService.updateArticleBidNum(Integer.parseInt(dto.getArticleNo()));                           session.setAttribute("loginUser", updatedUser); // 세션 업데이트
+          userService.updateUserPoints(dto.getUserNo(), dto.getBidAmount());                                  session.setAttribute("article", article);
+
+        History history = new History();
+        history.setBidder(loginUser);
+        history.setArticle(article);
+        history.setPrice(dto.getBidAmount());
+        historyService.add(history);
 
         return true;
     }

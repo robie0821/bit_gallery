@@ -51,7 +51,7 @@ document.getElementById('bidButton').addEventListener('click', function () {
         return;
     }
 
-    if (cuPrice > bidAmount) {
+    if (endPrice < bidAmount) {
         alert('즉시 구매가격 보다 입찰금액이 높습니다.'); // 보유 포인트가 입찰 금액보다 작은 경우 알림
         if (ajaxRequest) {
             ajaxRequest.abort();
@@ -91,7 +91,7 @@ document.getElementById('bidButton').addEventListener('click', function () {
                         console.log(data);
                         try {
                             var resultData = JSON.parse(JSON.stringify(data));
-                            alert('입찰 포인트: ' + resultData.bidAmount);
+                            alert(resultData.bidAmount+' 포인트를 입찰하였습니다.' );
                             location.reload();
 
                         } catch (e) {
