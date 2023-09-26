@@ -122,9 +122,6 @@
     <div data-th-if="${article}"  style="margin:30px; border: 8px solid #D8D8D8; padding: 50px; border-radius: 20px; " >
         <h2 style="text-align: center; font-weight: 320;" th:text="${#strings.equals(article.status, 'progress')} ? '진행 중인 경매' : (${#strings.equals(article.status, 'expected')} ? '진행 예정 경매' : (${#strings.equals(article.status, 'end')} ? '종료된 경매' : article.title))">
             게시글</h2>
-
-        <!-- 변경 삭제 목록 폼 -->
-        <div style="text-align: center;">
             <p>
                 <a style="font-size: 12px; font-weight: normal; text-align: right;" data-th-if="${#strings.equals(article.status, 'expected')} and ${editable}"
                    data-th-href="@{/article/update/(articleNo=${article.articleNo},currentPage=${currentPage})}">변경</a>&nbsp
