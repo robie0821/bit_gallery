@@ -43,7 +43,7 @@ public class DefaultArticleService implements ArticleService {
       }
       List<Article> list = articleDao.findAll(status);
       int size = list.size();
-      int pageSize = 10;
+      int pageSize = 5;
       int startPage = (currentPage - 1) * pageSize ;
       int endPage = Math.min(pageSize, size - startPage);
       List<Article> subList = list.stream().skip(startPage).limit(endPage).toList();
@@ -52,6 +52,7 @@ public class DefaultArticleService implements ArticleService {
       model.addAttribute("size", size);
       model.addAttribute("list", subList);
       model.addAttribute("currentPage", currentPage);
+      model.addAttribute("actualSize", Math.ceil((double)size / (double)pageSize));
       model.addAttribute("status", status.name());
       model.addAttribute("path", 0);
     } catch (Exception e) {
@@ -70,7 +71,7 @@ public class DefaultArticleService implements ArticleService {
       }
       List<Article> list = articleDao.findByArtist(artist);
       int size = list.size();
-      int pageSize = 10;
+      int pageSize = 5;
       int startPage = (currentPage - 1) * pageSize ;
       int endPage = Math.min(pageSize, size - startPage);
       List<Article> subList = list.stream().skip(startPage).limit(endPage).toList();
@@ -78,6 +79,7 @@ public class DefaultArticleService implements ArticleService {
       model.addAttribute("pageSize", size);
       model.addAttribute("list", subList);
       model.addAttribute("currentPage", currentPage);
+      model.addAttribute("actualSize", Math.ceil((double)size / (double)pageSize));
       model.addAttribute("artist", artist);
       model.addAttribute("path", 1);
     } catch (Exception e) {
