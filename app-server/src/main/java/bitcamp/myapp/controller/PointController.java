@@ -66,7 +66,8 @@ public class PointController {
 
 
         // SQL처리
-        articleService.updateArticleBidPoint(articleNo, bidAmount);
+        articleService.returnPoint(articleNo);
+        articleService.updateArticleBidPoint(articleNo, bidAmount, Integer.parseInt(userNo));
         articleService.updateArticleBidNum((articleNo));
         userService.updateUserPoints(userNo, bidAmount);
 
@@ -113,7 +114,8 @@ public class PointController {
 
         User loginUser = (User) session.getAttribute("loginUser");
 
-          articleService.updateArticleBidPoint(Integer.parseInt(dto.getArticleNo()), dto.getBidAmount());     
+            articleService.returnPoint(Integer.parseInt(dto.getArticleNo()));
+          articleService.updateArticleBidPoint(Integer.parseInt(dto.getArticleNo()), dto.getBidAmount(), loginUser.getNo());
           articleService.updateArticleStatus(Integer.parseInt(dto.getArticleNo()));
           articleService.updateArticleBidNum(Integer.parseInt(dto.getArticleNo()));                           session.setAttribute("loginUser", updatedUser); // 세션 업데이트
           userService.updateUserPoints(dto.getUserNo(), dto.getBidAmount());                                  session.setAttribute("article", article);
@@ -156,6 +158,3 @@ public class PointController {
         return ResponseEntity.ok(response);
     }
 }
-
-
-
