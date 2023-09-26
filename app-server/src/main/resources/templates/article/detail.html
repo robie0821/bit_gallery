@@ -213,7 +213,7 @@
                 </td>
             </tr>
 
-            <tr>
+            <tr data-th-unless="${#strings.equals(article.status, 'end')}">
                 <th style='width:120px; font-size: 12px; font-weight: normal; text-align: center;'>남은시간</th>
                 <td><span id=RemainPeriod></span></td>
             </tr>
