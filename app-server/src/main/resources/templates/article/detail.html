@@ -150,7 +150,7 @@
         </tr>
 
         <!-- 입찰/즉시구매 폼 -->
-        <div style="text-align: center;">
+        <div data-th-if="${#strings.equals(article.status, 'progress')}" style="text-align: center;">
             <p>
             <a style="text-align: center;">
                 <input type="text" id="bidAmount" name="bidAmount" placeholder="입찰할 금액 입력"
