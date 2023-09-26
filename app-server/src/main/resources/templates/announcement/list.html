@@ -68,7 +68,7 @@
             border-spacing: 0; /* 테두리 간격을 0으로 설정 */
             border: none; /* 테두리 없애기 */
             border-radius: 20px; /* 표 전체에 둥글게 설정 */
-            max-width: 80%; /* 표의 최대 너비를 80%로 설정 */
+            max-width: 90%; /* 표의 최대 너비를 80%로 설정 */
             margin: 0 auto; /* 가운데 정렬을 위해 추가 */
         }
 
@@ -92,15 +92,21 @@
         }
 
         form {
-            width: 500px;
-            height: 500px;
-            margin: 30px;
-            padding: 20px;
+            width: 800px;
+            height: 650px;
+            margin: 10px;
+            padding: 10px;
             border: 4px solid #D8D8D8;
             border-radius: 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
+
+            #paginationNumber {
+                bottom: 100px;
+                position: absolute;
+                text-align: center;
+            }
         }
     </style>
 
@@ -134,7 +140,7 @@
 <tbody>
     <tr data-th-each="announcement : ${list}">
       <td style="width: 70px;" data-th-text="${announcement.no}">100</td>
-        <td style="width: 400px;">
+        <td style="width: 400px; height: 30px">
             <a style="text-decoration-line: none;" data-th-href="@{/announcement/detail(no=${announcement.no},currentPage=${currentPage})}"
                data-th-text="${announcement.title} ?: '제목없음'" >게시글 제목</a>
         </td>
@@ -146,7 +152,7 @@
 
 </table>
 
-<nav aria-label="Page navigation" style="text-align: center;">
+<nav aria-label="Page navigation" style="text-align: center;" id="paginationNumber">
     <ul id="pagination" class="pagination horizontal-pagination" style="padding: 0px 0px 0px 0px;">
 
         <!-- 페이지 번호 추가 -->

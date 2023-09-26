@@ -86,7 +86,7 @@ table {
     border-spacing: 0; /* 테두리 간격을 0으로 설정 */
     border: none; /* 테두리 없애기 */
     border-radius: 20px; /* 표 전체에 둥글게 설정 */
-    max-width: 60%; /* 표의 최대 너비를 60%로 설정 (원하는 크기로 조절) */
+    max-width: 90%; /* 표의 최대 너비를 60%로 설정 (원하는 크기로 조절) */
     margin: 0 auto; /* 가운데 정렬을 위해 추가 */
 }
 
@@ -110,16 +110,21 @@ table {
         }
 
         form {
-            width: 60%;
-            margin: 210px auto;
-            padding: 20px;
-            border: 4px solid #D8D8D8;
-            border-radius: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
+        width: 900px;
+        height: 800px;
+        margin: 0 auto; /* 중앙 정렬 */
+        margin-top: 40px;
+        margin-bottom: 40px;
+        padding-top: 2px;
+        padding-right: 2px;
+        padding-bottom: 2px;
+        padding-left: 2px;
+        border: 4px solid #D8D8D8;
+        border-radius: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
 
     </style>
     <meta charset='UTF-8'>
@@ -133,38 +138,41 @@ table {
 
 <div data-th-replace="header :: header"></div>
 
-
 <p data-th-unless="${announcement}">해당 번호의 게시글이 없습니다!</p>
+
+<form>
 <br>
     <h2 style="text-align: center; font-weight: 320; letter-spacing: 2px;">공지사항</h2>
-<div style="display: flex; justify-content: center;">
-    <a style="font-size: 12px; font-weight: normal; text-align: center; display: inline-block; margin-right: 5px;" id="editButton" onclick="moveUpdate()">변경</a>
-    <a style="text-decoration-line: none; font-size: 12px; font-weight: normal; text-align: center; display: inline-block; margin-left: 5px;" data-th-href="@{/announcement/delete(no=${announcement.no},currentPage=${currentPage})}">삭제</a>
-</div>
 
+    <th:block th:if="${#strings.equals(authority, 'ADMIN')}" >
+        <div style="display: flex; justify-content: center;">
+            <a style="font-size: 12px; font-weight: normal; text-align: center; display: inline-block; margin-right: 5px;" id="editButton" onclick="moveUpdate()">변경</a>
+            <a style="text-decoration-line: none; font-size: 12px; font-weight: normal; text-align: center; display: inline-block; margin-left: 5px;" data-th-href="@{/announcement/delete(no=${announcement.no},currentPage=${currentPage})}">삭제</a>
+        </div>
+        <script>
+            function moveUpdate() {
+               var currentPage = [[${currentPage}]]
+               var announcementNo = [[${announcement.no}]]
+               location.href="http://" + window.location.host + "/announcement/update?currentPage=" + currentPage + "&no=" + announcementNo;
+            }
+        </script>
+    </th:block>
     <br>
+
 <th:block th:if="${announcement}">
     <table border='1'>
-        <tr><th style='width:120px;'>번호</th><td style='width:300px;'><div data-th-text="${announcement.no}"></div></td></tr>
-        <tr><th>제목</th><td><div data-th-text="${announcement.title}" style="width: 500px;" ></div></td></tr>
-        <tr><th>내용</th><td><div data-th-text="${announcement.content}" id="detail-content-scroll" style="width: 500px; height: 500px;"></div></td></tr>
-        <tr><th>작성자</th><td data-th-text="${announcement.writer.name}">홍길동</td></tr>
-        <tr><th>등록일</th><td data-th-text="${#dates.format(announcement.createdDate, 'yyyy-MM-dd')}">2023-09-14</td></tr>
-        <tr><th>첨부파일</th><td><div data-th-each="file : ${announcement.announcementAttachedFiles}"><a data-th-href="|https://kr.object.ncloudstorage.com/bitgallery/announcement/${file.filePath}|" data-th-text="${file.filePath}">okok.gif</a></div></td></tr>
+        <tr><th style='width:100px; height: 30px'>번호</th><td style='width:600px;'><div data-th-text="${announcement.no}"></div></td></tr>
+        <tr><th style='width:100px; height: 30px'>제목</th><td><div data-th-text="${announcement.title}" style="width: 600px;" ></div></td></tr>
+        <tr><th>내용</th><td><div data-th-text="${announcement.content}" id="detail-content-scroll" style="width: 600px; height: 400px;"></div></td></tr>
+        <tr><th style='width:100px; height: 30px'>작성자</th><td data-th-text="${announcement.writer.name}">홍길동</td></tr>
+        <tr><th style='width:100px; height: 30px'>등록일</th><td data-th-text="${#dates.format(announcement.createdDate, 'yyyy-MM-dd')}">2023-09-14</td></tr>
+        <tr><th style='width:100px; height: 30px'>첨부파일</th><td><div data-th-each="file : ${announcement.announcementAttachedFiles}"><a data-th-href="|https://kr.object.ncloudstorage.com/bitgallery/announcement/${file.filePath}|" data-th-text="${file.filePath}">okok.gif</a></div></td></tr>
     </table>
 </th:block>
+</form>
+
     <div>
         <input type='hidden' name='currentPage' data-th-value=${currentPage}>
-        <th:block th:if="${#strings.equals(authority, 'ADMIN')}" >
-            <script>
-                function moveUpdate() {
-                   var currentPage = [[${currentPage}]]
-                   var announcementNo = [[${announcement.no}]]
-                   location.href="http://" + window.location.host + "/announcement/update?currentPage=" + currentPage + "&no=" + announcementNo;
-                }
-            </script>
-        </th:block>
-
     </div>
 <div data-th-replace="footer :: footer"></div>
 </body>
