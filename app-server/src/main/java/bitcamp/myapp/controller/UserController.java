@@ -16,10 +16,6 @@ import org.springframework.web.multipart.MultipartFile;
 @Controller
 @RequestMapping("/user")
 public class UserController {
-  {
-    System.out.println("UserController 생성됨!");
-  }
-
 
   @Autowired
   UserService userService;

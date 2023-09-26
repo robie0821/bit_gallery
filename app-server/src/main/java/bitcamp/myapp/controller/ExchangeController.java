@@ -23,10 +23,6 @@ import java.util.Map;
 @RequestMapping("/exchange")
 public class ExchangeController {
 
-  {
-    System.out.println("ExchangeController 생성됨!");
-  }
-
   @Autowired
   ExchangeService exchangeService;
 

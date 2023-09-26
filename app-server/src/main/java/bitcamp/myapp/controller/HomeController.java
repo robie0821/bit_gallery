@@ -7,9 +7,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class HomeController {
-  {
-    System.out.println("HomeController 생성됨!");
-  }
 
   @Autowired
   UserService userService;

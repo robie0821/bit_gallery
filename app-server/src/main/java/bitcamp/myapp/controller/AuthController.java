@@ -18,10 +18,6 @@ import javax.servlet.http.HttpSession;
 @RequestMapping("/auth")
 public class AuthController {
 
-  {
-    System.out.println("AuthController 생성됨!");
-  }
-
   @Autowired
   UserService userService;
 
