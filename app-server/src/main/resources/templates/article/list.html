@@ -123,10 +123,10 @@
       </tr>
       </thead>
       <tbody>
-      <tr data-th-each="article, iterStat : ${list}">
-        <td style="text-align: center;">
+      <tr data-th-each="article, iterStat : ${list}" style="height: 110px;">
+        <td style="width: 10% text-align: center;">
           <img data-th-if="${article.photo}"
-               data-th-src="|http://tyasnlztlptw19619311.cdn.ntruss.com/article/${article.photo}?type=f&w=160&h=120&autorotate=false&faceopt=false&ttype=jpg|">
+               data-th-src="|http://tyasnlztlptw19619311.cdn.ntruss.com/article/${article.photo}?type=f&w=120&h=90&autorotate=false&faceopt=false|">
         </td>
         <td style="text-align: center;"><a
                 data-th-href="@{/article/detail(currentPage=${currentPage},path=${path},articleNo=${article.articleNo})}"
