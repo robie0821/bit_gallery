@@ -1,5 +1,6 @@
 package bitcamp.myapp.controller;
 
+import bitcamp.myapp.App;
 import bitcamp.myapp.service.NcpObjectStorageService;
 import bitcamp.myapp.service.UserService;
 import bitcamp.myapp.vo.User;
@@ -45,9 +46,9 @@ public class UserController {
   }
 
   @PostMapping("add")
-  public String add(User user) throws Exception {
-    System.out.println(user.toString());
+  public String add(HttpSession session,User user) throws Exception {
     userService.add(user);
+    App.loginHandler.addUser(session.getId(),user);
     return "redirect:/";
   }
 

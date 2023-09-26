@@ -20,6 +20,8 @@ public class HomeController {
     User loginUser = App.loginHandler.getUser(session.getId());
     if (loginUser == null) {
       session.setAttribute("loginUser",null);
+    } else {
+      session.setAttribute("loginUser",loginUser);
     }
 
     return "index";
