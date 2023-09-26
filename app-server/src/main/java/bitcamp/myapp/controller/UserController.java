@@ -32,13 +32,11 @@ public class UserController {
 
   @GetMapping("edit")
   public String showEditPage(HttpSession session, Model model) {
-    User loginUser = (User) session.getAttribute("loginUser");
-    String email = (String) session.getAttribute("email");
+    User loginUser = App.loginHandler.getUser(session.getId());
 
-    // 모델에 이메일 값을 추가합니다.
-    model.addAttribute("email", email);
+    System.out.println("edit호출()! : " + loginUser);
     if (loginUser == null) {
-      return "redirect:/login";
+      return "redirect:/auth/form";
     } else {
       model.addAttribute("user", loginUser); // "user"라는 이름으로 사용자 객체 추가
       return "user/edit";
@@ -103,10 +101,6 @@ public class UserController {
     session.setAttribute("loginUser", updatedUser); // 세션 업데이트
 
     // 사용자 정보 업데이트
-    if (userService.editUpdate(updatedUser) == 0) {
-      throw new Exception("회원 정보 업데이트에 실패했습니다.");
-    } else {
       return "redirect:/points/chargePoint";
     }
   }
-}

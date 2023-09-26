@@ -11,7 +11,6 @@ import java.util.List;
 @Service
 public class DefaultUserService implements UserService {
   {
-    System.out.println("DefaultUserService 생성됨!");
   }
 
   UserDao userDao;
