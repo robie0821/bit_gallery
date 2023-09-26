@@ -6,10 +6,13 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.config.annotation.PathMatchConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.util.UrlPathHelper;
+import bitcamp.myapp.LoginHandler;
 
 @EnableTransactionManagement
 @SpringBootApplication
 public class App implements WebMvcConfigurer {
+
+  public static LoginHandler loginHandler = new LoginHandler();
 
   public static void main(String[] args) throws Exception {
     SpringApplication.run(App.class, args);
@@ -26,12 +29,5 @@ public class App implements WebMvcConfigurer {
     configurer.setUrlPathHelper(pathHelper);
   }
 
-//  @Override
-//  public void addInterceptors(InterceptorRegistry registry) {
-//    System.out.println("AppConfig.addInterceptors() 호출됨!");
-////    registry
-////            .addInterceptor(new MyInterceptor())
-////            .addPathPatterns("/c04_1/**");
-//  }
 
 }
