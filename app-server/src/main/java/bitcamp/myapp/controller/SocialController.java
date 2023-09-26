@@ -1,5 +1,6 @@
 package bitcamp.myapp.controller;
 
+import bitcamp.myapp.App;
 import bitcamp.myapp.service.KakaoRequestService;
 import bitcamp.myapp.service.UserService;
 import bitcamp.myapp.vo.KakaoInfo;
@@ -71,8 +72,8 @@ public class SocialController {
             loginUser = user;
 
         }
-
-        session.setAttribute("loginUser", loginUser);
+        App.loginHandler.addUser(session.getId(),loginUser);
+        //session.setAttribute("loginUser", loginUser);
         return "redirect:/";
     }
     private String createRandomPassword(int length) {
