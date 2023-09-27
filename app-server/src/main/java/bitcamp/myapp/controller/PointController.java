@@ -1,5 +1,6 @@
 package bitcamp.myapp.controller;
 
+import bitcamp.myapp.App;
 import bitcamp.myapp.dto.RequestPaymentDTO;
 import bitcamp.myapp.service.ArticleService;
 import bitcamp.myapp.service.HistoryService;
@@ -80,6 +81,8 @@ public class PointController {
         User loginUser = (User) session.getAttribute("loginUser");
 
 
+        App.loginHandler.removeUser(session.getId());
+        App.loginHandler.addUser(session.getId(),updatedUser);
         session.setAttribute("loginUser", updatedUser); // 세션 업데이트
         session.setAttribute("article", article); // 세션 업데이트
 
@@ -114,11 +117,17 @@ public class PointController {
 
         User loginUser = (User) session.getAttribute("loginUser");
 
-            articleService.returnPoint(Integer.parseInt(dto.getArticleNo()));
-          articleService.updateArticleBidPoint(Integer.parseInt(dto.getArticleNo()), dto.getBidAmount(), loginUser.getNo());
-          articleService.updateArticleStatus(Integer.parseInt(dto.getArticleNo()));
-          articleService.updateArticleBidNum(Integer.parseInt(dto.getArticleNo()));                           session.setAttribute("loginUser", updatedUser); // 세션 업데이트
-          userService.updateUserPoints(dto.getUserNo(), dto.getBidAmount());                                  session.setAttribute("article", article);
+        articleService.returnPoint(Integer.parseInt(dto.getArticleNo()));
+        articleService.updateArticleBidPoint(Integer.parseInt(dto.getArticleNo()), dto.getBidAmount(), loginUser.getNo());
+        articleService.updateArticleStatus(Integer.parseInt(dto.getArticleNo()));
+        articleService.updateArticleBidNum(Integer.parseInt(dto.getArticleNo()));
+        userService.updateUserPoints(dto.getUserNo(), dto.getBidAmount());
+
+        App.loginHandler.removeUser(session.getId());
+        App.loginHandler.addUser(session.getId(),updatedUser);
+
+        session.setAttribute("loginUser", updatedUser); // 세션 업데이트
+        session.setAttribute("article", article);
 
         History history = new History();
         history.setBidder(loginUser);

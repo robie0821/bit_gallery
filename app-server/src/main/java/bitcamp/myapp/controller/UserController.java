@@ -93,10 +93,15 @@ public class UserController {
       return "redirect:/login";
     }
 
+
     // 현재 로그인한 사용자의 정보로 업데이트할 정보 설정
     updatedUser.setNo(loginUser.getNo());
     updatedUser.setEmail(loginUser.getEmail());
 
+    userService.editUpdate(updatedUser);
+
+    App.loginHandler.removeUser(session.getId());
+    App.loginHandler.addUser(session.getId(),updatedUser);
     // 세션 정보 업데이트
     session.setAttribute("loginUser", updatedUser); // 세션 업데이트
 
