@@ -36,7 +36,6 @@ public class SocialController {
         //System.out.println("kakaoInfo : " + kakaoInfo.toString());
 
 
-        //System.out.println("토큰 확인 시작");
         String response = kakaoRequestService.KakaoTokenRequest(kakaoInfo);
         //System.out.println(response);
 
