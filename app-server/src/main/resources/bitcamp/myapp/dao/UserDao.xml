@@ -67,7 +67,6 @@
     address,
     phone,
     zonecode,
-    detailAddr,
     join_date as joinDate,
     profile_photo as profilePhoto,
     point
