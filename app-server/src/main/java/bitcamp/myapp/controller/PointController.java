@@ -48,6 +48,8 @@ public class PointController {
 
         // 세션 정보 업데이트
         User updatedUser = userService.get(Integer.parseInt(userNo)); // 업데이트된 회원 정보 가져오기
+        App.loginHandler.removeUser(session.getId());
+        App.loginHandler.addUser(session.getId(),updatedUser);
         session.setAttribute("loginUser", updatedUser); // 세션 업데이트
 
         // 응답 데이터 생성 및 반환
