@@ -17,7 +17,7 @@ public class KakaoRequestService implements SocialRequestService{
 
     private final String grantType = "authorization_code";
     private final String clientId = "6884053a11c3626cab670763f77b2bf0";
-    private final String redirectUri = "http://localhost/social/kakao";
+    private final String redirectUri = "/social/kakao";
     private String code = "";
     private final String accessTokenUri = "https://kauth.kakao.com/oauth/token";
     private final String clientSecret = "";// 보안이 ON 일 경우 필수 설정해야함
