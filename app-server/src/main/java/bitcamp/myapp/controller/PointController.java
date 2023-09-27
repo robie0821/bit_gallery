@@ -109,21 +109,27 @@ public class PointController {
     @PostMapping("purchasePoint")
     public boolean purchasePoint(@RequestBody RequestPaymentDTO dto, HttpSession session) throws Exception {
 
-        // articleNo를 사용하여 article 정보 가져오기
-        Article article = articleService.get(Integer.parseInt(dto.getArticleNo()));
-        session.setAttribute("article", article);
 
         // 세션 정보 업데이트
-        User updatedUser = userService.get(Integer.parseInt(dto.getUserNo())); // 업데이트된 회원 정보 가져오기
-        session.setAttribute("loginUser", updatedUser); // 세션 업데이트
-
         User loginUser = (User) session.getAttribute("loginUser");
+
+        session.setAttribute("loginUser", loginUser); // 세션 업데이트
 
         articleService.returnPoint(Integer.parseInt(dto.getArticleNo()));
         articleService.updateArticleBidPoint(Integer.parseInt(dto.getArticleNo()), dto.getBidAmount(), loginUser.getNo());
         articleService.updateArticleStatus(Integer.parseInt(dto.getArticleNo()));
         articleService.updateArticleBidNum(Integer.parseInt(dto.getArticleNo()));
         userService.updateUserPoints(dto.getUserNo(), dto.getBidAmount());
+
+        // articleNo를 사용하여 article 정보 가져오기
+        Article article = articleService.get(Integer.parseInt(dto.getArticleNo()));
+        session.setAttribute("article", article);
+
+
+        User updatedUser = userService.get(Integer.parseInt(dto.getUserNo())); // 업데이트된 회원 정보 가져오기
+
+
+
 
         App.loginHandler.removeUser(session.getId());
         App.loginHandler.addUser(session.getId(),updatedUser);
