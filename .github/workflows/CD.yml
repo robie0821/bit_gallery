@@ -6,9 +6,7 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-18.04
-
     steps:
       - uses: actions/checkout@v3
       - name: Set up JDK 17
@@ -35,7 +33,7 @@ jobs:
 
   pull_deploy:
     name: Connect server ssh and pull from container registry
-    needs: build_dockerpush
+    needs: build
     runs-on: ubuntu-18.04
     steps:
       - name: connect ssh
