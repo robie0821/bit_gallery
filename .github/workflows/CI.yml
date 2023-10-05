@@ -34,7 +34,7 @@ jobs:
   pull_deploy:
     name: Connect server ssh and pull from container registry
     needs: build
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     steps:
       - name: connect ssh
         uses: appleboy/ssh-action@master
